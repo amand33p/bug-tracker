@@ -50,7 +50,7 @@ export const createProjectValidator = (name: string, members: string[]) => {
   const errors: ProjectErrors = {};
 
   if (name.trim() === '' || name.length > 30) {
-    errors.name = 'Project name must be in range of 1-30 characters length.';
+    errors.name = 'Project name length must not be more than 30.';
   }
 
   if (!Array.isArray(members)) {

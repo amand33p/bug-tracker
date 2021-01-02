@@ -26,3 +26,29 @@ export const createProject = async (req: Request, res: Response) => {
   await Member.insert(membersArray);
   res.status(201).json(savedProject);
 };
+
+export const editProjectName = async (req: Request, res: Response) => {
+  const { name } = req.body;
+  const { id } = req.params;
+
+  if (!name || name.trim() === '' || name.length > 30) {
+    return res
+      .status(400)
+      .send({ message: 'Project name length must not be more than 30.' });
+  }
+
+  const targetProject = await Project.findOne({ id });
+
+  if (!targetProject) {
+    return res.status(404).send({ message: 'Invalid project ID.' });
+  }
+
+  if (targetProject.createdById !== req.user) {
+    return res.status(401).send({ message: 'Access is denied.' });
+  }
+
+  targetProject.name = name;
+  await targetProject.save();
+
+  res.json(targetProject);
+};
