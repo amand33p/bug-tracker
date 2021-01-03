@@ -1,10 +1,15 @@
 import express from 'express';
-import { createProject, editProjectName } from '../controllers/project';
+import {
+  createProject,
+  editProjectName,
+  getProjects,
+} from '../controllers/project';
 import middleware from '../middleware';
 
 const router = express.Router();
 const { auth } = middleware;
 
+router.get('/', auth, getProjects);
 router.post('/', auth, createProject);
 router.put('/:id', auth, editProjectName);
 

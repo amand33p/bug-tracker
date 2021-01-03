@@ -29,6 +29,7 @@ export class Bug extends BaseModel {
 
   @ManyToOne(() => Project, (project) => project)
   @JoinColumn({ name: 'projectId' })
+  project: Project;
   @Column()
   projectId: string;
 
@@ -44,7 +45,7 @@ export class Bug extends BaseModel {
   @Column({ nullable: true })
   closedById: string;
 
-  @OneToMany(() => Note, (note) => note.bugId)
+  @OneToMany(() => Note, (note) => note.bug)
   @JoinColumn()
   notes: Note[];
 }

@@ -15,11 +15,11 @@ export class Project extends BaseModel {
   @Column()
   createdById: string;
 
-  @OneToMany(() => Member, (member) => member.memberId)
+  @OneToMany(() => Member, (member) => member.project)
   @JoinColumn()
   members: Member[];
 
-  @OneToMany(() => Bug, (bugs) => bugs.projectId)
+  @OneToMany(() => Bug, (bugs) => bugs.project)
   @JoinColumn()
   bugs: Bug[];
 }

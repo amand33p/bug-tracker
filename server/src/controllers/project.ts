@@ -3,6 +3,40 @@ import { Project } from '../entity/Project';
 import { Member } from '../entity/Member';
 import { createProjectValidator } from '../utils/validators';
 
+export const getProjects = async (req: Request, res: Response) => {
+  const projects = await Project.createQueryBuilder('project')
+    .leftJoin('project.members', 'projectMember')
+    .leftJoinAndSelect('project.members', 'members')
+    .leftJoinAndSelect('project.createdBy', 'createdBy')
+    .leftJoinAndSelect('members.member', 'member')
+    .where('projectMember.memberId = :userId', { userId: req.user })
+    .select([
+      'project.id',
+      'project.name',
+      'createdBy.id',
+      'createdBy.username',
+      'members.id',
+      'member.id',
+      'member.username',
+    ])
+    .getMany();
+
+  /*
+  //Using repo method, but you can't select relation fields
+  const projects = await Project.find({
+    relations: ['members', 'members.member'],
+    join: {
+      alias: 'projects',
+      innerJoin: { members: 'projects.members' },
+    },
+    where: (qb: SelectQueryBuilder<Project>) => {
+      qb.where({}).andWhere('members.memberId = :userId', { userId: req.user });
+    },
+  });*/
+
+  res.json(projects);
+};
+
 export const createProject = async (req: Request, res: Response) => {
   const { name } = req.body;
   const memberIds = [...req.body.members, req.user] as string[];
