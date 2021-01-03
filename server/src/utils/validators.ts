@@ -46,24 +46,32 @@ export const loginValidator = (username: string, password: string) => {
   };
 };
 
-export const createProjectValidator = (name: string, members: string[]) => {
-  const errors: ProjectErrors = {};
-
-  if (name.trim() === '' || name.length > 30) {
-    errors.name = 'Project name length must not be more than 30.';
-  }
-
+export const membersError = (members: string[]) => {
   if (!Array.isArray(members)) {
-    errors.members = 'Members field must be an array.';
+    return 'Members field must be an array.';
   }
 
   if (members.filter((m, i) => members.indexOf(m) !== i).length !== 0) {
-    errors.members = 'Members array must not have duplicate IDs.';
+    return 'Members array must not have duplicate IDs.';
   }
 
   if (members.some((m) => m.length !== 36)) {
-    errors.members = 'Members array must contain valid UUIDs.';
+    return 'Members array must contain valid UUIDs.';
   }
+};
+
+export const projectNameError = (name: string) => {
+  if (!name || name.trim() === '' || name.length > 30) {
+    return 'Project name length must not be more than 30.';
+  }
+};
+
+export const createProjectValidator = (name: string, members: string[]) => {
+  const errors: ProjectErrors = {};
+
+  errors.name = projectNameError(name);
+
+  errors.members = membersError(members);
 
   return {
     errors,

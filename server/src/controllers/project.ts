@@ -1,7 +1,11 @@
 import { Request, Response } from 'express';
 import { Project } from '../entity/Project';
 import { Member } from '../entity/Member';
-import { createProjectValidator } from '../utils/validators';
+import {
+  createProjectValidator,
+  projectNameError,
+  membersError,
+} from '../utils/validators';
 
 export const getProjects = async (req: Request, res: Response) => {
   const projects = await Project.createQueryBuilder('project')
@@ -63,14 +67,13 @@ export const editProjectName = async (req: Request, res: Response) => {
   const { name } = req.body;
   const { id } = req.params;
 
-  if (!name || name.trim() === '' || name.length > 30) {
-    return res
-      .status(400)
-      .send({ message: 'Project name length must not be more than 30.' });
+  const nameValidationError = projectNameError(name);
+
+  if (nameValidationError) {
+    return res.status(400).send({ message: nameValidationError });
   }
 
   const targetProject = await Project.findOne({ id });
-
   if (!targetProject) {
     return res.status(404).send({ message: 'Invalid project ID.' });
   }
@@ -84,7 +87,7 @@ export const editProjectName = async (req: Request, res: Response) => {
   res.json(targetProject);
 };
 
-export const removeProjectMembers = async (req: Request, res: Response) => {
+export const removeProjectMember = async (req: Request, res: Response) => {
   const { userId } = req.body;
   const { id } = req.params;
 
@@ -106,4 +109,46 @@ export const removeProjectMembers = async (req: Request, res: Response) => {
 
   await Member.delete({ projectId: id, memberId: userId });
   res.status(204).end();
+};
+
+export const addProjectMembers = async (req: Request, res: Response) => {
+  const memberIds = req.body.members as string[];
+  const { id } = req.params;
+
+  if (memberIds.length === 0) {
+    return res
+      .status(400)
+      .send({ message: 'Members field must not be empty.' });
+  }
+
+  const targetProject = await Project.findOne({
+    where: { id },
+    relations: ['members'],
+  });
+
+  if (!targetProject) {
+    return res.status(404).send({ message: 'Invalid project ID.' });
+  }
+
+  if (targetProject.createdById !== req.user) {
+    return res.status(401).send({ message: 'Access is denied.' });
+  }
+
+  const currentMembers = targetProject.members.map((m) => m.memberId);
+
+  const membersValidationError = membersError([
+    ...currentMembers,
+    ...memberIds,
+  ]);
+
+  if (membersValidationError) {
+    return res.status(400).send({ message: membersValidationError });
+  }
+
+  const membersArray = memberIds.map((memberId) => ({
+    memberId,
+    projectId: id,
+  }));
+
+  await Member.insert(membersArray);
 };
