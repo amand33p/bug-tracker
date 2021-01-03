@@ -3,6 +3,7 @@ import {
   createProject,
   editProjectName,
   getProjects,
+  removeProjectMembers,
 } from '../controllers/project';
 import middleware from '../middleware';
 
@@ -12,5 +13,6 @@ const { auth } = middleware;
 router.get('/', auth, getProjects);
 router.post('/', auth, createProject);
 router.put('/:id', auth, editProjectName);
+router.delete('/:id/members', auth, removeProjectMembers);
 
 export default router;

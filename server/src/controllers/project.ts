@@ -24,16 +24,14 @@ export const getProjects = async (req: Request, res: Response) => {
   /*
   //Using repo method, but you can't select relation fields
   const projects = await Project.find({
-    relations: ['members', 'members.member'],
     join: {
       alias: 'projects',
-      innerJoin: { members: 'projects.members' },
+      innerJoinAndSelect: { members: 'projects.members' },
     },
     where: (qb: SelectQueryBuilder<Project>) => {
       qb.where({}).andWhere('members.memberId = :userId', { userId: req.user });
     },
   });*/
-
   res.json(projects);
 };
 
@@ -83,6 +81,29 @@ export const editProjectName = async (req: Request, res: Response) => {
 
   targetProject.name = name;
   await targetProject.save();
-
   res.json(targetProject);
+};
+
+export const removeProjectMembers = async (req: Request, res: Response) => {
+  const { userId } = req.body;
+  const { id } = req.params;
+
+  const targetProject = await Project.findOne({ id });
+
+  if (!targetProject) {
+    return res.status(404).send({ message: 'Invalid project ID.' });
+  }
+
+  if (targetProject.createdById !== req.user) {
+    return res.status(401).send({ message: 'Access is denied.' });
+  }
+
+  if (targetProject.createdById === userId) {
+    return res
+      .status(400)
+      .send({ message: "Project creator can't be removed." });
+  }
+
+  await Member.delete({ projectId: id, memberId: userId });
+  res.status(204).end();
 };
