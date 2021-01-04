@@ -49,7 +49,7 @@ export const updateBug = async (req: Request, res: Response) => {
     return res.status(401).send({ message: 'Access is denied.' });
   }
 
-  const targetBug = await Bug.createQueryBuilder('bug')
+  const updatedBug = await Bug.createQueryBuilder('bug')
     .update(Bug)
     .set({
       title,
@@ -64,5 +64,69 @@ export const updateBug = async (req: Request, res: Response) => {
     .execute()
     .then((res) => res.raw[0]);
 
-  return res.json(targetBug);
+  return res.json(updatedBug);
+};
+
+export const closeBug = async (req: Request, res: Response) => {
+  const { projectId, bugId } = req.params;
+
+  const projectMembers = await Member.find({ projectId });
+  const memberIds = projectMembers.map((m) => m.memberId);
+
+  if (!memberIds.includes(req.user)) {
+    return res.status(401).send({ message: 'Access is denied.' });
+  }
+
+  const targetBug = await Bug.findOne({ id: bugId });
+
+  if (!targetBug) {
+    return res.status(400).send({ message: 'Invalid bug ID.' });
+  }
+
+  if (targetBug.isResolved === true) {
+    return res
+      .status(400)
+      .send({ message: 'Bug is already marked as closed.' });
+  }
+
+  targetBug.isResolved = true;
+  targetBug.closedById = req.user;
+  targetBug.closedAt = new Date();
+  targetBug.reopenedById = undefined;
+  targetBug.reopenedAt = undefined;
+
+  await targetBug.save();
+  res.status(201).json(targetBug);
+};
+
+export const reopenBug = async (req: Request, res: Response) => {
+  const { projectId, bugId } = req.params;
+
+  const projectMembers = await Member.find({ projectId });
+  const memberIds = projectMembers.map((m) => m.memberId);
+
+  if (!memberIds.includes(req.user)) {
+    return res.status(401).send({ message: 'Access is denied.' });
+  }
+
+  const targetBug = await Bug.findOne({ id: bugId });
+
+  if (!targetBug) {
+    return res.status(400).send({ message: 'Invalid bug ID.' });
+  }
+
+  if (targetBug.isResolved === false) {
+    return res
+      .status(400)
+      .send({ message: 'Bug is already marked as opened.' });
+  }
+
+  targetBug.isResolved = false;
+  targetBug.reopenedById = req.user;
+  targetBug.reopenedAt = new Date();
+  targetBug.closedById = undefined;
+  targetBug.closedAt = undefined;
+
+  await targetBug.save();
+  res.status(201).json(targetBug);
 };
