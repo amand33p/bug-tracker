@@ -4,6 +4,8 @@ import 'express-async-errors';
 import middleware from './middleware';
 import authRoutes from './routes/auth';
 import projectRoutes from './routes/project';
+import memberRoutes from './routes/member';
+import bugRoutes from './routes/bug';
 
 const app = express();
 
@@ -12,6 +14,8 @@ app.use(express.json());
 
 app.use('/', authRoutes);
 app.use('/projects', projectRoutes);
+app.use('/projects', memberRoutes);
+app.use('/projects', bugRoutes);
 
 app.use(middleware.unknownEndPointHandler);
 app.use(middleware.errorHandler);

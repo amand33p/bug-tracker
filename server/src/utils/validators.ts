@@ -8,10 +8,21 @@ interface ProjectErrors {
   members?: string;
 }
 
+interface BugErrors {
+  title?: string;
+  description?: string;
+  priority?: string;
+}
+
 export const registerValidator = (username: string, password: string) => {
   const errors: AuthErrors = {};
 
-  if (username.trim() === '' || username.length > 20 || username.length < 3) {
+  if (
+    !username ||
+    username.trim() === '' ||
+    username.length > 20 ||
+    username.length < 3
+  ) {
     errors.username = 'Username must be in range of 3-20 characters length.';
   }
 
@@ -32,7 +43,7 @@ export const registerValidator = (username: string, password: string) => {
 export const loginValidator = (username: string, password: string) => {
   const errors: AuthErrors = {};
 
-  if (username.trim() === '') {
+  if (!username || username.trim() === '') {
     errors.username = 'Username field must not be empty.';
   }
 
@@ -46,7 +57,13 @@ export const loginValidator = (username: string, password: string) => {
   };
 };
 
-export const membersError = (members: string[]) => {
+export const projectNameError = (name: string) => {
+  if (!name || name.trim() === '' || name.length > 30) {
+    return 'Project name length must not be more than 30.';
+  }
+};
+
+export const projectMembersError = (members: string[]) => {
   if (!Array.isArray(members)) {
     return 'Members field must be an array.';
   }
@@ -60,18 +77,66 @@ export const membersError = (members: string[]) => {
   }
 };
 
-export const projectNameError = (name: string) => {
-  if (!name || name.trim() === '' || name.length > 30) {
-    return 'Project name length must not be more than 30.';
+export const createProjectValidator = (name: string, members: string[]) => {
+  const errors: ProjectErrors = {};
+  const nameError = projectNameError(name);
+  const membersError = projectMembersError(members);
+
+  if (nameError) {
+    errors.name = nameError;
+  }
+
+  if (membersError) {
+    errors.members = membersError;
+  }
+
+  return {
+    errors,
+    valid: Object.keys(errors).length < 1,
+  };
+};
+
+export const bugTitleError = (title: string) => {
+  if (!title || title.trim() === '' || title.length > 50 || title.length < 3) {
+    return 'Title must be in range of 3-50 characters length.';
   }
 };
 
-export const createProjectValidator = (name: string, members: string[]) => {
-  const errors: ProjectErrors = {};
+export const bugDescriptionError = (description: string) => {
+  if (!description || description.trim() === '') {
+    return 'Description field must not be empty.';
+  }
+};
 
-  errors.name = projectNameError(name);
+export const bugPriorityError = (priority: string) => {
+  const validPriorities = ['low', 'medium', 'high'];
 
-  errors.members = membersError(members);
+  if (!priority || !validPriorities.includes(priority)) {
+    return 'Priority can only be - low, medium or high.';
+  }
+};
+
+export const createBugValidator = (
+  title: string,
+  description: string,
+  priority: string
+) => {
+  const errors: BugErrors = {};
+  const titleError = bugTitleError(title);
+  const descriptionError = bugDescriptionError(description);
+  const priorityError = bugPriorityError(priority);
+
+  if (titleError) {
+    errors.title = titleError;
+  }
+
+  if (descriptionError) {
+    errors.description = descriptionError;
+  }
+
+  if (priorityError) {
+    errors.priority = priorityError;
+  }
 
   return {
     errors,

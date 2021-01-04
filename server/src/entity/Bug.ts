@@ -8,7 +8,7 @@ type Priority = 'low' | 'medium' | 'high';
 
 @Entity({ name: 'bugs' })
 export class Bug extends BaseModel {
-  @Column()
+  @Column({ type: 'varchar', length: 50 })
   title: string;
 
   @Column()
