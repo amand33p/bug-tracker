@@ -1,5 +1,13 @@
-import { Entity, Column, ManyToOne, JoinColumn, OneToMany } from 'typeorm';
-import BaseModel from './BaseModel';
+import {
+  PrimaryGeneratedColumn,
+  CreateDateColumn,
+  Entity,
+  BaseEntity,
+  Column,
+  ManyToOne,
+  JoinColumn,
+  OneToMany,
+} from 'typeorm';
 import { Project } from './Project';
 import { User } from './User';
 import { Note } from './Note';
@@ -7,7 +15,10 @@ import { Note } from './Note';
 type Priority = 'low' | 'medium' | 'high';
 
 @Entity({ name: 'bugs' })
-export class Bug extends BaseModel {
+export class Bug extends BaseEntity {
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
+
   @Column({ type: 'varchar', length: 50 })
   title: string;
 
@@ -21,23 +32,18 @@ export class Bug extends BaseModel {
   })
   priority: Priority;
 
-  @ManyToOne(() => User, (user) => user)
-  @JoinColumn({ name: 'createdById' })
-  createdBy: User;
-  @Column()
-  createdById: string;
-
   @ManyToOne(() => Project, (project) => project)
   @JoinColumn({ name: 'projectId' })
   project: Project;
   @Column()
   projectId: string;
 
+  @OneToMany(() => Note, (note) => note.bug)
+  @JoinColumn()
+  notes: Note[];
+
   @Column({ default: false })
   isResolved: boolean;
-
-  @Column({ nullable: true })
-  closedAt: Date;
 
   @ManyToOne(() => User, (user) => user)
   @JoinColumn({ name: 'closedById' })
@@ -45,7 +51,24 @@ export class Bug extends BaseModel {
   @Column({ nullable: true })
   closedById: string;
 
-  @OneToMany(() => Note, (note) => note.bug)
-  @JoinColumn()
-  notes: Note[];
+  @Column({ nullable: true })
+  closedAt: Date;
+
+  @ManyToOne(() => User, (user) => user)
+  @JoinColumn({ name: 'createdById' })
+  createdBy: User;
+  @Column()
+  createdById: string;
+
+  @CreateDateColumn()
+  createdAt: Date;
+
+  @ManyToOne(() => User, (user) => user)
+  @JoinColumn({ name: 'closedById' })
+  updatedBy: User;
+  @Column({ nullable: true })
+  updatedById: string;
+
+  @Column({ nullable: true })
+  updatedAt: Date;
 }

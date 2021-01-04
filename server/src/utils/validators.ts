@@ -96,46 +96,24 @@ export const createProjectValidator = (name: string, members: string[]) => {
   };
 };
 
-export const bugTitleError = (title: string) => {
-  if (!title || title.trim() === '' || title.length > 50 || title.length < 3) {
-    return 'Title must be in range of 3-50 characters length.';
-  }
-};
-
-export const bugDescriptionError = (description: string) => {
-  if (!description || description.trim() === '') {
-    return 'Description field must not be empty.';
-  }
-};
-
-export const bugPriorityError = (priority: string) => {
-  const validPriorities = ['low', 'medium', 'high'];
-
-  if (!priority || !validPriorities.includes(priority)) {
-    return 'Priority can only be - low, medium or high.';
-  }
-};
-
 export const createBugValidator = (
   title: string,
   description: string,
   priority: string
 ) => {
   const errors: BugErrors = {};
-  const titleError = bugTitleError(title);
-  const descriptionError = bugDescriptionError(description);
-  const priorityError = bugPriorityError(priority);
+  const validPriorities = ['low', 'medium', 'high'];
 
-  if (titleError) {
-    errors.title = titleError;
+  if (!title || title.trim() === '' || title.length > 50 || title.length < 3) {
+    errors.title = 'Title must be in range of 3-50 characters length.';
   }
 
-  if (descriptionError) {
-    errors.description = descriptionError;
+  if (!description || description.trim() === '') {
+    errors.description = 'Description field must not be empty.';
   }
 
-  if (priorityError) {
-    errors.priority = priorityError;
+  if (!priority || !validPriorities.includes(priority)) {
+    errors.priority = 'Priority can only be - low, medium or high.';
   }
 
   return {
