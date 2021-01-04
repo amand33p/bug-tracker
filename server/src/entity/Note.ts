@@ -15,8 +15,14 @@ export class Note extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @CreateDateColumn()
-  createdAt: Date;
+  @Column()
+  body: string;
+
+  @ManyToOne(() => User, (user) => user)
+  @JoinColumn({ name: 'authorId' })
+  author: User;
+  @Column()
+  authorId: string;
 
   @ManyToOne(() => Bug, (bug) => bug)
   @JoinColumn({ name: 'bugId' })
@@ -24,9 +30,6 @@ export class Note extends BaseEntity {
   @Column()
   bugId: string;
 
-  @ManyToOne(() => User, (user) => user)
-  @JoinColumn({ name: 'authorId' })
-  author: User;
-  @Column()
-  authorId: string;
+  @CreateDateColumn()
+  createdAt: Date;
 }
