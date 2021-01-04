@@ -25,17 +25,6 @@ export const getProjects = async (req: Request, res: Response) => {
     ])
     .getMany();
 
-  /*
-  //Using repo method, but you can't select relation fields
-  const projects = await Project.find({
-    join: {
-      alias: 'projects',
-      innerJoinAndSelect: { members: 'projects.members' },
-    },
-    where: (qb: SelectQueryBuilder<Project>) => {
-      qb.where({}).andWhere('members.memberId = :userId', { userId: req.user });
-    },
-  });*/
   res.json(projects);
 };
 
@@ -118,7 +107,7 @@ export const addProjectMembers = async (req: Request, res: Response) => {
   if (memberIds.length === 0) {
     return res
       .status(400)
-      .send({ message: 'Members field must not be empty.' });
+      .send({ message: 'Members field must not be an empty array.' });
   }
 
   const targetProject = await Project.findOne({
@@ -151,4 +140,12 @@ export const addProjectMembers = async (req: Request, res: Response) => {
   }));
 
   await Member.insert(membersArray);
+
+  const updatedMembers = await Member.createQueryBuilder('projectMember')
+    .leftJoinAndSelect('projectMember.member', 'member')
+    .where('projectMember.projectId = :projectId', { projectId: id })
+    .select(['projectMember.id', 'member.id', 'member.username'])
+    .getMany();
+
+  res.status(201).json(updatedMembers);
 };

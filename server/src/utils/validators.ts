@@ -52,7 +52,7 @@ export const membersError = (members: string[]) => {
   }
 
   if (members.filter((m, i) => members.indexOf(m) !== i).length !== 0) {
-    return 'Members array must not have duplicate IDs.';
+    return 'Members field must not have already-added/duplicate IDs.';
   }
 
   if (members.some((m) => m.length !== 36)) {
