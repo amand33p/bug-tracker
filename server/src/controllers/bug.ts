@@ -185,11 +185,22 @@ export const closeBug = async (req: Request, res: Response) => {
   targetBug.isResolved = true;
   targetBug.closedById = req.user;
   targetBug.closedAt = new Date();
-  targetBug.reopenedById = undefined;
-  targetBug.reopenedAt = undefined;
+  targetBug.reopenedById = null;
+  targetBug.reopenedAt = null;
 
   await targetBug.save();
-  res.status(201).json(targetBug);
+  const relationedBug = await Bug.createQueryBuilder('bug')
+    .where('bug.id = :bugId', { bugId })
+    .leftJoinAndSelect('bug.createdBy', 'createdBy')
+    .leftJoinAndSelect('bug.updatedBy', 'updatedBy')
+    .leftJoinAndSelect('bug.closedBy', 'closedBy')
+    .leftJoinAndSelect('bug.reopenedBy', 'reopenedBy')
+    .leftJoinAndSelect('bug.notes', 'note')
+    .leftJoinAndSelect('note.author', 'noteAuthor')
+    .select(fieldsToSelect)
+    .getOne();
+
+  return res.status(201).json(relationedBug);
 };
 
 export const reopenBug = async (req: Request, res: Response) => {
@@ -217,9 +228,20 @@ export const reopenBug = async (req: Request, res: Response) => {
   targetBug.isResolved = false;
   targetBug.reopenedById = req.user;
   targetBug.reopenedAt = new Date();
-  targetBug.closedById = undefined;
-  targetBug.closedAt = undefined;
+  targetBug.closedById = null;
+  targetBug.closedAt = null;
 
   await targetBug.save();
-  res.status(201).json(targetBug);
+  const relationedBug = await Bug.createQueryBuilder('bug')
+    .where('bug.id = :bugId', { bugId })
+    .leftJoinAndSelect('bug.createdBy', 'createdBy')
+    .leftJoinAndSelect('bug.updatedBy', 'updatedBy')
+    .leftJoinAndSelect('bug.closedBy', 'closedBy')
+    .leftJoinAndSelect('bug.reopenedBy', 'reopenedBy')
+    .leftJoinAndSelect('bug.notes', 'note')
+    .leftJoinAndSelect('note.author', 'noteAuthor')
+    .select(fieldsToSelect)
+    .getOne();
+
+  return res.status(201).json(relationedBug);
 };

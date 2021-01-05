@@ -49,19 +49,19 @@ export class Bug extends BaseEntity {
   @JoinColumn({ name: 'closedById' })
   closedBy: User;
   @Column({ nullable: true })
-  closedById?: string;
+  closedById?: string | null;
 
   @Column({ nullable: true })
-  closedAt?: Date;
+  closedAt?: Date | null;
 
   @ManyToOne(() => User, (user) => user)
   @JoinColumn({ name: 'reopenedById' })
   reopenedBy: User;
   @Column({ nullable: true })
-  reopenedById?: string;
+  reopenedById?: string | null;
 
   @Column({ nullable: true })
-  reopenedAt?: Date;
+  reopenedAt?: Date | null;
 
   @ManyToOne(() => User, (user) => user)
   @JoinColumn({ name: 'createdById' })
