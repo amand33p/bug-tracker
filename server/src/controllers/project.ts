@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import { Project } from '../entity/Project';
 import { Member } from '../entity/Member';
+import { Bug } from '../entity/Bug';
 import { createProjectValidator, projectNameError } from '../utils/validators';
 
 export const getProjects = async (req: Request, res: Response) => {
@@ -37,6 +38,7 @@ export const createProject = async (req: Request, res: Response) => {
     name,
     createdById: req.user,
   });
+
   const savedProject = await newProject.save();
 
   const membersArray = memberIds.map((memberId) => ({
@@ -59,6 +61,7 @@ export const editProjectName = async (req: Request, res: Response) => {
   }
 
   const targetProject = await Project.findOne({ id: projectId });
+
   if (!targetProject) {
     return res.status(404).send({ message: 'Invalid project ID.' });
   }
@@ -70,4 +73,23 @@ export const editProjectName = async (req: Request, res: Response) => {
   targetProject.name = name;
   await targetProject.save();
   res.json(targetProject);
+};
+
+export const deleteProject = async (req: Request, res: Response) => {
+  const { projectId } = req.params;
+
+  const targetProject = await Project.findOne({ id: projectId });
+
+  if (!targetProject) {
+    return res.status(404).send({ message: 'Invalid project ID.' });
+  }
+
+  if (targetProject.createdById !== req.user) {
+    return res.status(401).send({ message: 'Access is denied.' });
+  }
+
+  await Member.delete({ projectId });
+  await Bug.delete({ projectId });
+  await targetProject.remove();
+  res.status(204).end();
 };

@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import { Member } from '../entity/Member';
 import { Bug } from '../entity/Bug';
+import { Note } from '../entity/Note';
 import { createBugValidator } from '../utils/validators';
 
 export const createBug = async (req: Request, res: Response) => {
@@ -65,6 +66,21 @@ export const updateBug = async (req: Request, res: Response) => {
     .then((res) => res.raw[0]);
 
   return res.json(updatedBug);
+};
+
+export const deleteBug = async (req: Request, res: Response) => {
+  const { projectId, bugId } = req.params;
+
+  const projectMembers = await Member.find({ projectId });
+  const memberIds = projectMembers.map((m) => m.memberId);
+
+  if (!memberIds.includes(req.user)) {
+    return res.status(401).send({ message: 'Access is denied.' });
+  }
+
+  await Note.delete({ bugId });
+  await Bug.delete({ id: bugId });
+  res.status(204).end();
 };
 
 export const closeBug = async (req: Request, res: Response) => {
