@@ -3,6 +3,7 @@ import { Member } from '../entity/Member';
 import { Bug } from '../entity/Bug';
 import { Note } from '../entity/Note';
 import { createBugValidator } from '../utils/validators';
+import { Project } from '../entity/Project';
 
 export const createBug = async (req: Request, res: Response) => {
   const { title, description, priority } = req.body;
@@ -71,15 +72,29 @@ export const updateBug = async (req: Request, res: Response) => {
 export const deleteBug = async (req: Request, res: Response) => {
   const { projectId, bugId } = req.params;
 
-  const projectMembers = await Member.find({ projectId });
-  const memberIds = projectMembers.map((m) => m.memberId);
+  const targetProject = await Project.findOne({
+    id: projectId,
+  });
 
-  if (!memberIds.includes(req.user)) {
+  if (!targetProject) {
+    return res.status(404).send({ message: 'Invalid project ID.' });
+  }
+
+  const targetBug = await Bug.findOne({ id: bugId });
+
+  if (!targetBug) {
+    return res.status(404).send({ message: 'Invalid bug ID.' });
+  }
+
+  if (
+    targetProject.createdById !== req.user &&
+    targetBug.createdById !== req.user
+  ) {
     return res.status(401).send({ message: 'Access is denied.' });
   }
 
   await Note.delete({ bugId });
-  await Bug.delete({ id: bugId });
+  await targetBug.remove();
   res.status(204).end();
 };
 
