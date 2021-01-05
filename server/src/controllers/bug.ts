@@ -5,6 +5,34 @@ import { Note } from '../entity/Note';
 import { Project } from '../entity/Project';
 import { createBugValidator } from '../utils/validators';
 
+const fieldsToSelect = [
+  'bug.id',
+  'bug.projectId',
+  'bug.title',
+  'bug.description',
+  'bug.priority',
+  'bug.isResolved',
+  'bug.createdAt',
+  'bug.updatedAt',
+  'bug.closedAt',
+  'bug.reopenedAt',
+  'createdBy.id',
+  'createdBy.username',
+  'updatedBy.id',
+  'updatedBy.username',
+  'closedBy.id',
+  'closedBy.username',
+  'reopenedBy.id',
+  'reopenedBy.username',
+  'note.id',
+  'note.bugId',
+  'note.body',
+  'note.createdAt',
+  'note.updatedAt',
+  'noteAuthor.id',
+  'noteAuthor.username',
+];
+
 export const getBugs = async (req: Request, res: Response) => {
   const { projectId } = req.params;
 
@@ -22,33 +50,7 @@ export const getBugs = async (req: Request, res: Response) => {
     .leftJoinAndSelect('bug.reopenedBy', 'reopenedBy')
     .leftJoinAndSelect('bug.notes', 'note')
     .leftJoinAndSelect('note.author', 'noteAuthor')
-    .select([
-      'bug.id',
-      'bug.projectId',
-      'bug.title',
-      'bug.description',
-      'bug.priority',
-      'bug.isResolved',
-      'bug.createdAt',
-      'bug.updatedAt',
-      'bug.closedAt',
-      'bug.reopenedAt',
-      'createdBy.id',
-      'createdBy.username',
-      'updatedBy.id',
-      'updatedBy.username',
-      'closedBy.id',
-      'closedBy.username',
-      'reopenedBy.id',
-      'reopenedBy.username',
-      'note.id',
-      'note.bugId',
-      'note.body',
-      'note.createdAt',
-      'note.updatedAt',
-      'noteAuthor.id',
-      'noteAuthor.username',
-    ])
+    .select(fieldsToSelect)
     .getMany();
 
   res.json(bugs);
@@ -78,9 +80,20 @@ export const createBug = async (req: Request, res: Response) => {
     projectId,
     createdById: req.user,
   });
-
   await newBug.save();
-  return res.status(201).json(newBug);
+
+  const relationedBug = await Bug.createQueryBuilder('bug')
+    .where('bug.id = :bugId', { bugId: newBug.id })
+    .leftJoinAndSelect('bug.createdBy', 'createdBy')
+    .leftJoinAndSelect('bug.updatedBy', 'updatedBy')
+    .leftJoinAndSelect('bug.closedBy', 'closedBy')
+    .leftJoinAndSelect('bug.reopenedBy', 'reopenedBy')
+    .leftJoinAndSelect('bug.notes', 'note')
+    .leftJoinAndSelect('note.author', 'noteAuthor')
+    .select(fieldsToSelect)
+    .getOne();
+
+  return res.status(201).json(relationedBug);
 };
 
 export const updateBug = async (req: Request, res: Response) => {

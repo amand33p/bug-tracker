@@ -4,6 +4,19 @@ import { Member } from '../entity/Member';
 import { Bug } from '../entity/Bug';
 import { createProjectValidator, projectNameError } from '../utils/validators';
 
+const fieldsToSelect = [
+  'project.id',
+  'project.name',
+  'project.createdAt',
+  'project.updatedAt',
+  'createdBy.id',
+  'createdBy.username',
+  'members.id',
+  'member.id',
+  'member.username',
+  'bug.id',
+];
+
 export const getProjects = async (req: Request, res: Response) => {
   const projects = await Project.createQueryBuilder('project')
     .leftJoin('project.members', 'projectMember')
@@ -12,18 +25,7 @@ export const getProjects = async (req: Request, res: Response) => {
     .leftJoinAndSelect('project.createdBy', 'createdBy')
     .leftJoinAndSelect('members.member', 'member')
     .leftJoinAndSelect('project.bugs', 'bug')
-    .select([
-      'project.id',
-      'project.name',
-      'project.createdAt',
-      'project.updatedAt',
-      'createdBy.id',
-      'createdBy.username',
-      'members.id',
-      'member.id',
-      'member.username',
-      'bug.id',
-    ])
+    .select(fieldsToSelect)
     .getMany();
 
   res.json(projects);
@@ -31,7 +33,10 @@ export const getProjects = async (req: Request, res: Response) => {
 
 export const createProject = async (req: Request, res: Response) => {
   const { name } = req.body;
-  const memberIds = [...req.body.members, req.user] as string[];
+  const memberIds = req.body.members
+    ? ([...req.body.members, req.user] as string[])
+    : [req.user];
+
   const { errors, valid } = createProjectValidator(name, memberIds);
 
   if (!valid) {
@@ -43,15 +48,25 @@ export const createProject = async (req: Request, res: Response) => {
     createdById: req.user,
   });
 
-  const savedProject = await newProject.save();
+  await newProject.save();
 
   const membersArray = memberIds.map((memberId) => ({
     memberId: memberId,
-    projectId: savedProject.id,
+    projectId: newProject.id,
   }));
 
   await Member.insert(membersArray);
-  res.status(201).json(savedProject);
+
+  const relationedProject = await Project.createQueryBuilder('project')
+    .where('project.id = :projectId', { projectId: newProject.id })
+    .leftJoinAndSelect('project.members', 'members')
+    .leftJoinAndSelect('project.createdBy', 'createdBy')
+    .leftJoinAndSelect('members.member', 'member')
+    .leftJoinAndSelect('project.bugs', 'bug')
+    .select(fieldsToSelect)
+    .getOne();
+
+  res.status(201).json(relationedProject);
 };
 
 export const editProjectName = async (req: Request, res: Response) => {

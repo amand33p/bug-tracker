@@ -24,7 +24,22 @@ export const postNote = async (req: Request, res: Response) => {
 
   const newNote = Note.create({ body, authorId: req.user, bugId });
   await newNote.save();
-  res.status(201).json(newNote);
+
+  const relationedNote = await Note.createQueryBuilder('note')
+    .where('note.id = :noteId', { noteId: newNote.id })
+    .leftJoinAndSelect('note.author', 'author')
+    .select([
+      'note.id',
+      'note.bugId',
+      'note.body',
+      'note.createdAt',
+      'note.updatedAt',
+      'author.id',
+      'author.username',
+    ])
+    .getOne();
+
+  res.status(201).json(relationedNote);
 };
 
 export const deleteNote = async (req: Request, res: Response) => {
