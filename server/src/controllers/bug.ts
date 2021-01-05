@@ -2,8 +2,57 @@ import { Request, Response } from 'express';
 import { Member } from '../entity/Member';
 import { Bug } from '../entity/Bug';
 import { Note } from '../entity/Note';
-import { createBugValidator } from '../utils/validators';
 import { Project } from '../entity/Project';
+import { createBugValidator } from '../utils/validators';
+
+export const getBugs = async (req: Request, res: Response) => {
+  const { projectId } = req.params;
+
+  const projectMembers = await Member.find({ projectId });
+
+  if (!projectMembers.map((m) => m.memberId).includes(req.user)) {
+    return res.status(401).send({ message: 'Access is denied.' });
+  }
+
+  const bugs = await Bug.createQueryBuilder('bug')
+    .where('"projectId" = :projectId', { projectId })
+    .leftJoinAndSelect('bug.createdBy', 'createdBy')
+    .leftJoinAndSelect('bug.updatedBy', 'updatedBy')
+    .leftJoinAndSelect('bug.closedBy', 'closedBy')
+    .leftJoinAndSelect('bug.reopenedBy', 'reopenedBy')
+    .leftJoinAndSelect('bug.notes', 'note')
+    .leftJoinAndSelect('note.author', 'noteAuthor')
+    .select([
+      'bug.id',
+      'bug.projectId',
+      'bug.title',
+      'bug.description',
+      'bug.priority',
+      'bug.isResolved',
+      'bug.createdAt',
+      'bug.updatedAt',
+      'bug.closedAt',
+      'bug.reopenedAt',
+      'createdBy.id',
+      'createdBy.username',
+      'updatedBy.id',
+      'updatedBy.username',
+      'closedBy.id',
+      'closedBy.username',
+      'reopenedBy.id',
+      'reopenedBy.username',
+      'note.id',
+      'note.bugId',
+      'note.body',
+      'note.createdAt',
+      'note.updatedAt',
+      'noteAuthor.id',
+      'noteAuthor.username',
+    ])
+    .getMany();
+
+  res.json(bugs);
+};
 
 export const createBug = async (req: Request, res: Response) => {
   const { title, description, priority } = req.body;

@@ -7,18 +7,22 @@ import { createProjectValidator, projectNameError } from '../utils/validators';
 export const getProjects = async (req: Request, res: Response) => {
   const projects = await Project.createQueryBuilder('project')
     .leftJoin('project.members', 'projectMember')
+    .where('projectMember.memberId = :userId', { userId: req.user })
     .leftJoinAndSelect('project.members', 'members')
     .leftJoinAndSelect('project.createdBy', 'createdBy')
     .leftJoinAndSelect('members.member', 'member')
-    .where('projectMember.memberId = :userId', { userId: req.user })
+    .leftJoinAndSelect('project.bugs', 'bug')
     .select([
       'project.id',
       'project.name',
+      'project.createdAt',
+      'project.updatedAt',
       'createdBy.id',
       'createdBy.username',
       'members.id',
       'member.id',
       'member.username',
+      'bug.id',
     ])
     .getMany();
 

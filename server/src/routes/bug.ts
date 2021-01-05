@@ -1,5 +1,6 @@
 import express from 'express';
 import {
+  getBugs,
   createBug,
   updateBug,
   deleteBug,
@@ -11,6 +12,7 @@ import middleware from '../middleware';
 const router = express.Router();
 const { auth } = middleware;
 
+router.get('/:projectId/bugs', auth, getBugs);
 router.post('/:projectId/bugs', auth, createBug);
 router.put('/:projectId/bugs/:bugId', auth, updateBug);
 router.delete('/:projectId/bugs/:bugId', auth, deleteBug);
