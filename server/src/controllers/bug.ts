@@ -189,6 +189,7 @@ export const closeBug = async (req: Request, res: Response) => {
   targetBug.reopenedAt = null;
 
   await targetBug.save();
+
   const relationedBug = await Bug.createQueryBuilder('bug')
     .where('bug.id = :bugId', { bugId })
     .leftJoinAndSelect('bug.createdBy', 'createdBy')
@@ -232,6 +233,7 @@ export const reopenBug = async (req: Request, res: Response) => {
   targetBug.closedAt = null;
 
   await targetBug.save();
+
   const relationedBug = await Bug.createQueryBuilder('bug')
     .where('bug.id = :bugId', { bugId })
     .leftJoinAndSelect('bug.createdBy', 'createdBy')
