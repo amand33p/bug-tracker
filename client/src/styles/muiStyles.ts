@@ -20,6 +20,10 @@ export const useNavStyles = makeStyles(
       display: 'flex',
       alignItems: 'center',
     },
+    appBar: {
+      backgroundColor: `${theme.palette.primary.main}60`,
+      borderBottom: `1px solid ${theme.palette.primary.main}99`,
+    },
     logoWrapper: {
       marginRight: '1em',
       [theme.breakpoints.down('xs')]: {
@@ -56,6 +60,55 @@ export const useNavStyles = makeStyles(
     },
     menuIcon: {
       marginRight: '8px',
+    },
+  }),
+  { index: 1 }
+);
+
+export const useAuthPageStyles = makeStyles(
+  (theme) => ({
+    rootBackground: {
+      backgroundColor: `${theme.palette.primary.main}09`,
+      height: 'calc(100vH - 50px)',
+    },
+    root: {
+      padding: '1.5em 3em',
+      width: '320px',
+      margin: 'auto',
+      marginTop: '8%',
+      [theme.breakpoints.down('xs')]: {
+        width: 'auto',
+        margin: '0.7em 0.7em',
+        padding: '1em',
+      },
+    },
+    form: {
+      marginTop: '3em',
+    },
+    inputField: {
+      marginBottom: '1.5em',
+    },
+    submitButton: {
+      marginTop: '0.5em',
+      height: '3.1em',
+      fontSize: '1em',
+      fontWeight: 500,
+      color: '#fff',
+    },
+    titleLogo: {
+      display: 'block',
+      width: '7em',
+      margin: '0 auto',
+      [theme.breakpoints.down('xs')]: {
+        width: '6em',
+      },
+    },
+    footerText: {
+      marginTop: '1em',
+      textAlign: 'center',
+    },
+    link: {
+      cursor: 'pointer',
     },
   }),
   { index: 1 }
