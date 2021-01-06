@@ -5,9 +5,8 @@
   "scripts": {
     "start": "node build/server.js",
     "build": "rm -rf ./build && tsc -p ./",
-    "dev1": "ts-node-dev --respawn --transpile-only ./src/server.ts",
-    "dev2": "nodemon --exec 'ts-node' --type-check ./src/server.ts",
-    "typeorm": "ts-node --type-check ./node_modules/typeorm/cli.js",
+    "dev": "ts-node-dev --respawn ./src/server.ts",
+    "typeorm": "ts-node ./node_modules/typeorm/cli.js",
     "lint": "eslint --ext .ts ."
   },
   "author": "Amandeep S",
