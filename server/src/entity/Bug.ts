@@ -73,7 +73,7 @@ export class Bug extends BaseEntity {
   createdAt: Date;
 
   @ManyToOne(() => User, (user) => user)
-  @JoinColumn({ name: 'closedById' })
+  @JoinColumn({ name: 'updatedById' })
   updatedBy: User;
   @Column({ nullable: true })
   updatedById: string;
