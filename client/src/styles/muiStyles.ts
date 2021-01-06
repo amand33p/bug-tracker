@@ -51,16 +51,11 @@ export const useNavStyles = makeStyles(
     lastBtn: {
       marginLeft: '1em',
     },
-    userInfo: {
-      display: 'flex',
-      alignItems: 'center',
-      paddingRight: '0.8em',
+    threeDotsBtn: {
+      padding: '0.35em',
     },
-    avatar: {
-      width: theme.spacing(3.8),
-      height: theme.spacing(3.8),
-      marginRight: '0.4em',
-      borderRadius: 2,
+    menuIcon: {
+      marginRight: '8px',
     },
   }),
   { index: 1 }

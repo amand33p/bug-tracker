@@ -1,4 +1,6 @@
 import { Link as RouterLink } from 'react-router-dom';
+import UserButtonsDesktop from './UserButtonsDesktop';
+import UserMenuMobile from './UserMenuMobile';
 import BugIcon from '../svg/bug-logo.svg';
 
 import {
@@ -8,7 +10,6 @@ import {
   Link,
   Button,
   useMediaQuery,
-  Container,
 } from '@material-ui/core';
 import { useNavStyles } from '../styles/muiStyles';
 import { useTheme } from '@material-ui/core/styles';
@@ -54,6 +55,8 @@ const NavBar = () => {
             )}
           </div>
         </div>
+        <UserButtonsDesktop isMobile={isMobile} />
+        <UserMenuMobile isMobile={isMobile} />
       </Toolbar>
     </AppBar>
   );
