@@ -1,5 +1,5 @@
 {
-  "name": "bug-tracker-amand33p",
+  "name": "bug-tracker-by-amand33p",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -7,6 +7,13 @@
     "@material-ui/core": "^4.11.2",
     "@material-ui/icons": "^4.11.2",
     "@reduxjs/toolkit": "^1.5.0",
+    "@testing-library/jest-dom": "^5.11.8",
+    "@testing-library/react": "^11.2.2",
+    "@testing-library/user-event": "^12.6.0",
+    "@types/jest": "^26.0.19",
+    "@types/node": "^12.19.12",
+    "@types/react": "^16.14.2",
+    "@types/react-dom": "^16.9.10",
     "axios": "^0.21.1",
     "date-fns": "^2.16.1",
     "react": "^17.0.1",
@@ -16,6 +23,7 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.1",
     "redux": "^4.0.5",
+    "typescript": "^4.1.3",
     "yup": "^0.32.8"
   },
   "scripts": {
