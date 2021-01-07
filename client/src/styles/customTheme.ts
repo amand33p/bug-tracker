@@ -5,10 +5,10 @@ const customTheme = (darkMode: boolean) =>
     palette: {
       type: darkMode ? 'dark' : 'light',
       primary: {
-        main: '#25D366',
+        main: '#009688',
       },
       secondary: {
-        main: darkMode ? '#22db63' : '#136f36',
+        main: darkMode ? '#22db63' : '#005b53',
       },
     },
   });

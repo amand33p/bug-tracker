@@ -109,11 +109,7 @@ const SignupPage = () => {
                       onClick={() => setShowPass((prevState) => !prevState)}
                       size="small"
                     >
-                      {showPass ? (
-                        <VisibilityOffIcon color="secondary" />
-                      ) : (
-                        <VisibilityIcon color="secondary" />
-                      )}
+                      {showPass ? <VisibilityOffIcon /> : <VisibilityIcon />}
                     </IconButton>
                   </InputAdornment>
                 ),

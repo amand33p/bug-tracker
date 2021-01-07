@@ -20,10 +20,7 @@ export const useNavStyles = makeStyles(
       display: 'flex',
       alignItems: 'center',
     },
-    appBar: {
-      backgroundColor: `${theme.palette.primary.main}60`,
-      borderBottom: `1px solid ${theme.palette.primary.main}99`,
-    },
+    appBar: {},
     logoWrapper: {
       marginRight: '1em',
       [theme.breakpoints.down('xs')]: {
@@ -68,7 +65,7 @@ export const useNavStyles = makeStyles(
 export const useAuthPageStyles = makeStyles(
   (theme) => ({
     rootBackground: {
-      backgroundColor: `${theme.palette.primary.main}09`,
+      backgroundColor: `${theme.palette.primary.main}10`,
       height: 'calc(100vH - 50px)',
     },
     root: {
@@ -93,7 +90,6 @@ export const useAuthPageStyles = makeStyles(
       height: '3.1em',
       fontSize: '1em',
       fontWeight: 500,
-      color: '#fff',
     },
     titleLogo: {
       display: 'block',

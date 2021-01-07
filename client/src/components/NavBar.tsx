@@ -22,7 +22,7 @@ const NavBar = () => {
   //const history = useHistory();
 
   return (
-    <AppBar position="sticky" elevation={0} className={classes.appBar}>
+    <AppBar position="sticky" elevation={1} color="inherit">
       <Toolbar variant="dense" disableGutters={isMobile}>
         <div className={classes.leftPortion}>
           <div className={classes.logoWrapper}>
