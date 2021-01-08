@@ -1,4 +1,6 @@
 import { Link as RouterLink } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { selectAuthState, logout } from '../features/authSlice';
 import UserButtonsDesktop from './UserButtonsDesktop';
 import UserMenuMobile from './UserMenuMobile';
 import BugIcon from '../svg/bug-logo.svg';
@@ -16,10 +18,15 @@ import { useTheme } from '@material-ui/core/styles';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 
 const NavBar = () => {
+  const { user } = useSelector(selectAuthState);
+  const dispatch = useDispatch();
   const classes = useNavStyles();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
-  //const history = useHistory();
+
+  const handleLogout = () => {
+    dispatch(logout());
+  };
 
   return (
     <AppBar position="sticky" elevation={1} color="inherit">
@@ -55,8 +62,16 @@ const NavBar = () => {
             )}
           </div>
         </div>
-        <UserButtonsDesktop isMobile={isMobile} />
-        <UserMenuMobile isMobile={isMobile} />
+        <UserButtonsDesktop
+          isMobile={isMobile}
+          user={user}
+          handleLogout={handleLogout}
+        />
+        <UserMenuMobile
+          isMobile={isMobile}
+          user={user}
+          handleLogout={handleLogout}
+        />
       </Toolbar>
     </AppBar>
   );

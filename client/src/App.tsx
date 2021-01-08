@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import NavBar from './components/NavBar';
 import Routes from './pages/Routes';
 

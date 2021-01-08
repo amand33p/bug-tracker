@@ -55,6 +55,28 @@ export const useNavStyles = makeStyles(
     menuIcon: {
       marginRight: '8px',
     },
+    userInfo: {
+      display: 'flex',
+      alignItems: 'center',
+    },
+    avatar: {
+      width: theme.spacing(4.1),
+      height: theme.spacing(4.1),
+      marginRight: '0.4em',
+      color: theme.palette.primary.main,
+      backgroundColor: '#d3d3d3',
+      [theme.breakpoints.down('xs')]: {
+        width: theme.spacing(3.5),
+        height: theme.spacing(3.5),
+      },
+    },
+    btnsWrapper: {
+      display: 'flex',
+      alignItems: 'center',
+    },
+    userBtnMob: {
+      padding: '0.1em',
+    },
   }),
   { index: 1 }
 );
