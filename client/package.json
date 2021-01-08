@@ -51,6 +51,7 @@
     ]
   },
   "devDependencies": {
+    "@types/react-redux": "^7.1.15",
     "@types/react-router-dom": "^5.1.7"
   }
 }
