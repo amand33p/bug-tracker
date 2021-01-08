@@ -5,7 +5,7 @@ import bcrypt from 'bcrypt';
 import { JWT_SECRET } from '../utils/config';
 import { registerValidator, loginValidator } from '../utils/validators';
 
-export const registerUser = async (req: Request, res: Response) => {
+export const signupUser = async (req: Request, res: Response) => {
   const { username, password } = req.body;
   const { errors, valid } = registerValidator(username, password);
 

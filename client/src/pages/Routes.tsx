@@ -1,9 +1,11 @@
 import { Switch, Route, Redirect } from 'react-router-dom';
 import LoginPage from './LoginPage';
 import SignupPage from './SignupPage';
+import { useSelector } from 'react-redux';
+import { selectAuthState } from '../features/authSlice';
 
 const Routes = () => {
-  const user = false; //placeholder
+  const { user } = useSelector(selectAuthState);
 
   return (
     <Switch>

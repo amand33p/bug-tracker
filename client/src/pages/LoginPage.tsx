@@ -1,6 +1,9 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link as RouterLink } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { login, clearError, selectAuthState } from '../features/authSlice';
+import ErrorBox from '../components/ErrorBox';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import BugIcon from '../svg/bug-logo.svg';
@@ -33,14 +36,16 @@ const validationSchema = yup.object({
 
 const LoginPage = () => {
   const classes = useAuthPageStyles();
+  const dispatch = useDispatch();
+  const { loading, error } = useSelector(selectAuthState);
   const [showPass, setShowPass] = useState<boolean>(false);
-  const { register, handleSubmit, reset, errors } = useForm({
+  const { register, handleSubmit, errors, reset } = useForm({
     mode: 'onChange',
     resolver: yupResolver(validationSchema),
   });
 
-  const handleLogin = ({ username, password }: InputValues) => {
-    console.log(username, password);
+  const handleLogin = async ({ username, password }: InputValues) => {
+    dispatch(login({ username, password }));
     reset();
   };
 
@@ -107,6 +112,7 @@ const LoginPage = () => {
             startIcon={<ExitToAppIcon />}
             type="submit"
             className={classes.submitButton}
+            disabled={loading}
           >
             Log In
           </Button>
@@ -122,10 +128,12 @@ const LoginPage = () => {
             Sign Up
           </Link>
         </Typography>
-        {/*<ErrorMessage
-          errorMsg={errorMsg}
-          clearErrorMsg={() => setErrorMsg(null)}
-        />*/}
+        {error && (
+          <ErrorBox
+            errorMsg={error}
+            clearErrorMsg={() => dispatch(clearError())}
+          />
+        )}
       </Paper>
     </div>
   );

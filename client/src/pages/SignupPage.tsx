@@ -1,6 +1,14 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link as RouterLink } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  signup,
+  clearError,
+  setError,
+  selectAuthState,
+} from '../features/authSlice';
+import ErrorBox from '../components/ErrorBox';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import BugIcon from '../svg/bug-logo.svg';
@@ -50,6 +58,8 @@ const validationSchema = yup.object({
 
 const SignupPage = () => {
   const classes = useAuthPageStyles();
+  const dispatch = useDispatch();
+  const { loading, error } = useSelector(selectAuthState);
   const [showPass, setShowPass] = useState<boolean>(false);
   const [showConfPass, setShowConfPass] = useState<boolean>(false);
   const { register, handleSubmit, reset, errors } = useForm({
@@ -62,7 +72,11 @@ const SignupPage = () => {
     password,
     confirmPassword,
   }: InputValues) => {
-    console.log(username, password, confirmPassword);
+    if (password !== confirmPassword) {
+      return dispatch(setError('Both passwords need to match.'));
+    }
+
+    dispatch(signup({ username, password }));
     reset();
   };
 
@@ -167,6 +181,7 @@ const SignupPage = () => {
             startIcon={<PersonAddIcon />}
             type="submit"
             className={classes.submitButton}
+            disabled={loading}
           >
             Sign Up
           </Button>
@@ -182,10 +197,12 @@ const SignupPage = () => {
             Log In
           </Link>
         </Typography>
-        {/*<ErrorMessage
-          errorMsg={errorMsg}
-          clearErrorMsg={() => setErrorMsg(null)}
-        />*/}
+        {error && (
+          <ErrorBox
+            errorMsg={error}
+            clearErrorMsg={() => dispatch(clearError())}
+          />
+        )}
       </Paper>
     </div>
   );
