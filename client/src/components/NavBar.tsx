@@ -42,7 +42,7 @@ const NavBar = () => {
             {!isMobile && (
               <Typography variant="caption" color="secondary">
                 Made with{' '}
-                <FavoriteIcon style={{ fontSize: 10, color: '#f4649f' }} /> by{' '}
+                <FavoriteIcon style={{ fontSize: 10 }} color="primary" /> by{' '}
                 <Link
                   href={'https://github.com/amand33p'}
                   color="inherit"

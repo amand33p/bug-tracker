@@ -51,6 +51,7 @@ const LoginPage = () => {
         <form onSubmit={handleSubmit(handleLogin)} className={classes.form}>
           <div className={classes.inputField}>
             <TextField
+              required
               fullWidth
               inputRef={register}
               name="username"

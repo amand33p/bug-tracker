@@ -20,13 +20,10 @@ export const useNavStyles = makeStyles(
       display: 'flex',
       alignItems: 'center',
     },
-    appBar: {},
     logoWrapper: {
       marginRight: '1em',
-      [theme.breakpoints.down('xs')]: {
-        display: 'flex',
-        alignItems: 'center',
-      },
+      display: 'flex',
+      alignItems: 'center',
     },
     logoBtn: {
       textTransform: 'none',
