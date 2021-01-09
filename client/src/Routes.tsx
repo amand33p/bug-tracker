@@ -10,7 +10,7 @@ const Routes = () => {
   return (
     <Switch>
       <Route exact path="/">
-        <h1>home</h1>
+        {user ? <h1>home</h1> : <Redirect to="/signup" />}
       </Route>
       <Route exact path="/login">
         {!user ? <LoginPage /> : <Redirect to="/" />}

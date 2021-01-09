@@ -76,8 +76,7 @@ const SignupPage = () => {
       return dispatch(setAuthError('Both passwords need to match.'));
     }
 
-    dispatch(signup({ username, password }));
-    reset();
+    dispatch(signup({ username, password }, reset));
   };
 
   return (

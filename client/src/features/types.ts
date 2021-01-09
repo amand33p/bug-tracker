@@ -8,3 +8,5 @@ export interface UserState {
   username: string;
   token: string;
 }
+
+export type ResetFields = () => void;

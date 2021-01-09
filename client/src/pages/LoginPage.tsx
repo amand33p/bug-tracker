@@ -44,9 +44,8 @@ const LoginPage = () => {
     resolver: yupResolver(validationSchema),
   });
 
-  const handleLogin = async ({ username, password }: InputValues) => {
-    dispatch(login({ username, password }));
-    reset();
+  const handleLogin = ({ username, password }: InputValues) => {
+    dispatch(login({ username, password }, reset));
   };
 
   return (

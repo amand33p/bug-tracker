@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState, AppThunk } from '../store';
 import authService from '../services/auth';
 import storage from '../utils/localStorage';
-import { UserCredentials, UserState } from './types';
+import { UserCredentials, UserState, ResetFields } from './types';
 
 interface InitialState {
   user: UserState | null;
@@ -50,26 +50,36 @@ export const {
   clearAuthError,
 } = authSlice.actions;
 
-export const login = (credentials: UserCredentials): AppThunk => {
+export const login = (
+  credentials: UserCredentials,
+  resetFields: ResetFields
+): AppThunk => {
   return async (dispatch) => {
     try {
       dispatch(setAuthLoading());
       const userData = await authService.login(credentials);
       dispatch(setUser(userData));
+
       storage.saveUser(userData);
+      resetFields();
     } catch (e) {
       dispatch(setAuthError(e.response.data.message));
     }
   };
 };
 
-export const signup = (credentials: UserCredentials): AppThunk => {
+export const signup = (
+  credentials: UserCredentials,
+  resetFields: ResetFields
+): AppThunk => {
   return async (dispatch) => {
     try {
       dispatch(setAuthLoading());
       const userData = await authService.signup(credentials);
       dispatch(setUser(userData));
+
       storage.saveUser(userData);
+      resetFields();
     } catch (e) {
       dispatch(setAuthError(e.response.data.message));
     }

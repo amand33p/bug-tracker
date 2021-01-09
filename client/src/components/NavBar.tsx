@@ -1,4 +1,4 @@
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink, useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectAuthState, logout } from '../features/authSlice';
 import UserButtonsDesktop from './UserButtonsDesktop';
@@ -20,12 +20,14 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 const NavBar = () => {
   const { user } = useSelector(selectAuthState);
   const dispatch = useDispatch();
+  const history = useHistory();
   const classes = useNavStyles();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   const handleLogout = () => {
     dispatch(logout());
+    history.push('/login');
   };
 
   return (

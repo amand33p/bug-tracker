@@ -80,7 +80,7 @@ const UserMenuMobile: React.FC<UserMenu> = ({
             Logout: {user.username}
           </MenuItem>
         ) : (
-          <>
+          <div>
             <MenuItem
               component={RouterLink}
               to="/login"
@@ -97,7 +97,7 @@ const UserMenuMobile: React.FC<UserMenu> = ({
               <PersonAddIcon className={classes.menuIcon} />
               Sign Up
             </MenuItem>
-          </>
+          </div>
         )}
       </Menu>
     </div>
