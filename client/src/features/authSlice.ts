@@ -5,13 +5,13 @@ import storage from '../utils/localStorage';
 import { UserCredentials, UserState, ResetFields } from './types';
 import { getErrorMsg } from '../utils/helperFuncs';
 
-interface InitialState {
+interface InitialAuthState {
   user: UserState | null;
   loading: boolean;
   error: string | null;
 }
 
-const initialState: InitialState = {
+const initialState: InitialAuthState = {
   user: null,
   loading: false,
   error: null,
