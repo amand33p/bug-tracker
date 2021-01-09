@@ -20,48 +20,45 @@ const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    authPending: (state) => {
-      state.loading = true;
-      state.error = null;
-    },
-    authSuccess: (state, action: PayloadAction<UserState>) => {
+    setUser: (state, action: PayloadAction<UserState>) => {
       state.user = action.payload;
       state.loading = false;
       state.error = null;
     },
-    authFailure: (state, action: PayloadAction<string>) => {
-      state.loading = false;
-      state.error = action.payload;
-    },
     removeUser: (state) => {
       state.user = null;
     },
-    setError: (state, action: PayloadAction<string>) => {
+    setAuthLoading: (state) => {
+      state.loading = true;
+      state.error = null;
+    },
+    setAuthError: (state, action: PayloadAction<string>) => {
+      state.loading = false;
       state.error = action.payload;
     },
-    clearError: (state) => {
+    clearAuthError: (state) => {
       state.error = null;
     },
   },
 });
 
 export const {
-  authSuccess,
-  authPending,
-  authFailure,
+  setUser,
   removeUser,
-  clearError,
-  setError,
+  setAuthLoading,
+  setAuthError,
+  clearAuthError,
 } = authSlice.actions;
 
 export const login = (credentials: UserCredentials): AppThunk => {
   return async (dispatch) => {
     try {
-      dispatch(authPending());
+      dispatch(setAuthLoading());
       const userData = await authService.login(credentials);
-      dispatch(authSuccess(userData));
+      dispatch(setUser(userData));
+      storage.saveUser(userData);
     } catch (e) {
-      dispatch(authFailure(e.response.data.message));
+      dispatch(setAuthError(e.response.data.message));
     }
   };
 };
@@ -69,11 +66,12 @@ export const login = (credentials: UserCredentials): AppThunk => {
 export const signup = (credentials: UserCredentials): AppThunk => {
   return async (dispatch) => {
     try {
-      dispatch(authPending());
+      dispatch(setAuthLoading());
       const userData = await authService.signup(credentials);
-      dispatch(authSuccess(userData));
+      dispatch(setUser(userData));
+      storage.saveUser(userData);
     } catch (e) {
-      dispatch(authFailure(e.response.data.message));
+      dispatch(setAuthError(e.response.data.message));
     }
   };
 };

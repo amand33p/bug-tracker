@@ -4,8 +4,8 @@ import { Link as RouterLink } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   signup,
-  clearError,
-  setError,
+  clearAuthError,
+  setAuthError,
   selectAuthState,
 } from '../features/authSlice';
 import ErrorBox from '../components/ErrorBox';
@@ -73,7 +73,7 @@ const SignupPage = () => {
     confirmPassword,
   }: InputValues) => {
     if (password !== confirmPassword) {
-      return dispatch(setError('Both passwords need to match.'));
+      return dispatch(setAuthError('Both passwords need to match.'));
     }
 
     dispatch(signup({ username, password }));
@@ -200,7 +200,7 @@ const SignupPage = () => {
         {error && (
           <ErrorBox
             errorMsg={error}
-            clearErrorMsg={() => dispatch(clearError())}
+            clearErrorMsg={() => dispatch(clearAuthError())}
           />
         )}
       </Paper>

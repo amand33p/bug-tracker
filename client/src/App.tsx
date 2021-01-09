@@ -1,6 +1,9 @@
 import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { setUser } from './features/authSlice';
 import NavBar from './components/NavBar';
-import Routes from './pages/Routes';
+import Routes from './Routes';
+import storage from './utils/localStorage';
 
 import customTheme from './styles/customTheme';
 import { useBodyStyles } from './styles/muiStyles';
@@ -9,7 +12,16 @@ import { ThemeProvider } from '@material-ui/core/styles';
 
 const App = () => {
   const classes = useBodyStyles();
+  const dispatch = useDispatch();
   const darkMode = false; //placeholder
+
+  useEffect(() => {
+    const loggedUser = storage.loadUser();
+    if (loggedUser) {
+      dispatch(setUser(loggedUser));
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <ThemeProvider theme={customTheme(darkMode)}>
