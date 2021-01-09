@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
-import { UserState } from '../features/types';
+import { UserState } from '../redux/types';
 
 import { IconButton, Menu, MenuItem, Avatar } from '@material-ui/core';
 import { useNavStyles } from '../styles/muiStyles';

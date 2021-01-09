@@ -2,7 +2,7 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 import LoginPage from './pages/LoginPage';
 import SignupPage from './pages/SignupPage';
 import { useSelector } from 'react-redux';
-import { selectAuthState } from './features/authSlice';
+import { selectAuthState } from './redux/slices/authSlice';
 
 const Routes = () => {
   const { user } = useSelector(selectAuthState);

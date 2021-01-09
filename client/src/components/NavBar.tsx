@@ -1,6 +1,6 @@
 import { Link as RouterLink, useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { selectAuthState, logout } from '../features/authSlice';
+import { selectAuthState, logout } from '../redux/slices/authSlice';
 import UserButtonsDesktop from './UserButtonsDesktop';
 import UserMenuMobile from './UserMenuMobile';
 import BugIcon from '../svg/bug-logo.svg';

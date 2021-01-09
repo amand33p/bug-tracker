@@ -1,8 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState, AppThunk } from '../store';
-import projectService from '../services/projects';
-import { ProjectState } from './types';
-import { getErrorMsg } from '../utils/helperFuncs';
+import projectService from '../../services/projects';
+import { ProjectState } from '../types';
+import { getErrorMsg } from '../../utils/helperFuncs';
 
 interface InitialProjectState {
   data: ProjectState[];

@@ -1,9 +1,9 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState, AppThunk } from '../store';
-import authService from '../services/auth';
-import storage from '../utils/localStorage';
-import { UserCredentials, UserState, ResetFields } from './types';
-import { getErrorMsg } from '../utils/helperFuncs';
+import authService from '../../services/auth';
+import storage from '../../utils/localStorage';
+import { UserCredentials, UserState, ResetFields } from '../types';
+import { getErrorMsg } from '../../utils/helperFuncs';
 
 interface InitialAuthState {
   user: UserState | null;

@@ -2,7 +2,11 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link as RouterLink } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { login, clearAuthError, selectAuthState } from '../features/authSlice';
+import {
+  login,
+  clearAuthError,
+  selectAuthState,
+} from '../redux/slices/authSlice';
 import ErrorBox from '../components/ErrorBox';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';

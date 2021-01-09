@@ -7,7 +7,7 @@ import {
   clearAuthError,
   setAuthError,
   selectAuthState,
-} from '../features/authSlice';
+} from '../redux/slices/authSlice';
 import ErrorBox from '../components/ErrorBox';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';

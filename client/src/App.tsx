@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { setUser } from './features/authSlice';
+import { setUser } from './redux/slices/authSlice';
 import NavBar from './components/NavBar';
 import Routes from './Routes';
 import storage from './utils/localStorage';
