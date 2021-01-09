@@ -3,6 +3,7 @@ import { RootState, AppThunk } from '../store';
 import authService from '../services/auth';
 import storage from '../utils/localStorage';
 import { UserCredentials, UserState, ResetFields } from './types';
+import { getErrorMsg } from '../utils/helperFuncs';
 
 interface InitialState {
   user: UserState | null;
@@ -59,11 +60,10 @@ export const login = (
       dispatch(setAuthLoading());
       const userData = await authService.login(credentials);
       dispatch(setUser(userData));
-
       storage.saveUser(userData);
       resetFields();
     } catch (e) {
-      dispatch(setAuthError(e.response.data.message));
+      dispatch(setAuthError(getErrorMsg(e)));
     }
   };
 };
@@ -77,11 +77,10 @@ export const signup = (
       dispatch(setAuthLoading());
       const userData = await authService.signup(credentials);
       dispatch(setUser(userData));
-
       storage.saveUser(userData);
       resetFields();
     } catch (e) {
-      dispatch(setAuthError(e.response.data.message));
+      dispatch(setAuthError(getErrorMsg(e)));
     }
   };
 };
