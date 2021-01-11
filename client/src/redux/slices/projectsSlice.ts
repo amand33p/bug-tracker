@@ -5,14 +5,14 @@ import { ProjectState } from '../types';
 import { getErrorMsg } from '../../utils/helperFuncs';
 
 interface InitialProjectState {
-  data: ProjectState[];
-  loading: boolean;
+  projects: ProjectState[];
+  status: 'idle' | 'loading' | 'succeeded' | 'failed';
   error: string | null;
 }
 
 const initialState: InitialProjectState = {
-  data: [],
-  loading: false,
+  projects: [],
+  status: 'idle',
   error: null,
 };
 
@@ -21,16 +21,16 @@ const projectsSlice = createSlice({
   initialState,
   reducers: {
     setProjects: (state, action: PayloadAction<ProjectState[]>) => {
-      state.data = action.payload;
-      state.loading = false;
+      state.projects = action.payload;
+      state.status = 'succeeded';
       state.error = null;
     },
     setProjectsLoading: (state) => {
-      state.loading = true;
+      state.status = 'loading';
       state.error = null;
     },
     setProjectsError: (state, action: PayloadAction<string>) => {
-      state.loading = false;
+      state.status = 'failed';
       state.error = action.payload;
     },
     clearProjectsError: (state) => {

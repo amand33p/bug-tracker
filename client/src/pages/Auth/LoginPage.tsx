@@ -6,11 +6,11 @@ import {
   login,
   clearAuthError,
   selectAuthState,
-} from '../redux/slices/authSlice';
-import ErrorBox from '../components/ErrorBox';
+} from '../../redux/slices/authSlice';
+import ErrorBox from '../../components/ErrorBox';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
-import BugIcon from '../svg/bug-logo.svg';
+import BugIcon from '../../svg/bug-logo.svg';
 
 import {
   TextField,
@@ -21,7 +21,7 @@ import {
   Link,
   Paper,
 } from '@material-ui/core';
-import { useAuthPageStyles } from '../styles/muiStyles';
+import { useAuthPageStyles } from '../../styles/muiStyles';
 import PersonIcon from '@material-ui/icons/Person';
 import LockIcon from '@material-ui/icons/Lock';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
@@ -53,7 +53,7 @@ const LoginPage = () => {
   };
 
   return (
-    <div className={classes.rootBackground}>
+    <div>
       <Paper className={classes.root} elevation={2}>
         <img src={BugIcon} alt="bug-logo" className={classes.titleLogo} />
         <form onSubmit={handleSubmit(handleLogin)} className={classes.form}>

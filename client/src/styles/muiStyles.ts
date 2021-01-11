@@ -8,6 +8,7 @@ export const useBodyStyles = makeStyles(
       flexDirection: 'column',
       flex: 1,
       minHeight: '100vH',
+      backgroundColor: '#00968810',
     },
   }),
   { index: 1 }
@@ -83,10 +84,6 @@ export const useNavStyles = makeStyles(
 
 export const useAuthPageStyles = makeStyles(
   (theme) => ({
-    rootBackground: {
-      backgroundColor: `${theme.palette.primary.main}10`,
-      height: 'calc(100vH - 50px)',
-    },
     root: {
       padding: '1.5em 3em',
       width: '320px',
@@ -124,6 +121,33 @@ export const useAuthPageStyles = makeStyles(
     },
     link: {
       cursor: 'pointer',
+    },
+  }),
+  { index: 1 }
+);
+
+export const useProjectsPageStyles = makeStyles(
+  (theme) => ({
+    root: {
+      padding: '1em 1em',
+    },
+  }),
+  { index: 1 }
+);
+
+export const useTableStyles = makeStyles(
+  (theme) => ({
+    root: {
+      marginTop: theme.spacing(3),
+      '& thead th': {
+        fontWeight: '600',
+        color: theme.palette.secondary.main,
+        backgroundColor: theme.palette.primary.light,
+      },
+      '& tbody tr:hover': {
+        backgroundColor: '#d3d3d350',
+        cursor: 'pointer',
+      },
     },
   }),
   { index: 1 }
