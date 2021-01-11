@@ -14,6 +14,25 @@ export const useBodyStyles = makeStyles(
   { index: 1 }
 );
 
+export const useTableStyles = makeStyles(
+  (theme) => ({
+    root: {
+      marginTop: '1em',
+      '& thead th': {
+        fontWeight: '600',
+        color: theme.palette.secondary.main,
+        backgroundColor: theme.palette.primary.light,
+      },
+      '& tbody tr:hover': {
+        backgroundColor: '#d3d3d350',
+        cursor: 'pointer',
+      },
+      border: `1px solid ${theme.palette.primary.main}40`,
+    },
+  }),
+  { index: 1 }
+);
+
 export const useNavStyles = makeStyles(
   (theme) => ({
     leftPortion: {
@@ -129,25 +148,25 @@ export const useAuthPageStyles = makeStyles(
 export const useProjectsPageStyles = makeStyles(
   (theme) => ({
     root: {
-      padding: '1em 1em',
+      padding: '1em',
+    },
+    paper: {
+      padding: '1.5em',
     },
   }),
   { index: 1 }
 );
 
-export const useTableStyles = makeStyles(
+export const useProjectActionBarStyles = makeStyles(
   (theme) => ({
-    root: {
-      marginTop: theme.spacing(3),
-      '& thead th': {
-        fontWeight: '600',
-        color: theme.palette.secondary.main,
-        backgroundColor: theme.palette.primary.light,
-      },
-      '& tbody tr:hover': {
-        backgroundColor: '#d3d3d350',
-        cursor: 'pointer',
-      },
+    inputs: {
+      display: 'flex',
+      minWidth: '100%',
+      justifyContent: 'space-between',
+      marginBottom: '1em',
+    },
+    searchBarWrapper: {
+      width: '50%',
     },
   }),
   { index: 1 }
