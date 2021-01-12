@@ -6,6 +6,7 @@ import {
 } from '../../redux/slices/projectsSlice';
 import ProjectsTable from './ProjectsTable';
 import ProjectActionBar from './ProjectActionBar';
+import sortProjects from '../../utils/sortProjects';
 
 import { Paper, Typography } from '@material-ui/core';
 import { useProjectsPageStyles } from '../../styles/muiStyles';
@@ -13,7 +14,7 @@ import { useProjectsPageStyles } from '../../styles/muiStyles';
 const ProjectsPage = () => {
   const classes = useProjectsPageStyles();
   const dispatch = useDispatch();
-  const { projects, status, error } = useSelector(selectProjectsState);
+  const { projects, status, error, sortBy } = useSelector(selectProjectsState);
   const [filterValue, setFilterValue] = useState('');
 
   useEffect(() => {
@@ -23,9 +24,28 @@ const ProjectsPage = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [status]);
 
-  const filteredProjects = projects.filter((p) =>
-    p.name.toLowerCase().includes(filterValue)
+  const filteredSortedProjects = sortProjects(
+    projects.filter((p) => p.name.toLowerCase().includes(filterValue)),
+    sortBy
   );
+
+  const dataToDisplay = () => {
+    if (status === 'loading') {
+      return <div>Loading...</div>;
+    } else if (status === 'succeeded' && projects.length === 0) {
+      return <div>No Projects added yet.</div>;
+    } else if (status === 'failed' && error) {
+      return <div>{error}</div>;
+    } else if (
+      status === 'succeeded' &&
+      projects.length !== 0 &&
+      filteredSortedProjects.length === 0
+    ) {
+      return <div>No matches found.</div>;
+    } else {
+      return <ProjectsTable projects={filteredSortedProjects} />;
+    }
+  };
 
   return (
     <div className={classes.root}>
@@ -39,7 +59,7 @@ const ProjectsPage = () => {
           filterValue={filterValue}
           setFilterValue={setFilterValue}
         />
-        <ProjectsTable projects={filteredProjects} />
+        {dataToDisplay()}
       </Paper>
     </div>
   );

@@ -166,7 +166,10 @@ export const useProjectActionBarStyles = makeStyles(
       marginBottom: '1em',
     },
     searchBarWrapper: {
-      width: '50%',
+      width: '70%',
+    },
+    sortBarWrapper: {
+      width: '25%',
     },
   }),
   { index: 1 }

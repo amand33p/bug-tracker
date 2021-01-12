@@ -1,32 +1,37 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import FilterBar from '../../components/FilterBar';
 import SortBar from '../../components/SortBar';
+import { ProjectSortValues } from '../../redux/types';
+import { sortProjectsBy } from '../../redux/slices/projectsSlice';
 
 import { Button } from '@material-ui/core';
 import { useProjectActionBarStyles } from '../../styles/muiStyles';
 import AddIcon from '@material-ui/icons/Add';
 
-type SortBy =
-  | 'newest'
-  | 'oldest'
-  | 'a-z'
-  | 'z-a'
-  | 'most-bugs'
-  | 'least-bugs'
-  | 'most-members'
-  | 'least-members';
-
-const menuItems = [{ value: 'newest', label: 'Newest' }];
+const menuItems = [
+  { value: 'newest', label: 'Newest' },
+  { value: 'oldest', label: 'Oldest' },
+  { value: 'a-z', label: 'Name (A - Z)' },
+  { value: 'z-a', label: 'Name (Z - A)' },
+  { value: 'most-bugs', label: 'Most Bugs' },
+  { value: 'least-bugs', label: 'Least Bugs' },
+  { value: 'most-members', label: 'Most Members' },
+  { value: 'least-members', label: 'Least Members' },
+];
 
 const ProjectActionBar: React.FC<{
   filterValue: string;
   setFilterValue: (filterValue: string) => void;
 }> = ({ filterValue, setFilterValue }) => {
   const classes = useProjectActionBarStyles();
-  const [sortBy, setSortBy] = useState<SortBy>('newest');
+  const dispatch = useDispatch();
+  const [sortBy, setSortBy] = useState<ProjectSortValues>('newest');
 
   const handleSortChange = (e: React.ChangeEvent<{ value: unknown }>) => {
-    setSortBy(e.target.value as SortBy);
+    const selectedValue = e.target.value as ProjectSortValues;
+    setSortBy(selectedValue);
+    dispatch(sortProjectsBy(selectedValue));
   };
 
   return (
@@ -39,11 +44,14 @@ const ProjectActionBar: React.FC<{
             label="Projects"
           />
         </div>
-        <SortBar
-          sortBy={sortBy}
-          handleSortChange={handleSortChange}
-          menuItems={menuItems}
-        />
+        <div className={classes.sortBarWrapper}>
+          <SortBar
+            sortBy={sortBy}
+            handleSortChange={handleSortChange}
+            menuItems={menuItems}
+            label="Projects"
+          />
+        </div>
       </div>
       <Button
         size="large"

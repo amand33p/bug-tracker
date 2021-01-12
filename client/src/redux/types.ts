@@ -53,6 +53,16 @@ export interface BugState {
   updatedAt: Date;
 }
 
+export type ProjectSortValues =
+  | 'newest'
+  | 'oldest'
+  | 'a-z'
+  | 'z-a'
+  | 'most-bugs'
+  | 'least-bugs'
+  | 'most-members'
+  | 'least-members';
+
 export interface UserCredentials {
   username: string;
   password: string;

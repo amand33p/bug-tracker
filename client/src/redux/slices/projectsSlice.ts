@@ -1,19 +1,21 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState, AppThunk } from '../store';
 import projectService from '../../services/projects';
-import { ProjectState } from '../types';
+import { ProjectState, ProjectSortValues } from '../types';
 import { getErrorMsg } from '../../utils/helperFuncs';
 
 interface InitialProjectState {
   projects: ProjectState[];
   status: 'idle' | 'loading' | 'succeeded' | 'failed';
   error: string | null;
+  sortBy: ProjectSortValues;
 }
 
 const initialState: InitialProjectState = {
   projects: [],
   status: 'idle',
   error: null,
+  sortBy: 'newest',
 };
 
 const projectsSlice = createSlice({
@@ -36,6 +38,9 @@ const projectsSlice = createSlice({
     clearProjectsError: (state) => {
       state.error = null;
     },
+    sortProjectsBy: (state, action: PayloadAction<ProjectSortValues>) => {
+      state.sortBy = action.payload;
+    },
   },
 });
 
@@ -44,6 +49,7 @@ export const {
   setProjectsLoading,
   setProjectsError,
   clearProjectsError,
+  sortProjectsBy,
 } = projectsSlice.actions;
 
 export const fetchProjects = (): AppThunk => {
