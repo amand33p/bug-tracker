@@ -10,6 +10,7 @@ import sortProjects from '../../utils/sortProjects';
 
 import { Paper, Typography } from '@material-ui/core';
 import { useProjectsPageStyles } from '../../styles/muiStyles';
+import AssignmentIcon from '@material-ui/icons/Assignment';
 
 const ProjectsPage = () => {
   const classes = useProjectsPageStyles();
@@ -49,10 +50,20 @@ const ProjectsPage = () => {
 
   return (
     <div className={classes.root}>
-      <Paper>
-        <Typography variant="h5" color="secondary">
-          Projects
-        </Typography>
+      <Paper className={classes.headerPaper}>
+        <AssignmentIcon
+          fontSize="large"
+          color="primary"
+          className={classes.headerIcon}
+        />
+        <div>
+          <Typography variant="h5" color="secondary">
+            All Projects
+          </Typography>
+          <Typography variant="body2" color="secondary">
+            Projects you created or joined.
+          </Typography>
+        </div>
       </Paper>
       <Paper className={classes.paper}>
         <ProjectActionBar

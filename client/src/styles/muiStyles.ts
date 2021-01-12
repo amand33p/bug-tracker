@@ -150,8 +150,19 @@ export const useProjectsPageStyles = makeStyles(
     root: {
       padding: '1em',
     },
+    headerPaper: {
+      padding: '0.8em 1.5em',
+      marginBottom: '1em',
+      display: 'flex',
+      alignItems: 'center',
+    },
+    headerIcon: {
+      fontSize: '4.5em',
+      marginRight: '0.3em',
+    },
     paper: {
       padding: '1.5em',
+      marginBottom: '1em',
     },
   }),
   { index: 1 }
