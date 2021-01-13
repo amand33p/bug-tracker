@@ -8,11 +8,19 @@ import MembersTable from './MembersTable';
 import FilterBar from '../../components/FilterBar';
 import { formatDateTime } from '../../utils/helperFuncs';
 
-import { Paper, Typography, IconButton, Button } from '@material-ui/core';
+import {
+  Paper,
+  Typography,
+  IconButton,
+  Button,
+  Collapse,
+} from '@material-ui/core';
 import { useMainPageStyles } from '../../styles/muiStyles';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 import GroupAddOutlinedIcon from '@material-ui/icons/GroupAddOutlined';
+import ExpandLessIcon from '@material-ui/icons/ExpandLess';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 interface ParamTypes {
   projectId: string;
@@ -22,6 +30,7 @@ const SingleProjectPage = () => {
   const classes = useMainPageStyles();
   const { projectId } = useParams<ParamTypes>();
   const [filterValue, setFilterValue] = useState('');
+  const [viewMembers, setViewMembers] = useState(false);
   const { user } = useSelector(selectAuthState);
   const project = useSelector((state: RootState) =>
     selectProjectById(state, projectId)
@@ -98,23 +107,38 @@ const SingleProjectPage = () => {
             </Button>
           </div>
         )}
-      </Paper>
-      {members.length > 1 && (
-        <Paper className={classes.membersPaper}>
-          <div className={classes.membersBar}>
-            <Typography variant="h5" color="secondary">
-              Members
-            </Typography>
-            <FilterBar
-              filterValue={filterValue}
-              setFilterValue={setFilterValue}
-              label="Members"
-              size="small"
-            />
+        {members.length > 1 && (
+          <div>
+            <Button
+              color="primary"
+              variant="outlined"
+              startIcon={viewMembers ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+              onClick={() => setViewMembers(!viewMembers)}
+            >
+              {viewMembers ? 'Hide Members' : 'View Members'}
+            </Button>
+            <Collapse
+              in={viewMembers}
+              timeout="auto"
+              unmountOnExit
+              className={classes.membersWrapper}
+            >
+              <div className={classes.membersBar}>
+                <Typography variant="h5" color="secondary">
+                  Members
+                </Typography>
+                <FilterBar
+                  filterValue={filterValue}
+                  setFilterValue={setFilterValue}
+                  label="Members"
+                  size="small"
+                />
+              </div>
+              {membersDataToDisplay()}
+            </Collapse>
           </div>
-          {membersDataToDisplay()}
-        </Paper>
-      )}
+        )}
+      </Paper>
     </div>
   );
 };

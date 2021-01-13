@@ -71,8 +71,8 @@ export const useMainPageStyles = makeStyles(
     btnsWrapper: {
       margin: '1em 0',
     },
-    membersPaper: {
-      padding: '1.2em 1.5em',
+    membersWrapper: {
+      marginTop: '1em',
     },
     membersBar: {
       display: 'flex',
