@@ -16,7 +16,7 @@ export const useBodyStyles = makeStyles(
 
 export const useTableStyles = makeStyles(
   (theme) => ({
-    root: {
+    table: {
       '& thead th': {
         fontWeight: '600',
         color: theme.palette.secondary.main,
@@ -26,6 +26,15 @@ export const useTableStyles = makeStyles(
         backgroundColor: '#d3d3d330',
         cursor: 'pointer',
       },
+    },
+    scrollableTable: {
+      '& thead th': {
+        fontWeight: '600',
+        color: theme.palette.secondary.main,
+        backgroundColor: theme.palette.primary.light,
+      },
+      overflowY: 'auto',
+      maxHeight: '350px',
     },
   }),
   { index: 1 }
@@ -46,7 +55,7 @@ export const useMainPageStyles = makeStyles(
       fontSize: '4.5em',
       marginRight: '0.2em',
     },
-    contentPaper: {
+    projectsPaper: {
       padding: '1.5em',
       minHeight: '685px',
       marginBottom: '0.5em',
@@ -61,6 +70,14 @@ export const useMainPageStyles = makeStyles(
     },
     btnsWrapper: {
       margin: '1em 0',
+    },
+    membersPaper: {
+      padding: '1.2em 1.5em',
+    },
+    membersBar: {
+      display: 'flex',
+      justifyContent: 'space-between',
+      alignItems: 'center',
     },
   }),
   { index: 1 }

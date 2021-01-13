@@ -7,13 +7,15 @@ const FilterBar: React.FC<{
   filterValue: string;
   setFilterValue: (filterValue: string) => void;
   label: string;
-}> = ({ filterValue, setFilterValue, label }) => {
+  size?: 'small' | 'medium';
+}> = ({ filterValue, setFilterValue, label, size }) => {
   return (
     <div>
       <div>
         <TextField
           value={filterValue}
           fullWidth
+          size={size ? size : 'medium'}
           type="text"
           label={`Search ${label}`}
           variant="outlined"
@@ -21,14 +23,20 @@ const FilterBar: React.FC<{
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">
-                <SearchIcon color="primary" fontSize="large" />
+                <SearchIcon
+                  color="primary"
+                  fontSize={size === 'small' ? 'default' : 'large'}
+                />
               </InputAdornment>
             ),
             endAdornment: (
               <InputAdornment position="start">
                 {filterValue !== '' ? (
                   <IconButton onClick={() => setFilterValue('')} size="small">
-                    <ClearIcon color="primary" fontSize="large" />
+                    <ClearIcon
+                      color="primary"
+                      fontSize={size === 'small' ? 'default' : 'large'}
+                    />
                   </IconButton>
                 ) : (
                   <div></div>

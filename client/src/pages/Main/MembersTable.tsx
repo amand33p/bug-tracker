@@ -12,7 +12,7 @@ import {
   Paper,
 } from '@material-ui/core';
 import { useTableStyles } from '../../styles/muiStyles';
-import ClearIcon from '@material-ui/icons/Clear';
+import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 
 const memberHeaders = ['ID', 'Username', 'Role', 'Joined'];
 
@@ -24,8 +24,8 @@ const MembersTable: React.FC<{
   const classes = useTableStyles();
 
   return (
-    <Paper className={classes.root}>
-      <Table>
+    <Paper className={classes.scrollableTable}>
+      <Table stickyHeader>
         <TableHead>
           <TableRow>
             {memberHeaders.map((m) => (
@@ -53,7 +53,7 @@ const MembersTable: React.FC<{
                     size="small"
                     onClick={() => console.log('table button clicked.')}
                   >
-                    <ClearIcon color="primary" fontSize="large" />
+                    <HighlightOffIcon color="primary" fontSize="large" />
                   </IconButton>
                 </TableCell>
               )}

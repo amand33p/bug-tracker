@@ -1,9 +1,11 @@
+import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { selectProjectById } from '../../redux/slices/projectsSlice';
 import { selectAuthState } from '../../redux/slices/authSlice';
 import { RootState } from '../../redux/store';
 import MembersTable from './MembersTable';
+import FilterBar from '../../components/FilterBar';
 import { formatDateTime } from '../../utils/helperFuncs';
 
 import { Paper, Typography, IconButton, Button } from '@material-ui/core';
@@ -19,6 +21,7 @@ interface ParamTypes {
 const SingleProjectPage = () => {
   const classes = useMainPageStyles();
   const { projectId } = useParams<ParamTypes>();
+  const [filterValue, setFilterValue] = useState('');
   const { user } = useSelector(selectAuthState);
   const project = useSelector((state: RootState) =>
     selectProjectById(state, projectId)
@@ -31,6 +34,26 @@ const SingleProjectPage = () => {
   const { name, members, createdAt, updatedAt, createdBy } = project;
 
   const isAdmin = createdBy.id === user?.id;
+
+  const filteredMembers = members.filter((m) =>
+    m.member.username.toLowerCase().includes(filterValue.toLowerCase())
+  );
+
+  const membersDataToDisplay = () => {
+    if (filteredMembers.length === 0) {
+      return <div>No matches found.</div>;
+    } else {
+      return (
+        <div style={{ marginTop: '1em' }}>
+          <MembersTable
+            members={filteredMembers}
+            adminId={createdBy.id}
+            isAdmin={isAdmin}
+          />
+        </div>
+      );
+    }
+  };
 
   return (
     <div className={classes.root}>
@@ -75,19 +98,23 @@ const SingleProjectPage = () => {
             </Button>
           </div>
         )}
-        {members.length > 1 && (
-          <div style={{ marginTop: '1.5em' }}>
-            <Typography variant="h6" color="secondary">
+      </Paper>
+      {members.length > 1 && (
+        <Paper className={classes.membersPaper}>
+          <div className={classes.membersBar}>
+            <Typography variant="h5" color="secondary">
               Members
             </Typography>
-            <MembersTable
-              members={members}
-              adminId={createdBy.id}
-              isAdmin={isAdmin}
+            <FilterBar
+              filterValue={filterValue}
+              setFilterValue={setFilterValue}
+              label="Members"
+              size="small"
             />
           </div>
-        )}
-      </Paper>
+          {membersDataToDisplay()}
+        </Paper>
+      )}
     </div>
   );
 };

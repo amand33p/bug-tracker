@@ -26,11 +26,13 @@ const ProjectsPage = () => {
   }, [status]);
 
   const filteredSortedProjects = sortProjects(
-    projects.filter((p) => p.name.toLowerCase().includes(filterValue)),
+    projects.filter((p) =>
+      p.name.toLowerCase().includes(filterValue.toLowerCase())
+    ),
     sortBy
   );
 
-  const dataToDisplay = () => {
+  const projectsDataToDisplay = () => {
     if (status === 'loading') {
       return <div>Loading...</div>;
     } else if (status === 'succeeded' && projects.length === 0) {
@@ -69,12 +71,12 @@ const ProjectsPage = () => {
           </Typography>
         </div>
       </Paper>
-      <Paper className={classes.contentPaper}>
+      <Paper className={classes.projectsPaper}>
         <ProjectActionCard
           filterValue={filterValue}
           setFilterValue={setFilterValue}
         />
-        {dataToDisplay()}
+        {projectsDataToDisplay()}
       </Paper>
     </div>
   );

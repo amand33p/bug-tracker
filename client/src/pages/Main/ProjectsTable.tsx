@@ -29,7 +29,7 @@ const ProjectsTable: React.FC<{ projects: ProjectState[] }> = ({
   const { user } = useSelector(selectAuthState);
 
   return (
-    <Paper className={classes.root}>
+    <Paper className={classes.table}>
       <Table>
         <TableHead>
           <TableRow>
