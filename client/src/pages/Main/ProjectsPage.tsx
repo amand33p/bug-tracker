@@ -44,7 +44,11 @@ const ProjectsPage = () => {
     ) {
       return <div>No matches found.</div>;
     } else {
-      return <ProjectsTable projects={filteredSortedProjects} />;
+      return (
+        <div style={{ marginTop: '1.5em' }}>
+          <ProjectsTable projects={filteredSortedProjects} />
+        </div>
+      );
     }
   };
 

@@ -17,19 +17,15 @@ export const useBodyStyles = makeStyles(
 export const useTableStyles = makeStyles(
   (theme) => ({
     root: {
-      marginTop: '1.5em',
       '& thead th': {
         fontWeight: '600',
         color: theme.palette.secondary.main,
         backgroundColor: theme.palette.primary.light,
       },
       '& tbody tr:hover': {
-        backgroundColor: '#d3d3d340',
+        backgroundColor: '#d3d3d330',
         cursor: 'pointer',
       },
-    },
-    table: {
-      border: `1px solid ${theme.palette.primary.main}40`,
     },
   }),
   { index: 1 }
@@ -56,8 +52,15 @@ export const useMainPageStyles = makeStyles(
       marginBottom: '0.5em',
     },
     detailsHeader: {
-      padding: '0.8em 1.5em',
+      padding: '1em 1.5em',
       marginBottom: '1em',
+    },
+    projectName: {
+      display: 'flex',
+      alignItems: 'center',
+    },
+    btnsWrapper: {
+      margin: '1em 0',
     },
   }),
   { index: 1 }

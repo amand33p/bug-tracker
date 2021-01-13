@@ -1,7 +1,6 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 import { ProjectMember } from '../../redux/types';
-import { selectAuthState } from '../../redux/slices/authSlice';
+import { formatDateInWords } from '../../utils/helperFuncs';
 
 import {
   Table,
@@ -9,27 +8,24 @@ import {
   TableBody,
   TableRow,
   TableCell,
-  Typography,
   IconButton,
+  Paper,
 } from '@material-ui/core';
 import { useTableStyles } from '../../styles/muiStyles';
 import ClearIcon from '@material-ui/icons/Clear';
 
-const memberHeaders = ['ID', 'Username', 'Joined At', 'Role'];
+const memberHeaders = ['ID', 'Username', 'Role', 'Joined'];
 
-const MembersTable: React.FC<{ members: ProjectMember[]; adminId: string }> = ({
-  members,
-  adminId,
-}) => {
+const MembersTable: React.FC<{
+  members: ProjectMember[];
+  adminId: string;
+  isAdmin: boolean;
+}> = ({ members, adminId, isAdmin }) => {
   const classes = useTableStyles();
-  const { user } = useSelector(selectAuthState);
 
   return (
-    <div className={classes.root}>
-      <Typography variant="h6" color="secondary">
-        Members
-      </Typography>
-      <Table className={classes.table}>
+    <Paper className={classes.root}>
+      <Table>
         <TableHead>
           <TableRow>
             {memberHeaders.map((m) => (
@@ -37,9 +33,7 @@ const MembersTable: React.FC<{ members: ProjectMember[]; adminId: string }> = ({
                 {m}
               </TableCell>
             ))}
-            {user?.id === adminId && (
-              <TableCell align="center">Remove</TableCell>
-            )}
+            {isAdmin && <TableCell align="center">Remove</TableCell>}
           </TableRow>
         </TableHead>
         <TableBody>
@@ -47,11 +41,13 @@ const MembersTable: React.FC<{ members: ProjectMember[]; adminId: string }> = ({
             <TableRow key={m.id}>
               <TableCell align="center">{m.id}</TableCell>
               <TableCell align="center">{m.member.username}</TableCell>
-              <TableCell align="center">Placeholder</TableCell>
               <TableCell align="center">
                 {m.member.id === adminId ? 'Admin' : 'Member'}
               </TableCell>
-              {user?.id === adminId && (
+              <TableCell align="center">
+                {formatDateInWords(m.joinedAt)}
+              </TableCell>
+              {isAdmin && (
                 <TableCell align="center">
                   <IconButton
                     size="small"
@@ -65,7 +61,7 @@ const MembersTable: React.FC<{ members: ProjectMember[]; adminId: string }> = ({
           ))}
         </TableBody>
       </Table>
-    </div>
+    </Paper>
   );
 };
 

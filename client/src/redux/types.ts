@@ -13,6 +13,7 @@ export interface User {
 
 export interface ProjectMember {
   id: number;
+  joinedAt: Date;
   member: User;
 }
 

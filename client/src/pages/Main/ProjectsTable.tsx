@@ -13,6 +13,7 @@ import {
   TableCell,
   Link,
   IconButton,
+  Paper,
 } from '@material-ui/core';
 import { useTableStyles } from '../../styles/muiStyles';
 import BlockIcon from '@material-ui/icons/Block';
@@ -28,8 +29,8 @@ const ProjectsTable: React.FC<{ projects: ProjectState[] }> = ({
   const { user } = useSelector(selectAuthState);
 
   return (
-    <div className={classes.root}>
-      <Table className={classes.table}>
+    <Paper className={classes.root}>
+      <Table>
         <TableHead>
           <TableRow>
             {tableHeaders.map((t) => (
@@ -76,7 +77,7 @@ const ProjectsTable: React.FC<{ projects: ProjectState[] }> = ({
           ))}
         </TableBody>
       </Table>
-    </div>
+    </Paper>
   );
 };
 
