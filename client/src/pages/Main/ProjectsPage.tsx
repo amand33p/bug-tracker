@@ -5,15 +5,15 @@ import {
   selectProjectsState,
 } from '../../redux/slices/projectsSlice';
 import ProjectsTable from './ProjectsTable';
-import ProjectActionBar from './ProjectActionBar';
+import ProjectActionCard from './ProjectsActionCard';
 import sortProjects from '../../utils/sortProjects';
 
 import { Paper, Typography } from '@material-ui/core';
-import { useProjectsPageStyles } from '../../styles/muiStyles';
+import { useMainPageStyles } from '../../styles/muiStyles';
 import AssignmentIcon from '@material-ui/icons/Assignment';
 
 const ProjectsPage = () => {
-  const classes = useProjectsPageStyles();
+  const classes = useMainPageStyles();
   const dispatch = useDispatch();
   const { projects, status, error, sortBy } = useSelector(selectProjectsState);
   const [filterValue, setFilterValue] = useState('');
@@ -65,8 +65,8 @@ const ProjectsPage = () => {
           </Typography>
         </div>
       </Paper>
-      <Paper className={classes.paper}>
-        <ProjectActionBar
+      <Paper className={classes.contentPaper}>
+        <ProjectActionCard
           filterValue={filterValue}
           setFilterValue={setFilterValue}
         />

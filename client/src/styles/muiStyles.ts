@@ -17,17 +17,65 @@ export const useBodyStyles = makeStyles(
 export const useTableStyles = makeStyles(
   (theme) => ({
     root: {
-      marginTop: '1em',
+      marginTop: '1.5em',
       '& thead th': {
         fontWeight: '600',
         color: theme.palette.secondary.main,
         backgroundColor: theme.palette.primary.light,
       },
       '& tbody tr:hover': {
-        backgroundColor: '#d3d3d350',
+        backgroundColor: '#d3d3d340',
         cursor: 'pointer',
       },
+    },
+    table: {
       border: `1px solid ${theme.palette.primary.main}40`,
+    },
+  }),
+  { index: 1 }
+);
+
+export const useMainPageStyles = makeStyles(
+  (theme) => ({
+    root: {
+      padding: '1em 0',
+    },
+    headerPaper: {
+      padding: '0.8em 1.5em',
+      marginBottom: '1em',
+      display: 'flex',
+      alignItems: 'center',
+    },
+    headerIcon: {
+      fontSize: '4.5em',
+      marginRight: '0.2em',
+    },
+    contentPaper: {
+      padding: '1.5em',
+      minHeight: '685px',
+      marginBottom: '0.5em',
+    },
+    detailsHeader: {
+      padding: '0.8em 1.5em',
+      marginBottom: '1em',
+    },
+  }),
+  { index: 1 }
+);
+
+export const useActionCardStyles = makeStyles(
+  (theme) => ({
+    inputs: {
+      display: 'flex',
+      minWidth: '100%',
+      justifyContent: 'space-between',
+      marginBottom: '1.5em',
+    },
+    searchBarWrapper: {
+      width: '70%',
+    },
+    sortBarWrapper: {
+      width: '25%',
     },
   }),
   { index: 1 }
@@ -140,47 +188,6 @@ export const useAuthPageStyles = makeStyles(
     },
     link: {
       cursor: 'pointer',
-    },
-  }),
-  { index: 1 }
-);
-
-export const useProjectsPageStyles = makeStyles(
-  (theme) => ({
-    root: {
-      padding: '1em',
-    },
-    headerPaper: {
-      padding: '0.8em 1.5em',
-      marginBottom: '1em',
-      display: 'flex',
-      alignItems: 'center',
-    },
-    headerIcon: {
-      fontSize: '4.5em',
-      marginRight: '0.3em',
-    },
-    paper: {
-      padding: '1.5em',
-      marginBottom: '1em',
-    },
-  }),
-  { index: 1 }
-);
-
-export const useProjectActionBarStyles = makeStyles(
-  (theme) => ({
-    inputs: {
-      display: 'flex',
-      minWidth: '100%',
-      justifyContent: 'space-between',
-      marginBottom: '1em',
-    },
-    searchBarWrapper: {
-      width: '70%',
-    },
-    sortBarWrapper: {
-      width: '25%',
     },
   }),
   { index: 1 }

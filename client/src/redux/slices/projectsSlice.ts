@@ -66,4 +66,8 @@ export const fetchProjects = (): AppThunk => {
 
 export const selectProjectsState = (state: RootState) => state.projects;
 
+export const selectProjectById = (state: RootState, projectId: string) => {
+  return state.projects.projects.find((p) => p.id === projectId);
+};
+
 export default projectsSlice.reducer;

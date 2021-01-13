@@ -6,7 +6,7 @@ import { ProjectSortValues } from '../../redux/types';
 import { sortProjectsBy } from '../../redux/slices/projectsSlice';
 
 import { Button } from '@material-ui/core';
-import { useProjectActionBarStyles } from '../../styles/muiStyles';
+import { useActionCardStyles } from '../../styles/muiStyles';
 import AddIcon from '@material-ui/icons/Add';
 
 const menuItems = [
@@ -20,11 +20,11 @@ const menuItems = [
   { value: 'least-members', label: 'Least Members' },
 ];
 
-const ProjectActionBar: React.FC<{
+const ProjectsActionCard: React.FC<{
   filterValue: string;
   setFilterValue: (filterValue: string) => void;
 }> = ({ filterValue, setFilterValue }) => {
-  const classes = useProjectActionBarStyles();
+  const classes = useActionCardStyles();
   const dispatch = useDispatch();
   const [sortBy, setSortBy] = useState<ProjectSortValues>('newest');
 
@@ -65,4 +65,4 @@ const ProjectActionBar: React.FC<{
   );
 };
 
-export default ProjectActionBar;
+export default ProjectsActionCard;
