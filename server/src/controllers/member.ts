@@ -47,7 +47,12 @@ export const addProjectMembers = async (req: Request, res: Response) => {
   const updatedMembers = await Member.createQueryBuilder('projectMember')
     .leftJoinAndSelect('projectMember.member', 'member')
     .where('projectMember.projectId = :projectId', { projectId })
-    .select(['projectMember.id', 'member.id', 'member.username'])
+    .select([
+      'projectMember.id',
+      'projectMember.joinedAt',
+      'member.id',
+      'member.username',
+    ])
     .getMany();
 
   res.status(201).json(updatedMembers);

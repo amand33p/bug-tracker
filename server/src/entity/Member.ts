@@ -2,6 +2,7 @@ import {
   BaseEntity,
   Entity,
   PrimaryGeneratedColumn,
+  CreateDateColumn,
   Column,
   ManyToOne,
   JoinColumn,
@@ -25,4 +26,7 @@ export class Member extends BaseEntity {
   member: User;
   @Column()
   memberId: string;
+
+  @CreateDateColumn()
+  joinedAt: Date;
 }

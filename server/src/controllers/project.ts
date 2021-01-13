@@ -12,6 +12,7 @@ const fieldsToSelect = [
   'createdBy.id',
   'createdBy.username',
   'members.id',
+  'members.joinedAt',
   'member.id',
   'member.username',
   'bug.id',
@@ -34,7 +35,7 @@ export const getProjects = async (req: Request, res: Response) => {
 export const createProject = async (req: Request, res: Response) => {
   const { name } = req.body;
   const memberIds = req.body.members
-    ? ([...req.body.members, req.user] as string[])
+    ? ([req.user, ...req.body.members] as string[])
     : [req.user];
 
   const { errors, valid } = createProjectValidator(name, memberIds);
