@@ -15,6 +15,7 @@ import {
   IconButton,
   Button,
   Collapse,
+  Divider,
 } from '@material-ui/core';
 import { useMainPageStyles } from '../../styles/muiStyles';
 import EditIcon from '@material-ui/icons/Edit';
@@ -69,18 +70,19 @@ const ProjectDetailsPage = () => {
   return (
     <div className={classes.root}>
       <Paper className={classes.detailsHeader}>
-        <div className={classes.iconHeader}>
+        <div className={classes.flexHeader}>
           <Typography variant="h4" color="secondary">
             <strong>{name}</strong>
           </Typography>
           {isAdmin && (
-            <IconButton>
-              <EditIcon color="primary" />
+            <IconButton size="small" style={{ marginLeft: '0.4em' }}>
+              <EditIcon color="primary" style={{ fontSize: '1.7em' }} />
             </IconButton>
           )}
         </div>
+        <Divider style={{ margin: '0.5em 0' }} />
         <Typography variant="subtitle2" color="secondary">
-          Admin: <em>{createdBy.username}</em>
+          Admin: <strong>{createdBy.username}</strong>
         </Typography>
         <Typography variant="subtitle2" color="secondary">
           Created At: <em>{formatDateTime(createdAt)}</em>
@@ -133,7 +135,7 @@ const ProjectDetailsPage = () => {
               <Typography
                 variant="h5"
                 color="secondary"
-                className={classes.iconHeader}
+                className={classes.flexHeader}
               >
                 <GroupIcon fontSize="large" style={{ marginRight: '0.2em' }} />
                 Members

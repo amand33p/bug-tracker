@@ -66,7 +66,7 @@ export const useMainPageStyles = makeStyles(
       padding: '1.2em 1.5em',
       marginBottom: '1em',
     },
-    iconHeader: {
+    flexHeader: {
       display: 'flex',
       alignItems: 'center',
     },
@@ -84,7 +84,7 @@ export const useMainPageStyles = makeStyles(
     bugsPaper: {
       padding: '1.5em',
       marginBottom: '0.2em',
-      minHeight: 'calc(100vH - 346px)',
+      minHeight: 'calc(100vH - 348px)',
     },
   }),
   { index: 1 }

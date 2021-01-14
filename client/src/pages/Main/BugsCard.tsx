@@ -55,7 +55,7 @@ const BugsCard: React.FC<{ projectId: string }> = ({ projectId }) => {
 
   return (
     <Paper className={classes.bugsPaper}>
-      <Typography variant="h5" color="secondary" className={classes.iconHeader}>
+      <Typography variant="h5" color="secondary" className={classes.flexHeader}>
         <BugReportIcon fontSize="large" style={{ marginRight: '0.2em' }} />
         Bugs
       </Typography>
