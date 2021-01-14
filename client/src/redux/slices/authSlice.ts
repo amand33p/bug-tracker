@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState, AppThunk } from '../store';
 import authService from '../../services/auth';
 import storage from '../../utils/localStorage';
-import { UserCredentials, UserState, ResetFields } from '../types';
+import { CredentialsPayload, UserState, ResetFields } from '../types';
 import { getErrorMsg } from '../../utils/helperFuncs';
 
 interface InitialAuthState {
@@ -52,7 +52,7 @@ export const {
 } = authSlice.actions;
 
 export const login = (
-  credentials: UserCredentials,
+  credentials: CredentialsPayload,
   resetFields: ResetFields
 ): AppThunk => {
   return async (dispatch) => {
@@ -69,7 +69,7 @@ export const login = (
 };
 
 export const signup = (
-  credentials: UserCredentials,
+  credentials: CredentialsPayload,
   resetFields: ResetFields
 ): AppThunk => {
   return async (dispatch) => {

@@ -41,11 +41,7 @@ const NavBar = () => {
               to="/"
               color="secondary"
             >
-              <img
-                src={BugIcon}
-                alt="bugtracker-logo"
-                className={classes.svgImage}
-              />
+              <img src={BugIcon} alt="logo" className={classes.svgImage} />
               BugTracker
             </Button>
             {!isMobile && (

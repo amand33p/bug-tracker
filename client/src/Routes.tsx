@@ -2,7 +2,7 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 import LoginPage from './pages/Auth/LoginPage';
 import SignupPage from './pages/Auth/SignupPage';
 import ProjectsPage from './pages/Main/ProjectsPage';
-import SingleProjectPage from './pages/Main/SingleProjectPage';
+import ProjectDetailsPage from './pages/Main/ProjectDetailsPage';
 import { useSelector } from 'react-redux';
 import { selectAuthState } from './redux/slices/authSlice';
 
@@ -21,7 +21,7 @@ const Routes = () => {
           {user ? <ProjectsPage /> : <Redirect to="/signup" />}
         </Route>
         <Route exact path="/projects/:projectId">
-          {user ? <SingleProjectPage /> : <Redirect to="/signup" />}
+          {user ? <ProjectDetailsPage /> : <Redirect to="/signup" />}
         </Route>
         <Route exact path="/login">
           {!user ? <LoginPage /> : <Redirect to="/" />}

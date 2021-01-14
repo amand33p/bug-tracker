@@ -57,14 +57,14 @@ export const useMainPageStyles = makeStyles(
     },
     projectsPaper: {
       padding: '1.5em',
-      minHeight: '685px',
-      marginBottom: '0.5em',
+      minHeight: 'calc(100vH - 245px)',
+      marginBottom: '0.2em',
     },
     detailsHeader: {
-      padding: '1em 1.5em',
+      padding: '1.2em 1.5em',
       marginBottom: '1em',
     },
-    projectName: {
+    iconHeader: {
       display: 'flex',
       alignItems: 'center',
     },
@@ -78,6 +78,11 @@ export const useMainPageStyles = makeStyles(
       display: 'flex',
       justifyContent: 'space-between',
       alignItems: 'center',
+    },
+    bugsPaper: {
+      padding: '1.5em',
+      marginBottom: '0.2em',
+      minHeight: 'calc(100vH - 346px)',
     },
   }),
   { index: 1 }

@@ -6,6 +6,7 @@ import { selectAuthState } from '../../redux/slices/authSlice';
 import { RootState } from '../../redux/store';
 import MembersTable from './MembersTable';
 import FilterBar from '../../components/FilterBar';
+import BugsCard from './BugsCard';
 import { formatDateTime } from '../../utils/helperFuncs';
 
 import {
@@ -21,12 +22,13 @@ import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 import GroupAddOutlinedIcon from '@material-ui/icons/GroupAddOutlined';
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import GroupIcon from '@material-ui/icons/Group';
 
 interface ParamTypes {
   projectId: string;
 }
 
-const SingleProjectPage = () => {
+const ProjectDetailsPage = () => {
   const classes = useMainPageStyles();
   const { projectId } = useParams<ParamTypes>();
   const [filterValue, setFilterValue] = useState('');
@@ -67,7 +69,7 @@ const SingleProjectPage = () => {
   return (
     <div className={classes.root}>
       <Paper className={classes.detailsHeader}>
-        <div className={classes.projectName}>
+        <div className={classes.iconHeader}>
           <Typography variant="h4" color="secondary">
             <strong>{name}</strong>
           </Typography>
@@ -90,6 +92,19 @@ const SingleProjectPage = () => {
         )}
         {isAdmin && (
           <div className={classes.btnsWrapper}>
+            {members.length > 1 && (
+              <Button
+                color="secondary"
+                variant="outlined"
+                startIcon={
+                  viewMembers ? <ExpandLessIcon /> : <ExpandMoreIcon />
+                }
+                onClick={() => setViewMembers(!viewMembers)}
+                style={{ marginRight: '1em' }}
+              >
+                {viewMembers ? 'Hide Members' : 'View Members'}
+              </Button>
+            )}
             <Button
               color="primary"
               variant="contained"
@@ -108,39 +123,35 @@ const SingleProjectPage = () => {
           </div>
         )}
         {members.length > 1 && (
-          <div>
-            <Button
-              color="primary"
-              variant="outlined"
-              startIcon={viewMembers ? <ExpandLessIcon /> : <ExpandMoreIcon />}
-              onClick={() => setViewMembers(!viewMembers)}
-            >
-              {viewMembers ? 'Hide Members' : 'View Members'}
-            </Button>
-            <Collapse
-              in={viewMembers}
-              timeout="auto"
-              unmountOnExit
-              className={classes.membersWrapper}
-            >
-              <div className={classes.membersBar}>
-                <Typography variant="h5" color="secondary">
-                  Members
-                </Typography>
-                <FilterBar
-                  filterValue={filterValue}
-                  setFilterValue={setFilterValue}
-                  label="Members"
-                  size="small"
-                />
-              </div>
-              {membersDataToDisplay()}
-            </Collapse>
-          </div>
+          <Collapse
+            in={viewMembers}
+            timeout="auto"
+            unmountOnExit
+            className={classes.membersWrapper}
+          >
+            <div className={classes.membersBar}>
+              <Typography
+                variant="h5"
+                color="secondary"
+                className={classes.iconHeader}
+              >
+                <GroupIcon fontSize="large" style={{ marginRight: '0.2em' }} />
+                Members
+              </Typography>
+              <FilterBar
+                filterValue={filterValue}
+                setFilterValue={setFilterValue}
+                label="Members"
+                size="small"
+              />
+            </div>
+            {membersDataToDisplay()}
+          </Collapse>
         )}
       </Paper>
+      <BugsCard projectId={projectId} />
     </div>
   );
 };
 
-export default SingleProjectPage;
+export default ProjectDetailsPage;

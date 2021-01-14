@@ -42,16 +42,16 @@ export interface BugState {
   title: string;
   description: string;
   priority: BugPriority;
-  createdBy: User;
-  updatedBy: User;
-  closedBy: User;
-  reopenedBy: User;
   notes: Note[];
   isResolved: boolean;
-  closedAt: Date;
-  reopenedAt: Date;
+  createdBy: User;
+  updatedBy?: User;
+  closedBy?: User;
+  reopenedBy?: User;
+  closedAt?: Date;
+  reopenedAt?: Date;
+  updatedAt?: Date;
   createdAt: Date;
-  updatedAt: Date;
 }
 
 export type ProjectSortValues =
@@ -64,7 +64,18 @@ export type ProjectSortValues =
   | 'most-members'
   | 'least-members';
 
-export interface UserCredentials {
+export type BugSortValues =
+  | 'newest'
+  | 'oldest'
+  | 'a-z'
+  | 'z-a'
+  | 'closed'
+  | 'reopened'
+  | 'updated'
+  | 'most-notes'
+  | 'least-notes';
+
+export interface CredentialsPayload {
   username: string;
   password: string;
 }

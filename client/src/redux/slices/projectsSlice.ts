@@ -4,14 +4,14 @@ import projectService from '../../services/projects';
 import { ProjectState, ProjectSortValues } from '../types';
 import { getErrorMsg } from '../../utils/helperFuncs';
 
-interface InitialProjectState {
+interface InitialProjectsState {
   projects: ProjectState[];
   status: 'idle' | 'loading' | 'succeeded' | 'failed';
   error: string | null;
   sortBy: ProjectSortValues;
 }
 
-const initialState: InitialProjectState = {
+const initialState: InitialProjectsState = {
   projects: [],
   status: 'idle',
   error: null,
