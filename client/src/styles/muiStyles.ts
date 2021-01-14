@@ -22,8 +22,10 @@ export const useTableStyles = makeStyles(
         color: theme.palette.secondary.main,
         backgroundColor: theme.palette.primary.light,
       },
-      '& tbody tr:hover': {
-        backgroundColor: '#d3d3d330',
+    },
+    clickableCell: {
+      '&:hover': {
+        backgroundColor: theme.palette.primary.main + '15',
         cursor: 'pointer',
       },
     },

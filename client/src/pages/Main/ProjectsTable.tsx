@@ -46,6 +46,7 @@ const ProjectsTable: React.FC<{ projects: ProjectState[] }> = ({
               <TableCell
                 align="center"
                 onClick={() => history.push(`/projects/${p.id}`)}
+                className={classes.clickableCell}
               >
                 <Link
                   component={RouterLink}

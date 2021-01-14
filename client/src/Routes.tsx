@@ -3,6 +3,7 @@ import LoginPage from './pages/Auth/LoginPage';
 import SignupPage from './pages/Auth/SignupPage';
 import ProjectsPage from './pages/Main/ProjectsPage';
 import ProjectDetailsPage from './pages/Main/ProjectDetailsPage';
+import BugDetailsPage from './pages/Main/BugsDetailsPage';
 import { useSelector } from 'react-redux';
 import { selectAuthState } from './redux/slices/authSlice';
 
@@ -22,6 +23,9 @@ const Routes = () => {
         </Route>
         <Route exact path="/projects/:projectId">
           {user ? <ProjectDetailsPage /> : <Redirect to="/signup" />}
+        </Route>
+        <Route exact path="/projects/:projectId/bugs/:bugId">
+          {user ? <BugDetailsPage /> : <Redirect to="/signup" />}
         </Route>
         <Route exact path="/login">
           {!user ? <LoginPage /> : <Redirect to="/" />}

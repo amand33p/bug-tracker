@@ -50,6 +50,7 @@ const BugsTable: React.FC<{ bugs: BugState[] }> = ({ bugs }) => {
                 onClick={() =>
                   history.push(`/projects/${b.projectId}/bugs/${b.id}`)
                 }
+                className={classes.clickableCell}
               >
                 <Link
                   component={RouterLink}
