@@ -13,13 +13,14 @@ import { useMainPageStyles } from '../../styles/muiStyles';
 import ForumOutlinedIcon from '@material-ui/icons/ForumOutlined';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
+import CommentIcon from '@material-ui/icons/Comment';
 
 export type NoteSortValues = 'newest' | 'oldest' | 'updated';
 
 const menuItems = [
   { value: 'newest', label: 'Newest' },
   { value: 'oldest', label: 'Oldest' },
-  { value: 'recently-updated', label: 'Recently Updated' },
+  { value: 'updated', label: 'Recently Updated' },
 ];
 
 const NotesCard: React.FC<{ notes: Note[]; projectId: string }> = ({
@@ -63,6 +64,14 @@ const NotesCard: React.FC<{ notes: Note[]; projectId: string }> = ({
           />
         </div>
       </div>
+      <Button
+        color="primary"
+        variant="contained"
+        startIcon={<CommentIcon />}
+        style={{ marginTop: '1em' }}
+      >
+        Leave a Note
+      </Button>
       <div className={classes.notesWrapper}>
         {sortedNotes.map((n) => (
           <div key={n.id}>

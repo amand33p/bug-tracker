@@ -89,7 +89,7 @@ export const useMainPageStyles = makeStyles(
     notesPaper: {
       padding: '1.5em',
       marginBottom: '0.2em',
-      minHeight: 'calc(100vH - 436px)',
+      minHeight: 'calc(100vH - 236px)',
     },
     notesWrapper: {
       margin: '1.5em 0',
@@ -137,6 +137,10 @@ export const useActionCardStyles = makeStyles(
 
 export const useNavStyles = makeStyles(
   (theme) => ({
+    container: {
+      position: 'sticky',
+      top: 0,
+    },
     leftPortion: {
       flexGrow: 1,
       display: 'flex',

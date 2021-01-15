@@ -84,8 +84,8 @@ const NavBar = () => {
   };
 
   return (
-    <Container disableGutters={isMobile}>
-      <AppBar position="sticky" elevation={1} color="inherit">
+    <Container disableGutters={isMobile} className={classes.container}>
+      <AppBar elevation={1} color="inherit" position="static">
         <Toolbar variant="dense" disableGutters={isMobile}>
           <div className={classes.leftPortion}>{mainButton()}</div>
           <UserButtonsDesktop
