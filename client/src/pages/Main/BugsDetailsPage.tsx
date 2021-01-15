@@ -52,18 +52,20 @@ const BugsDetailsPage = () => {
   const statusInfo = () => {
     if (!isResolved && reopenedAt && reopenedBy) {
       return (
-        <span>{`Re-opened | ${formatDateTime(reopenedAt)} | By ${
-          reopenedBy.username
-        }`}</span>
+        <span>
+          <strong>Re-opened</strong>, <em>{formatDateTime(reopenedAt)}</em> ~{' '}
+          <strong>{reopenedBy.username}</strong>
+        </span>
       );
     } else if (isResolved && closedAt && closedBy) {
       return (
-        <span>{`Closed | ${formatDateTime(closedAt)} | By ${
-          closedBy.username
-        }`}</span>
+        <span>
+          <strong>Closed</strong>, <em>{formatDateTime(closedAt)}</em> ~{' '}
+          <strong>{closedBy.username}</strong>
+        </span>
       );
     } else {
-      return <span>Open</span>;
+      return <strong>Open</strong>;
     }
   };
 
@@ -130,7 +132,7 @@ const BugsDetailsPage = () => {
           </Button>
         </div>
       </Paper>
-      <NotesCard notes={notes} />
+      <NotesCard notes={notes} projectId={projectId} />
     </div>
   );
 };

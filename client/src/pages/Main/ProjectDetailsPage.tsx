@@ -142,7 +142,7 @@ const ProjectDetailsPage = () => {
             unmountOnExit
             className={classes.membersWrapper}
           >
-            <div className={classes.membersBar}>
+            <div className={classes.flexInput}>
               <Typography
                 variant="h5"
                 color="secondary"

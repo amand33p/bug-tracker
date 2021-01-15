@@ -76,7 +76,7 @@ export const useMainPageStyles = makeStyles(
     membersWrapper: {
       marginTop: '1em',
     },
-    membersBar: {
+    flexInput: {
       display: 'flex',
       justifyContent: 'space-between',
       alignItems: 'center',
@@ -90,6 +90,28 @@ export const useMainPageStyles = makeStyles(
       padding: '1.5em',
       marginBottom: '0.2em',
       minHeight: 'calc(100vH - 436px)',
+    },
+    notesWrapper: {
+      margin: '1.5em 0',
+    },
+    singleNote: {
+      display: 'flex',
+      alignItems: 'flex-start',
+      marginBottom: '0.3em',
+    },
+    avatar: {
+      width: theme.spacing(4.8),
+      height: theme.spacing(4.8),
+      marginRight: '0.4em',
+      marginTop: '0.3em',
+      color: theme.palette.primary.main,
+      backgroundColor: '#d3d3d3',
+    },
+    noteBody: {
+      marginTop: '0.2em',
+    },
+    notesBtnWrapper: {
+      margin: '0.5em 0',
     },
   }),
   { index: 1 }

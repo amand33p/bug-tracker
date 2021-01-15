@@ -14,10 +14,11 @@ const SortBar: React.FC<{
   handleSortChange: (e: React.ChangeEvent<{ value: unknown }>) => void;
   menuItems: { value: string; label: string }[];
   label: string;
-}> = ({ sortBy, handleSortChange, menuItems, label }) => {
+  size?: 'small' | 'medium';
+}> = ({ sortBy, handleSortChange, menuItems, label, size }) => {
   return (
-    <FormControl variant="outlined" fullWidth>
-      <InputLabel id="sort-label">{`Sort ${label} By`}</InputLabel>
+    <FormControl variant="outlined" fullWidth size={size || 'medium'}>
+      <InputLabel id="sort-label">Sort {label} By</InputLabel>
       <Select
         labelId="sort-label"
         value={sortBy}
@@ -25,7 +26,10 @@ const SortBar: React.FC<{
         label={`Sort ${label} By`}
         startAdornment={
           <InputAdornment position="start">
-            <SortIcon color="primary" fontSize="large" />
+            <SortIcon
+              color="primary"
+              fontSize={size === 'small' ? 'default' : 'large'}
+            />
           </InputAdornment>
         }
       >

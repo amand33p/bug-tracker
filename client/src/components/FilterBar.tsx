@@ -15,7 +15,7 @@ const FilterBar: React.FC<{
         <TextField
           value={filterValue}
           fullWidth
-          size={size ? size : 'medium'}
+          size={size || 'medium'}
           type="text"
           label={`Search ${label}`}
           variant="outlined"

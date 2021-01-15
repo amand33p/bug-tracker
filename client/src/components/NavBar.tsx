@@ -42,7 +42,7 @@ const NavBar = () => {
   };
 
   const mainButton = () => {
-    if (pathname === '/' || pathname === 'login' || pathname === 'signup') {
+    if (['/', '/login', '/signup'].includes(pathname)) {
       return (
         <div className={classes.logoWrapper}>
           <Button

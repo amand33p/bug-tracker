@@ -1,4 +1,4 @@
-import { format } from 'date-fns';
+import { format, formatDistanceToNowStrict } from 'date-fns';
 
 interface ReturnedError {
   response?: {
@@ -23,4 +23,8 @@ export const formatDateTime = (date: Date) => {
 
 export const formatDateInWords = (date: Date) => {
   return format(new Date(date), "MMM d', ' YYY");
+};
+
+export const formatTimeAgo = (date: Date) => {
+  return formatDistanceToNowStrict(new Date(date));
 };
