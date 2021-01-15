@@ -89,7 +89,7 @@ export const useMainPageStyles = makeStyles(
     notesPaper: {
       padding: '1.5em',
       marginBottom: '0.2em',
-      minHeight: 'calc(100vH - 236px)',
+      minHeight: 'calc(100vH - 436px)',
     },
     notesWrapper: {
       margin: '1.5em 0',
