@@ -23,7 +23,7 @@ import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 import GroupAddOutlinedIcon from '@material-ui/icons/GroupAddOutlined';
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import GroupIcon from '@material-ui/icons/Group';
+import PeopleAltOutlinedIcon from '@material-ui/icons/PeopleAltOutlined';
 import ExitToAppOutlinedIcon from '@material-ui/icons/ExitToAppOutlined';
 
 interface ParamTypes {
@@ -148,7 +148,10 @@ const ProjectDetailsPage = () => {
                 color="secondary"
                 className={classes.flexHeader}
               >
-                <GroupIcon fontSize="large" style={{ marginRight: '0.2em' }} />
+                <PeopleAltOutlinedIcon
+                  fontSize="large"
+                  style={{ marginRight: '0.2em' }}
+                />
                 Members
               </Typography>
               <FilterBar

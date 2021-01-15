@@ -12,7 +12,7 @@ import sortBugs from '../../utils/sortBugs';
 
 import { Paper, Typography } from '@material-ui/core';
 import { useMainPageStyles } from '../../styles/muiStyles';
-import BugReportIcon from '@material-ui/icons/BugReport';
+import BugReportOutlinedIcon from '@material-ui/icons/BugReportOutlined';
 
 const BugsCard: React.FC<{ projectId: string }> = ({ projectId }) => {
   const classes = useMainPageStyles();
@@ -56,7 +56,10 @@ const BugsCard: React.FC<{ projectId: string }> = ({ projectId }) => {
   return (
     <Paper className={classes.bugsPaper}>
       <Typography variant="h5" color="secondary" className={classes.flexHeader}>
-        <BugReportIcon fontSize="large" style={{ marginRight: '0.2em' }} />
+        <BugReportOutlinedIcon
+          fontSize="large"
+          style={{ marginRight: '0.2em' }}
+        />
         Bugs
       </Typography>
       <div style={{ margin: '1.5em 0' }}>

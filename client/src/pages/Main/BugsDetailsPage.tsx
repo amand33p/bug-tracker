@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import { selectBugById } from '../../redux/slices/bugsSlice';
 import { RootState } from '../../redux/store';
 import { formatDateTime } from '../../utils/helperFuncs';
+import NotesCard from './NotesCard';
 
 import { Paper, Typography, Divider, Button } from '@material-ui/core';
 import { useMainPageStyles } from '../../styles/muiStyles';
@@ -45,6 +46,7 @@ const BugsDetailsPage = () => {
     closedAt,
     reopenedBy,
     reopenedAt,
+    notes,
   } = bug;
 
   const statusInfo = () => {
@@ -128,6 +130,7 @@ const BugsDetailsPage = () => {
           </Button>
         </div>
       </Paper>
+      <NotesCard notes={notes} />
     </div>
   );
 };

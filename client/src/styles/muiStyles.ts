@@ -59,7 +59,7 @@ export const useMainPageStyles = makeStyles(
     },
     projectsPaper: {
       padding: '1.5em',
-      minHeight: 'calc(100vH - 245px)',
+      minHeight: 'calc(100vH - 248px)',
       marginBottom: '0.2em',
     },
     detailsHeader: {
@@ -85,6 +85,11 @@ export const useMainPageStyles = makeStyles(
       padding: '1.5em',
       marginBottom: '0.2em',
       minHeight: 'calc(100vH - 360px)',
+    },
+    notesPaper: {
+      padding: '1.5em',
+      marginBottom: '0.2em',
+      minHeight: 'calc(100vH - 436px)',
     },
   }),
   { index: 1 }
