@@ -24,6 +24,7 @@ import GroupAddOutlinedIcon from '@material-ui/icons/GroupAddOutlined';
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import GroupIcon from '@material-ui/icons/Group';
+import ExitToAppOutlinedIcon from '@material-ui/icons/ExitToAppOutlined';
 
 interface ParamTypes {
   projectId: string;
@@ -92,38 +93,48 @@ const ProjectDetailsPage = () => {
             Updated At: <em>{formatDateTime(updatedAt)}</em>
           </Typography>
         )}
-        {isAdmin && (
-          <div className={classes.btnsWrapper}>
-            {members.length > 1 && (
+        <div className={classes.btnsWrapper}>
+          {members.length > 1 && (
+            <Button
+              color="secondary"
+              variant="outlined"
+              startIcon={viewMembers ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+              onClick={() => setViewMembers(!viewMembers)}
+            >
+              {viewMembers ? 'Hide Members' : 'View Members'}
+            </Button>
+          )}
+          {!isAdmin && (
+            <Button
+              color="primary"
+              variant="contained"
+              startIcon={<ExitToAppOutlinedIcon />}
+              style={{ marginLeft: '1em' }}
+            >
+              Leave Project
+            </Button>
+          )}
+          {isAdmin && (
+            <>
               <Button
-                color="secondary"
-                variant="outlined"
-                startIcon={
-                  viewMembers ? <ExpandLessIcon /> : <ExpandMoreIcon />
-                }
-                onClick={() => setViewMembers(!viewMembers)}
+                color="primary"
+                variant="contained"
+                startIcon={<GroupAddOutlinedIcon />}
+                style={{ marginLeft: '1em' }}
               >
-                {viewMembers ? 'Hide Members' : 'View Members'}
+                Add Members
               </Button>
-            )}
-            <Button
-              color="primary"
-              variant="contained"
-              startIcon={<GroupAddOutlinedIcon />}
-              style={{ marginLeft: '1em' }}
-            >
-              Add Members
-            </Button>
-            <Button
-              color="primary"
-              variant="contained"
-              startIcon={<DeleteOutlineIcon />}
-              style={{ marginLeft: '1em' }}
-            >
-              Delete Project
-            </Button>
-          </div>
-        )}
+              <Button
+                color="primary"
+                variant="contained"
+                startIcon={<DeleteOutlineIcon />}
+                style={{ marginLeft: '1em' }}
+              >
+                Delete Project
+              </Button>
+            </>
+          )}
+        </div>
         {members.length > 1 && (
           <Collapse
             in={viewMembers}

@@ -47,6 +47,24 @@ const BugsDetailsPage = () => {
     reopenedAt,
   } = bug;
 
+  const statusInfo = () => {
+    if (!isResolved && reopenedAt && reopenedBy) {
+      return (
+        <span>{`Re-opened | ${formatDateTime(reopenedAt)} | By ${
+          reopenedBy.username
+        }`}</span>
+      );
+    } else if (isResolved && closedAt && closedBy) {
+      return (
+        <span>{`Closed | ${formatDateTime(closedAt)} | By ${
+          closedBy.username
+        }`}</span>
+      );
+    } else {
+      return <span>Open</span>;
+    }
+  };
+
   return (
     <div className={classes.root}>
       <Paper className={classes.detailsHeader}>
@@ -58,18 +76,22 @@ const BugsDetailsPage = () => {
           {description}
         </Typography>
         <Typography color="secondary" variant="subtitle2">
-          Status:{' '}
-          <strong>
-            {reopenedAt ? 'Re-opened' : isResolved ? 'Closed' : 'Open'}
-          </strong>
+          Status: {statusInfo()}
         </Typography>
         <Typography color="secondary" variant="subtitle2">
           Priority: <strong>{priority}</strong>
         </Typography>
         <Typography color="secondary" variant="subtitle2">
-          Created: <em>{formatDateTime(createdAt)}</em>{' '}
-          <em> -- {createdBy.username}</em>
+          Created: <em>{formatDateTime(createdAt)}</em> ~{' '}
+          <strong>{createdBy.username}</strong>
         </Typography>
+        {updatedBy && updatedAt && (
+          <Typography color="secondary" variant="subtitle2">
+            Updated: <em>{formatDateTime(updatedAt)}</em> ~{' '}
+            <strong>{updatedBy.username}</strong>
+          </Typography>
+        )}
+
         <div className={classes.btnsWrapper}>
           {isResolved ? (
             <Button
@@ -102,7 +124,7 @@ const BugsDetailsPage = () => {
             startIcon={<DeleteOutlineIcon />}
             style={{ marginLeft: '1em' }}
           >
-            Delete Project
+            Delete Bug
           </Button>
         </div>
       </Paper>
