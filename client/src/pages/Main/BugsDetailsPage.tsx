@@ -5,8 +5,12 @@ import { selectBugById } from '../../redux/slices/bugsSlice';
 import { RootState } from '../../redux/store';
 import { formatDateTime } from '../../utils/helperFuncs';
 
-import { Paper, Typography, Divider } from '@material-ui/core';
+import { Paper, Typography, Divider, Button } from '@material-ui/core';
 import { useMainPageStyles } from '../../styles/muiStyles';
+import RedoIcon from '@material-ui/icons/Redo';
+import DoneOutlineIcon from '@material-ui/icons/DoneOutline';
+import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
+import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 
 interface ParamTypes {
   projectId: string;
@@ -66,6 +70,41 @@ const BugsDetailsPage = () => {
           Created: <em>{formatDateTime(createdAt)}</em>{' '}
           <em> -- {createdBy.username}</em>
         </Typography>
+        <div className={classes.btnsWrapper}>
+          {isResolved ? (
+            <Button
+              color="primary"
+              variant="contained"
+              startIcon={<RedoIcon />}
+            >
+              Re-Open Bug
+            </Button>
+          ) : (
+            <Button
+              color="primary"
+              variant="contained"
+              startIcon={<DoneOutlineIcon />}
+            >
+              Close Bug
+            </Button>
+          )}
+          <Button
+            color="primary"
+            variant="contained"
+            startIcon={<EditOutlinedIcon />}
+            style={{ marginLeft: '1em' }}
+          >
+            Update Bug Info
+          </Button>
+          <Button
+            color="primary"
+            variant="contained"
+            startIcon={<DeleteOutlineIcon />}
+            style={{ marginLeft: '1em' }}
+          >
+            Delete Project
+          </Button>
+        </div>
       </Paper>
     </div>
   );

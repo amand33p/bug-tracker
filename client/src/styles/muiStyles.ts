@@ -84,7 +84,7 @@ export const useMainPageStyles = makeStyles(
     bugsPaper: {
       padding: '1.5em',
       marginBottom: '0.2em',
-      minHeight: 'calc(100vH - 348px)',
+      minHeight: 'calc(100vH - 360px)',
     },
   }),
   { index: 1 }

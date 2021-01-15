@@ -102,7 +102,6 @@ const ProjectDetailsPage = () => {
                   viewMembers ? <ExpandLessIcon /> : <ExpandMoreIcon />
                 }
                 onClick={() => setViewMembers(!viewMembers)}
-                style={{ marginRight: '1em' }}
               >
                 {viewMembers ? 'Hide Members' : 'View Members'}
               </Button>
@@ -110,17 +109,18 @@ const ProjectDetailsPage = () => {
             <Button
               color="primary"
               variant="contained"
-              startIcon={<DeleteOutlineIcon />}
-              style={{ marginRight: '1em' }}
+              startIcon={<GroupAddOutlinedIcon />}
+              style={{ marginLeft: '1em' }}
             >
-              Delete Project
+              Add Members
             </Button>
             <Button
               color="primary"
               variant="contained"
-              startIcon={<GroupAddOutlinedIcon />}
+              startIcon={<DeleteOutlineIcon />}
+              style={{ marginLeft: '1em' }}
             >
-              Add Members
+              Delete Project
             </Button>
           </div>
         )}
