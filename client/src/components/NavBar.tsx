@@ -34,7 +34,11 @@ const NavBar = () => {
   };
 
   const handleGoBack = () => {
-    history.go(-2);
+    if (pathname.includes('/bugs')) {
+      history.push(`${pathname.slice(0, pathname.indexOf('/bugs'))}`);
+    } else {
+      history.push('/');
+    }
   };
 
   const mainButton = () => {
@@ -72,9 +76,8 @@ const NavBar = () => {
           startIcon={<ArrowBackIcon />}
           color="secondary"
           onClick={handleGoBack}
-          className={classes.logoBtn}
         >
-          Back
+          {pathname.includes('/bugs') ? 'Project' : 'Home'}
         </Button>
       );
     }
