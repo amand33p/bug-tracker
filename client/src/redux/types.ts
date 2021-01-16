@@ -80,4 +80,9 @@ export interface CredentialsPayload {
   password: string;
 }
 
+export interface NewProjectPayload {
+  name: string;
+  members: User[];
+}
+
 export type ResetFields = () => void;

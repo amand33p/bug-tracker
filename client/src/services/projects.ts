@@ -1,6 +1,7 @@
 import axios from 'axios';
 import backendUrl from '../backendUrl';
 import storage from '../utils/localStorage';
+import { NewProjectPayload } from '../redux/types';
 
 const baseUrl = `${backendUrl}/projects`;
 const token = storage.loadUser()?.token;
@@ -16,6 +17,11 @@ const getProjects = async () => {
   return response.data;
 };
 
-const projectService = { getProjects };
+const createProject = async (projectData: NewProjectPayload) => {
+  const response = await axios.post(baseUrl, projectData, setConfig());
+  return response.data;
+};
+
+const projectService = { getProjects, createProject };
 
 export default projectService;

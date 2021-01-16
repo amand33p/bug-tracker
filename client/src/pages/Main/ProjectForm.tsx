@@ -61,7 +61,7 @@ const ProjectForm = () => {
         InputProps={{
           startAdornment: (
             <InputAdornment position="start">
-              <LabelImportantIcon color="primary" fontSize="large" />
+              <LabelImportantIcon color="primary" />
             </InputAdornment>
           ),
         }}
@@ -85,7 +85,7 @@ const ProjectForm = () => {
                     position="start"
                     style={{ paddingLeft: '0.4em' }}
                   >
-                    <GroupIcon color="primary" fontSize="large" />
+                    <GroupIcon color="primary" />
                   </InputAdornment>
                   {params.InputProps.startAdornment}
                 </>

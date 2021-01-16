@@ -15,15 +15,17 @@ import AssignmentIcon from '@material-ui/icons/Assignment';
 const ProjectsPage = () => {
   const classes = useMainPageStyles();
   const dispatch = useDispatch();
-  const { projects, status, error, sortBy } = useSelector(selectProjectsState);
+  const { projects, fetchStatus, fetchError, sortBy } = useSelector(
+    selectProjectsState
+  );
   const [filterValue, setFilterValue] = useState('');
 
   useEffect(() => {
-    if (status === 'idle') {
+    if (fetchStatus === 'idle') {
       dispatch(fetchProjects());
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [status]);
+  }, []);
 
   const filteredSortedProjects = sortProjects(
     projects.filter((p) =>
@@ -33,14 +35,14 @@ const ProjectsPage = () => {
   );
 
   const projectsDataToDisplay = () => {
-    if (status === 'loading') {
+    if (fetchStatus === 'loading') {
       return <div>Loading...</div>;
-    } else if (status === 'succeeded' && projects.length === 0) {
+    } else if (fetchStatus === 'succeeded' && projects.length === 0) {
       return <div>No Projects added yet.</div>;
-    } else if (status === 'failed' && error) {
-      return <div>{error}</div>;
+    } else if (fetchStatus === 'failed' && fetchError) {
+      return <div>{fetchError}</div>;
     } else if (
-      status === 'succeeded' &&
+      fetchStatus === 'succeeded' &&
       projects.length !== 0 &&
       filteredSortedProjects.length === 0
     ) {

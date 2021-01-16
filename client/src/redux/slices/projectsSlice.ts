@@ -6,15 +6,15 @@ import { getErrorMsg } from '../../utils/helperFuncs';
 
 interface InitialProjectsState {
   projects: ProjectState[];
-  status: 'idle' | 'loading' | 'succeeded' | 'failed';
-  error: string | null;
+  fetchStatus: 'idle' | 'loading' | 'succeeded' | 'failed';
+  fetchError: string | null;
   sortBy: ProjectSortValues;
 }
 
 const initialState: InitialProjectsState = {
   projects: [],
-  status: 'idle',
-  error: null,
+  fetchStatus: 'idle',
+  fetchError: null,
   sortBy: 'newest',
 };
 
@@ -24,19 +24,19 @@ const projectsSlice = createSlice({
   reducers: {
     setProjects: (state, action: PayloadAction<ProjectState[]>) => {
       state.projects = action.payload;
-      state.status = 'succeeded';
-      state.error = null;
+      state.fetchStatus = 'succeeded';
+      state.fetchError = null;
     },
-    setProjectsLoading: (state) => {
-      state.status = 'loading';
-      state.error = null;
+    setFetchProjectsLoading: (state) => {
+      state.fetchStatus = 'loading';
+      state.fetchError = null;
     },
-    setProjectsError: (state, action: PayloadAction<string>) => {
-      state.status = 'failed';
-      state.error = action.payload;
+    setFetchProjectsError: (state, action: PayloadAction<string>) => {
+      state.fetchStatus = 'failed';
+      state.fetchError = action.payload;
     },
-    clearProjectsError: (state) => {
-      state.error = null;
+    clearFetchProjectsError: (state) => {
+      state.fetchError = null;
     },
     sortProjectsBy: (state, action: PayloadAction<ProjectSortValues>) => {
       state.sortBy = action.payload;
@@ -46,20 +46,20 @@ const projectsSlice = createSlice({
 
 export const {
   setProjects,
-  setProjectsLoading,
-  setProjectsError,
-  clearProjectsError,
+  setFetchProjectsLoading,
+  setFetchProjectsError,
+  clearFetchProjectsError,
   sortProjectsBy,
 } = projectsSlice.actions;
 
 export const fetchProjects = (): AppThunk => {
   return async (dispatch) => {
     try {
-      dispatch(setProjectsLoading());
+      dispatch(setFetchProjectsLoading());
       const projectData = await projectService.getProjects();
       dispatch(setProjects(projectData));
     } catch (e) {
-      dispatch(setProjectsError(getErrorMsg(e)));
+      dispatch(setFetchProjectsError(getErrorMsg(e)));
     }
   };
 };
