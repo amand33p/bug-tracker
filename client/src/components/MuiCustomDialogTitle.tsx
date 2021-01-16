@@ -21,7 +21,7 @@ const styles = (theme: Theme) =>
       position: 'absolute',
       right: theme.spacing(1),
       top: theme.spacing(1),
-      color: theme.palette.primary.main,
+      color: theme.palette.secondary.main,
     },
   });
 
@@ -34,7 +34,7 @@ export const DialogTitle = withStyles(styles)((props: DialogTitleProps) => {
   const { children, classes, onClose, ...other } = props;
   return (
     <MuiDialogTitle disableTypography className={classes.root} {...other}>
-      <Typography variant="h6" color="primary">
+      <Typography variant="h6" color="secondary">
         {children}
       </Typography>
       {onClose ? (

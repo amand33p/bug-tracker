@@ -2,10 +2,11 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import FilterBar from '../../components/FilterBar';
 import SortBar from '../../components/SortBar';
+import DialogBox from '../../components/DialogBox';
+import ProjectForm from './ProjectForm';
 import { ProjectSortValues } from '../../redux/types';
 import { sortProjectsBy } from '../../redux/slices/projectsSlice';
 
-import { Button } from '@material-ui/core';
 import { useActionCardStyles } from '../../styles/muiStyles';
 import AddIcon from '@material-ui/icons/Add';
 
@@ -53,14 +54,17 @@ const ProjectsActionCard: React.FC<{
           />
         </div>
       </div>
-      <Button
-        size="large"
-        variant="contained"
-        color="primary"
-        startIcon={<AddIcon />}
+      <DialogBox
+        triggerBtn={{
+          type: 'normal',
+          text: 'Add Project',
+          icon: AddIcon,
+          size: 'large',
+        }}
+        title="Add a new project"
       >
-        Add Project
-      </Button>
+        <ProjectForm />
+      </DialogBox>
     </div>
   );
 };

@@ -3,12 +3,14 @@ import { ThunkAction } from 'redux-thunk';
 import authReducer from './slices/authSlice';
 import projectsReducer from './slices/projectsSlice';
 import bugsReducer from './slices/bugsSlice';
+import usersReducer from './slices/usersSlice';
 
 const store = configureStore({
   reducer: {
     auth: authReducer,
     projects: projectsReducer,
     bugs: bugsReducer,
+    users: usersReducer,
   },
 });
 

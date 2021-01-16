@@ -55,6 +55,23 @@ export const useDialogStyles = makeStyles(
   { index: 1 }
 );
 
+export const useFormStyles = makeStyles(
+  (theme) => ({
+    textField: {
+      marginBottom: '1.5em',
+    },
+    submitBtn: {
+      marginTop: '2em',
+      height: '3.2em',
+    },
+    avatar: {
+      color: theme.palette.primary.main,
+      backgroundColor: '#d3d3d3',
+    },
+  }),
+  { index: 1 }
+);
+
 export const useMainPageStyles = makeStyles(
   (theme) => ({
     root: {

@@ -14,6 +14,7 @@ interface NormalButtonType {
   type: 'normal';
   text: string;
   icon: (props: SvgIconProps) => JSX.Element;
+  size?: 'small' | 'medium' | 'large';
 }
 
 interface IconButtonType {
@@ -33,7 +34,7 @@ type TriggerButtonDetails =
   | MenuItemButtonType;
 
 const DialogBox: React.FC<{
-  title: 'string';
+  title: string;
   triggerBtn: TriggerButtonDetails;
   children: React.ReactNode;
 }> = ({ triggerBtn, children, title }) => {
@@ -52,7 +53,10 @@ const DialogBox: React.FC<{
     if (triggerBtn.type === 'normal') {
       return (
         <Button
-          startIcon={<triggerBtn.icon color="primary" />}
+          color="primary"
+          variant="contained"
+          size={triggerBtn.size || 'medium'}
+          startIcon={<triggerBtn.icon />}
           onClick={handleModalOpen}
         >
           {triggerBtn.text}
