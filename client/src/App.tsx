@@ -5,7 +5,6 @@ import NavBar from './components/NavBar';
 import Routes from './Routes';
 import storage from './utils/localStorage';
 
-import { Container } from '@material-ui/core';
 import customTheme from './styles/customTheme';
 import { useBodyStyles } from './styles/muiStyles';
 import { ThemeProvider } from '@material-ui/core/styles';

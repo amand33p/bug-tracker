@@ -42,6 +42,19 @@ export const useTableStyles = makeStyles(
   { index: 1 }
 );
 
+export const useDialogStyles = makeStyles(
+  (theme) => ({
+    dialogWrapper: {
+      paddingBottom: 20,
+      overflow: 'hidden',
+      [theme.breakpoints.down('xs')]: {
+        padding: 0,
+      },
+    },
+  }),
+  { index: 1 }
+);
+
 export const useMainPageStyles = makeStyles(
   (theme) => ({
     root: {
