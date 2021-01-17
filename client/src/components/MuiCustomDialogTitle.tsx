@@ -37,7 +37,7 @@ export const DialogTitle = withStyles(styles)((props: DialogTitleProps) => {
       <Typography variant="h6" color="secondary">
         {children}
       </Typography>
-      {onClose ? (
+      {onClose && (
         <IconButton
           aria-label="close"
           className={classes.closeButton}
@@ -45,7 +45,7 @@ export const DialogTitle = withStyles(styles)((props: DialogTitleProps) => {
         >
           <CloseIcon />
         </IconButton>
-      ) : null}
+      )}
     </MuiDialogTitle>
   );
 });

@@ -170,6 +170,7 @@ export const useNavStyles = makeStyles(
     container: {
       position: 'sticky',
       top: 0,
+      zIndex: 100,
     },
     leftPortion: {
       flexGrow: 1,

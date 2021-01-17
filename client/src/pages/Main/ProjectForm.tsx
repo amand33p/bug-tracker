@@ -34,7 +34,7 @@ const validationSchema = yup.object({
     .max(30, 'Must be at most 30 characters'),
 });
 
-const ProjectForm = () => {
+const ProjectForm: React.FC<{ closeModal?: () => void }> = ({ closeModal }) => {
   const classes = useFormStyles();
   const dispatch = useDispatch();
   const { submitError, submitLoading } = useSelector(selectProjectsState);
@@ -50,7 +50,7 @@ const ProjectForm = () => {
   };
 
   const handleCreateProject = ({ name }: { name: string }) => {
-    dispatch(createNewProject({ name, members }));
+    dispatch(createNewProject({ name, members }, closeModal));
   };
 
   return (

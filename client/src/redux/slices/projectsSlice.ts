@@ -88,12 +88,16 @@ export const fetchProjects = (): AppThunk => {
   };
 };
 
-export const createNewProject = (projectData: NewProjectPayload): AppThunk => {
+export const createNewProject = (
+  projectData: NewProjectPayload,
+  closeModal?: () => void
+): AppThunk => {
   return async (dispatch) => {
     try {
       dispatch(setSubmitProjectLoading());
       const newProject = await projectService.createProject(projectData);
       dispatch(addProject(newProject));
+      closeModal && closeModal();
     } catch (e) {
       dispatch(setSubmitProjectError(getErrorMsg(e)));
     }

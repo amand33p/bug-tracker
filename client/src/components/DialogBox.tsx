@@ -78,6 +78,12 @@ const DialogBox: React.FC<{
     }
   };
 
+  const proppedChildren = React.isValidElement(children)
+    ? React.cloneElement(children, {
+        closeModal: handleModalClose,
+      })
+    : children;
+
   return (
     <div>
       {triggerButton()}
@@ -89,7 +95,7 @@ const DialogBox: React.FC<{
         classes={{ paper: classes.dialogWrapper }}
       >
         <DialogTitle onClose={handleModalClose}>{title}</DialogTitle>
-        <DialogContent>{children}</DialogContent>
+        <DialogContent>{proppedChildren}</DialogContent>
       </Dialog>
     </div>
   );
