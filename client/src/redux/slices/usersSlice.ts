@@ -42,8 +42,8 @@ export const fetchUsers = (): AppThunk => {
   return async (dispatch) => {
     try {
       dispatch(setUsersLoading());
-      const usersData = await userService.getUsers();
-      dispatch(setUsers(usersData));
+      const allUsers = await userService.getUsers();
+      dispatch(setUsers(allUsers));
     } catch (e) {
       dispatch(setUsersError(getErrorMsg(e)));
     }

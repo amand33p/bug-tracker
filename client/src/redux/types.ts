@@ -82,7 +82,7 @@ export interface CredentialsPayload {
 
 export interface NewProjectPayload {
   name: string;
-  members: User[];
+  members: string[];
 }
 
 export type ResetFields = () => void;

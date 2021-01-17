@@ -1,8 +1,14 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import {
+  createNewProject,
+  selectProjectsState,
+  clearSubmitProjectError,
+} from '../../redux/slices/projectsSlice';
 import { selectUsersState } from '../../redux/slices/usersSlice';
 import { User } from '../../redux/types';
+import ErrorBox from '../../components/ErrorBox';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 
@@ -30,6 +36,8 @@ const validationSchema = yup.object({
 
 const ProjectForm = () => {
   const classes = useFormStyles();
+  const dispatch = useDispatch();
+  const { submitError, submitLoading } = useSelector(selectProjectsState);
   const { users } = useSelector(selectUsersState);
   const { register, handleSubmit, errors } = useForm({
     mode: 'onChange',
@@ -42,7 +50,7 @@ const ProjectForm = () => {
   };
 
   const handleCreateProject = ({ name }: { name: string }) => {
-    console.log(name, members);
+    dispatch(createNewProject({ name, members }));
   };
 
   return (
@@ -128,9 +136,16 @@ const ProjectForm = () => {
         fullWidth
         className={classes.submitBtn}
         type="submit"
+        disabled={submitLoading}
       >
         Create New Project
       </Button>
+      {submitError && (
+        <ErrorBox
+          errorMsg={submitError}
+          clearErrorMsg={() => dispatch(clearSubmitProjectError())}
+        />
+      )}
     </form>
   );
 };

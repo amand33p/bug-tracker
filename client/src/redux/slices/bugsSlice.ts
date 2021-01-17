@@ -59,8 +59,8 @@ export const fetchBugsByProjectId = (projectId: string): AppThunk => {
   return async (dispatch) => {
     try {
       dispatch(setBugsLoading());
-      const bugsData = await bugService.getBugs(projectId);
-      dispatch(setBugs({ bugs: bugsData, projectId }));
+      const projectBugs = await bugService.getBugs(projectId);
+      dispatch(setBugs({ bugs: projectBugs, projectId }));
     } catch (e) {
       dispatch(setBugsError(getErrorMsg(e)));
     }
