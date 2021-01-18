@@ -10,6 +10,7 @@ interface InitialProjectsState {
   fetchError: string | null;
   submitLoading: boolean;
   submitError: string | null;
+  deleteError: string | null;
   sortBy: ProjectSortValues;
 }
 
@@ -19,6 +20,7 @@ const initialState: InitialProjectsState = {
   fetchError: null,
   submitLoading: false,
   submitError: null,
+  deleteError: null,
   sortBy: 'newest',
 };
 
@@ -39,9 +41,6 @@ const projectsSlice = createSlice({
       state.fetchStatus = 'failed';
       state.fetchError = action.payload;
     },
-    clearFetchProjectsError: (state) => {
-      state.fetchError = null;
-    },
     addProject: (state, action: PayloadAction<ProjectState>) => {
       state.projects.push(action.payload);
       state.submitLoading = false;
@@ -58,6 +57,13 @@ const projectsSlice = createSlice({
     clearSubmitProjectError: (state) => {
       state.submitError = null;
     },
+    removeProject: (state, action: PayloadAction<string>) => {
+      state.projects = state.projects.filter((p) => p.id !== action.payload);
+      state.deleteError = null;
+    },
+    setDeleteProjectError: (state, action: PayloadAction<string>) => {
+      state.deleteError = action.payload;
+    },
     sortProjectsBy: (state, action: PayloadAction<ProjectSortValues>) => {
       state.sortBy = action.payload;
     },
@@ -68,11 +74,12 @@ export const {
   setProjects,
   setFetchProjectsLoading,
   setFetchProjectsError,
-  clearFetchProjectsError,
   addProject,
   setSubmitProjectLoading,
   setSubmitProjectError,
   clearSubmitProjectError,
+  removeProject,
+  setDeleteProjectError,
   sortProjectsBy,
 } = projectsSlice.actions;
 
@@ -90,16 +97,27 @@ export const fetchProjects = (): AppThunk => {
 
 export const createNewProject = (
   projectData: NewProjectPayload,
-  closeModal?: () => void
+  closeDialog?: () => void
 ): AppThunk => {
   return async (dispatch) => {
     try {
       dispatch(setSubmitProjectLoading());
       const newProject = await projectService.createProject(projectData);
       dispatch(addProject(newProject));
-      closeModal && closeModal();
+      closeDialog && closeDialog();
     } catch (e) {
       dispatch(setSubmitProjectError(getErrorMsg(e)));
+    }
+  };
+};
+
+export const deleteProject = (projectId: string): AppThunk => {
+  return async (dispatch) => {
+    try {
+      await projectService.deleteProject(projectId);
+      dispatch(removeProject(projectId));
+    } catch (e) {
+      dispatch(setDeleteProjectError(getErrorMsg(e)));
     }
   };
 };

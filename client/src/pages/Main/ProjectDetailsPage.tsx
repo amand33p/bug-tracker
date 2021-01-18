@@ -100,6 +100,7 @@ const ProjectDetailsPage = () => {
               variant="outlined"
               startIcon={viewMembers ? <ExpandLessIcon /> : <ExpandMoreIcon />}
               onClick={() => setViewMembers(!viewMembers)}
+              style={{ marginRight: '1em' }}
             >
               {viewMembers ? 'Hide Members' : 'View Members'}
             </Button>
@@ -109,7 +110,6 @@ const ProjectDetailsPage = () => {
               color="primary"
               variant="contained"
               startIcon={<ExitToAppOutlinedIcon />}
-              style={{ marginLeft: '1em' }}
             >
               Leave Project
             </Button>
@@ -120,7 +120,7 @@ const ProjectDetailsPage = () => {
                 color="primary"
                 variant="contained"
                 startIcon={<GroupAddOutlinedIcon />}
-                style={{ marginLeft: '1em' }}
+                style={{ marginRight: '1em' }}
               >
                 Add Members
               </Button>
@@ -128,7 +128,6 @@ const ProjectDetailsPage = () => {
                 color="primary"
                 variant="contained"
                 startIcon={<DeleteOutlineIcon />}
-                style={{ marginLeft: '1em' }}
               >
                 Delete Project
               </Button>

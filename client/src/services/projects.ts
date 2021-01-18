@@ -22,6 +22,11 @@ const createProject = async (projectData: NewProjectPayload) => {
   return response.data;
 };
 
-const projectService = { getProjects, createProject };
+const deleteProject = async (projectId: string) => {
+  const response = await axios.delete(`${baseUrl}/${projectId}`, setConfig());
+  return response.data;
+};
+
+const projectService = { getProjects, createProject, deleteProject };
 
 export default projectService;

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import FilterBar from '../../components/FilterBar';
 import SortBar from '../../components/SortBar';
-import DialogBox from '../../components/DialogBox';
+import FormDialog from '../../components/FormDialog';
 import ProjectForm from './ProjectForm';
 import { ProjectSortValues } from '../../redux/types';
 import { sortProjectsBy } from '../../redux/slices/projectsSlice';
@@ -54,7 +54,7 @@ const ProjectsActionCard: React.FC<{
           />
         </div>
       </div>
-      <DialogBox
+      <FormDialog
         triggerBtn={{
           type: 'normal',
           text: 'Add Project',
@@ -64,7 +64,7 @@ const ProjectsActionCard: React.FC<{
         title="Add a new project"
       >
         <ProjectForm />
-      </DialogBox>
+      </FormDialog>
     </div>
   );
 };

@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
-import { DialogTitle } from './MuiCustomDialogTitle';
+
 import {
-  Dialog,
-  DialogContent,
   Button,
   IconButton,
   MenuItem,
   SvgIconProps,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
 } from '@material-ui/core';
-import { useDialogStyles } from '../styles/muiStyles';
 
 interface NormalButtonType {
   type: 'normal';
@@ -33,20 +35,27 @@ type TriggerButtonDetails =
   | IconButtonType
   | MenuItemButtonType;
 
-const DialogBox: React.FC<{
+const ConfirmDialog: React.FC<{
   title: string;
+  contentText: string;
+  actionBtnText: string;
   triggerBtn: TriggerButtonDetails;
-  children: React.ReactNode;
-}> = ({ triggerBtn, children, title }) => {
-  const classes = useDialogStyles();
-  const [modalOpen, setModalOpen] = useState(false);
+  handleConfirmedAction: () => void;
+}> = ({
+  title,
+  contentText,
+  actionBtnText,
+  triggerBtn,
+  handleConfirmedAction,
+}) => {
+  const [dialogOpen, setDialogOpen] = useState(false);
 
-  const handleModalClose = () => {
-    setModalOpen(false);
+  const handleDialogClose = () => {
+    setDialogOpen(false);
   };
 
-  const handleModalOpen = () => {
-    setModalOpen(true);
+  const handleDialogOpen = () => {
+    setDialogOpen(true);
   };
 
   const triggerButton = () => {
@@ -57,20 +66,20 @@ const DialogBox: React.FC<{
           variant="contained"
           size={triggerBtn.size || 'medium'}
           startIcon={<triggerBtn.icon />}
-          onClick={handleModalOpen}
+          onClick={handleDialogOpen}
         >
           {triggerBtn.text}
         </Button>
       );
     } else if (triggerBtn.type === 'icon') {
       return (
-        <IconButton color="primary" onClick={handleModalOpen}>
+        <IconButton color="primary" onClick={handleDialogOpen}>
           <triggerBtn.icon />
         </IconButton>
       );
     } else {
       return (
-        <MenuItem onClick={handleModalOpen}>
+        <MenuItem onClick={handleDialogOpen}>
           <triggerBtn.icon />
           {triggerBtn.text}
         </MenuItem>
@@ -78,27 +87,25 @@ const DialogBox: React.FC<{
     }
   };
 
-  const proppedChildren = React.isValidElement(children)
-    ? React.cloneElement(children, {
-        closeModal: handleModalClose,
-      })
-    : children;
-
   return (
     <div>
       {triggerButton()}
-      <Dialog
-        open={modalOpen}
-        onClose={handleModalClose}
-        maxWidth="sm"
-        fullWidth
-        classes={{ paper: classes.dialogWrapper }}
-      >
-        <DialogTitle onClose={handleModalClose}>{title}</DialogTitle>
-        <DialogContent>{proppedChildren}</DialogContent>
+      <Dialog open={dialogOpen} onClose={handleDialogOpen}>
+        <DialogTitle>{title}</DialogTitle>
+        <DialogContent dividers>
+          <DialogContentText>{contentText}</DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleDialogClose} color="primary">
+            Cancel
+          </Button>
+          <Button onClick={handleConfirmedAction} color="primary" autoFocus>
+            {actionBtnText}
+          </Button>
+        </DialogActions>
       </Dialog>
     </div>
   );
 };
 
-export default DialogBox;
+export default ConfirmDialog;
