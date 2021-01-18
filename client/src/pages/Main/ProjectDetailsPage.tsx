@@ -64,7 +64,7 @@ const ProjectDetailsPage = () => {
           {isAdmin && (
             <FormDialog
               triggerBtn={{ type: 'icon', icon: EditIcon, size: 'small' }}
-              title="Edit project name"
+              title="Edit the project name"
             >
               <ProjectForm editMode="name" previousName={name} projectId={id} />
             </FormDialog>
