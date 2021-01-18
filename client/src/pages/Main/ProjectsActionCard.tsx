@@ -63,7 +63,7 @@ const ProjectsActionCard: React.FC<{
         }}
         title="Add a new project"
       >
-        <ProjectForm />
+        <ProjectForm editMode={null} />
       </FormDialog>
     </div>
   );

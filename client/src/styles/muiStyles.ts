@@ -57,8 +57,8 @@ export const useDialogStyles = makeStyles(
 
 export const useFormStyles = makeStyles(
   (theme) => ({
-    textField: {
-      marginBottom: '1.5em',
+    autoCompleteField: {
+      marginTop: '1.5em',
     },
     submitBtn: {
       marginTop: '2em',
@@ -114,7 +114,7 @@ export const useMainPageStyles = makeStyles(
     bugsPaper: {
       padding: '1.5em',
       marginBottom: '0.2em',
-      minHeight: 'calc(100vH - 360px)',
+      minHeight: 'calc(100vH - 382px)',
     },
     notesPaper: {
       padding: '1.5em',

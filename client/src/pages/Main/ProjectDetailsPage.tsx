@@ -7,18 +7,14 @@ import {
 } from '../../redux/slices/projectsSlice';
 import { selectAuthState } from '../../redux/slices/authSlice';
 import { RootState } from '../../redux/store';
+import ProjectForm from './ProjectForm';
 import MembersCard from './MembersCard';
 import BugsCard from './BugsCard';
 import ConfirmDialog from '../../components/ConfirmDialog';
+import FormDialog from '../../components/FormDialog';
 import { formatDateTime } from '../../utils/helperFuncs';
 
-import {
-  Paper,
-  Typography,
-  IconButton,
-  Button,
-  Divider,
-} from '@material-ui/core';
+import { Paper, Typography, Button, Divider } from '@material-ui/core';
 import { useMainPageStyles } from '../../styles/muiStyles';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
@@ -36,9 +32,7 @@ const ProjectDetailsPage = () => {
   const { projectId } = useParams<ParamTypes>();
   const history = useHistory();
   const dispatch = useDispatch();
-  const [filterValue, setFilterValue] = useState('');
   const [viewMembers, setViewMembers] = useState(false);
-  const [editNameOpen, setEditNameOpen] = useState(false);
   const { user } = useSelector(selectAuthState);
   const project = useSelector((state: RootState) =>
     selectProjectById(state, projectId)
@@ -60,21 +54,20 @@ const ProjectDetailsPage = () => {
     <div className={classes.root}>
       <Paper className={classes.detailsHeader}>
         <div className={classes.flexHeader}>
-          {!editNameOpen ? (
-            <Typography variant="h4" color="secondary">
-              <strong>{name}</strong>
-            </Typography>
-          ) : (
-            <h4>ok</h4>
-          )}
-          {isAdmin && !editNameOpen && (
-            <IconButton
-              size="small"
-              style={{ marginLeft: '0.4em' }}
-              onClick={() => setEditNameOpen(true)}
+          <Typography
+            variant="h4"
+            color="secondary"
+            style={{ marginRight: '0.2em' }}
+          >
+            <strong>{name}</strong>
+          </Typography>
+          {isAdmin && (
+            <FormDialog
+              triggerBtn={{ type: 'icon', icon: EditIcon, size: 'small' }}
+              title="Edit project name"
             >
-              <EditIcon color="primary" style={{ fontSize: '1.7em' }} />
-            </IconButton>
+              <ProjectForm editMode="name" previousName={name} projectId={id} />
+            </FormDialog>
           )}
         </div>
         <Divider style={{ margin: '0.5em 0' }} />

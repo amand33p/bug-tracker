@@ -59,6 +59,19 @@ const projectsSlice = createSlice({
     removeProject: (state, action: PayloadAction<string>) => {
       state.projects = state.projects.filter((p) => p.id !== action.payload);
     },
+    updateProjectName: (
+      state,
+      action: PayloadAction<{
+        data: { name: string; updatedAt: Date };
+        projectId: string;
+      }>
+    ) => {
+      state.projects = state.projects.map((p) =>
+        p.id === action.payload.projectId ? { ...p, ...action.payload.data } : p
+      );
+      state.submitLoading = false;
+      state.submitError = null;
+    },
     sortProjectsBy: (state, action: PayloadAction<ProjectSortValues>) => {
       state.sortBy = action.payload;
     },
@@ -74,6 +87,7 @@ export const {
   setSubmitProjectError,
   clearSubmitProjectError,
   removeProject,
+  updateProjectName,
   sortProjectsBy,
 } = projectsSlice.actions;
 
@@ -116,6 +130,34 @@ export const deleteProject = (
       dispatch(removeProject(projectId));
     } catch (e) {
       console.log(console.log(getErrorMsg(e)));
+    }
+  };
+};
+
+export const editProjectName = (
+  projectId: string,
+  name: string,
+  closeDialog?: () => void
+): AppThunk => {
+  return async (dispatch) => {
+    try {
+      dispatch(setSubmitProjectLoading());
+      const updatedProject = await projectService.editProjectName(
+        projectId,
+        name
+      );
+      dispatch(
+        updateProjectName({
+          data: {
+            name: updatedProject.name,
+            updatedAt: updatedProject.updatedAt,
+          },
+          projectId,
+        })
+      );
+      closeDialog && closeDialog();
+    } catch (e) {
+      dispatch(setSubmitProjectError(getErrorMsg(e)));
     }
   };
 };

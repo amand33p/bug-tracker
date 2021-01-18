@@ -20,6 +20,7 @@ interface NormalButtonType {
 interface IconButtonType {
   type: 'icon';
   icon: (props: SvgIconProps) => JSX.Element;
+  size?: 'small' | 'medium';
 }
 
 interface MenuItemButtonType {
@@ -52,7 +53,11 @@ const FormDialog: React.FC<{
   const triggerButton = () => {
     if (triggerBtn.type === 'icon') {
       return (
-        <IconButton color="primary" onClick={handleDialogOpen}>
+        <IconButton
+          color="primary"
+          onClick={handleDialogOpen}
+          size={triggerBtn.size || 'medium'}
+        >
           <triggerBtn.icon />
         </IconButton>
       );

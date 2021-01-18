@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form';
 import { useSelector, useDispatch } from 'react-redux';
 import {
   createNewProject,
+  editProjectName,
   selectProjectsState,
   clearSubmitProjectError,
 } from '../../redux/slices/projectsSlice';
@@ -34,8 +35,38 @@ const validationSchema = yup.object({
     .max(30, 'Must be at most 30 characters'),
 });
 
-const ProjectForm: React.FC<{ closeDialog?: () => void }> = ({
+interface BaseType {
+  closeDialog?: () => void;
+}
+interface CreateProject extends BaseType {
+  editMode: null;
+  previousName?: string;
+  previousMembers?: string[];
+  projectId?: string;
+}
+
+interface EditProjectName extends BaseType {
+  editMode: 'name';
+  previousName: string;
+  projectId: string;
+  previousMembers?: string[];
+}
+
+interface AddProjectMembers extends BaseType {
+  editMode: 'members';
+  previousMembers: string[];
+  projectId: string;
+  previousName?: string;
+}
+
+type ProjectFormPropTypes = CreateProject | EditProjectName | AddProjectMembers;
+
+const ProjectForm: React.FC<ProjectFormPropTypes> = ({
   closeDialog,
+  editMode,
+  previousName,
+  previousMembers,
+  projectId,
 }) => {
   const classes = useFormStyles();
   const dispatch = useDispatch();
@@ -44,8 +75,11 @@ const ProjectForm: React.FC<{ closeDialog?: () => void }> = ({
   const { register, handleSubmit, errors } = useForm({
     mode: 'onChange',
     resolver: yupResolver(validationSchema),
+    defaultValues: {
+      name: previousName || '',
+    },
   });
-  const [members, setMembers] = useState<string[]>([]);
+  const [members, setMembers] = useState<string[]>(previousMembers || []);
 
   const selectMembersOnChange = (e: any, selectedOption: User[]) => {
     setMembers(selectedOption.map((s) => s.id));
@@ -55,8 +89,14 @@ const ProjectForm: React.FC<{ closeDialog?: () => void }> = ({
     dispatch(createNewProject({ name, members }, closeDialog));
   };
 
+  const handleEditName = ({ name }: { name: string }) => {
+    dispatch(editProjectName(projectId as string, name, closeDialog));
+  };
+
   return (
-    <form onSubmit={handleSubmit(handleCreateProject)}>
+    <form
+      onSubmit={handleSubmit(!editMode ? handleCreateProject : handleEditName)}
+    >
       <TextField
         inputRef={register}
         name="name"
@@ -66,8 +106,7 @@ const ProjectForm: React.FC<{ closeDialog?: () => void }> = ({
         label="Project Name"
         variant="outlined"
         error={'name' in errors}
-        helperText={'name' in errors ? errors.name.message : ''}
-        className={classes.textField}
+        helperText={'name' in errors ? errors.name?.message : ''}
         InputProps={{
           startAdornment: (
             <InputAdornment position="start">
@@ -76,61 +115,64 @@ const ProjectForm: React.FC<{ closeDialog?: () => void }> = ({
           ),
         }}
       />
-      <Autocomplete
-        multiple
-        filterSelectedOptions
-        onChange={selectMembersOnChange}
-        options={users}
-        getOptionLabel={(option) => option.username}
-        renderInput={(params) => (
-          <TextField
-            {...params}
-            variant="outlined"
-            label="Select Members"
-            InputProps={{
-              ...params.InputProps,
-              startAdornment: (
-                <>
-                  <InputAdornment
-                    position="start"
-                    style={{ paddingLeft: '0.4em' }}
-                  >
-                    <GroupIcon color="primary" />
-                  </InputAdornment>
-                  {params.InputProps.startAdornment}
-                </>
-              ),
-            }}
-          />
-        )}
-        renderOption={(option) => (
-          <ListItem dense component="div">
-            <ListItemAvatar>
-              <Avatar className={classes.avatar}>
-                {option.username.slice(0, 1)}
-              </Avatar>
-            </ListItemAvatar>
-            <ListItemText
-              primary={option.username}
-              primaryTypographyProps={{
-                color: 'secondary',
-                variant: 'body1',
+      {editMode !== 'name' && (
+        <Autocomplete
+          className={classes.autoCompleteField}
+          multiple
+          filterSelectedOptions
+          onChange={selectMembersOnChange}
+          options={users}
+          getOptionLabel={(option) => option.username}
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              variant="outlined"
+              label="Select Members"
+              InputProps={{
+                ...params.InputProps,
+                startAdornment: (
+                  <>
+                    <InputAdornment
+                      position="start"
+                      style={{ paddingLeft: '0.4em' }}
+                    >
+                      <GroupIcon color="primary" />
+                    </InputAdornment>
+                    {params.InputProps.startAdornment}
+                  </>
+                ),
               }}
             />
-          </ListItem>
-        )}
-        renderTags={(value, getTagProps) =>
-          value.map((option, index) => (
-            <Chip
-              avatar={<Avatar>{option.username.slice(0, 1)}</Avatar>}
-              color="secondary"
-              variant="outlined"
-              label={option.username}
-              {...getTagProps({ index })}
-            />
-          ))
-        }
-      />
+          )}
+          renderOption={(option) => (
+            <ListItem dense component="div">
+              <ListItemAvatar>
+                <Avatar className={classes.avatar}>
+                  {option.username.slice(0, 1)}
+                </Avatar>
+              </ListItemAvatar>
+              <ListItemText
+                primary={option.username}
+                primaryTypographyProps={{
+                  color: 'secondary',
+                  variant: 'body1',
+                }}
+              />
+            </ListItem>
+          )}
+          renderTags={(value, getTagProps) =>
+            value.map((option, index) => (
+              <Chip
+                avatar={<Avatar>{option.username.slice(0, 1)}</Avatar>}
+                color="secondary"
+                variant="outlined"
+                label={option.username}
+                {...getTagProps({ index })}
+              />
+            ))
+          }
+        />
+      )}
       <Button
         size="large"
         color="primary"
@@ -140,7 +182,7 @@ const ProjectForm: React.FC<{ closeDialog?: () => void }> = ({
         type="submit"
         disabled={submitLoading}
       >
-        Create New Project
+        {!editMode ? 'Create New Project' : 'Update Project Name'}
       </Button>
       {submitError && (
         <ErrorBox
