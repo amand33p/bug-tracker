@@ -1,12 +1,17 @@
-import { useState } from 'react';
-import { useParams } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import { selectProjectById } from '../../redux/slices/projectsSlice';
+import { useState, useEffect } from 'react';
+import { useParams, useHistory } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import {
+  selectProjectById,
+  deleteProject,
+  selectProjectsState,
+} from '../../redux/slices/projectsSlice';
 import { selectAuthState } from '../../redux/slices/authSlice';
 import { RootState } from '../../redux/store';
 import MembersTable from './MembersTable';
 import FilterBar from '../../components/FilterBar';
 import BugsCard from './BugsCard';
+import ConfirmDialog from '../../components/ConfirmDialog';
 import { formatDateTime } from '../../utils/helperFuncs';
 
 import {
@@ -33,24 +38,38 @@ interface ParamTypes {
 const ProjectDetailsPage = () => {
   const classes = useMainPageStyles();
   const { projectId } = useParams<ParamTypes>();
+  const history = useHistory();
+  const dispatch = useDispatch();
   const [filterValue, setFilterValue] = useState('');
   const [viewMembers, setViewMembers] = useState(false);
   const { user } = useSelector(selectAuthState);
+  const { deleteError } = useSelector(selectProjectsState);
   const project = useSelector((state: RootState) =>
     selectProjectById(state, projectId)
   );
+
+  useEffect(() => {
+    if (deleteError) {
+      console.log(deleteError);
+    }
+  }, [deleteError]);
 
   if (!project) {
     return <div>404: Project not found.</div>;
   }
 
-  const { name, members, createdAt, updatedAt, createdBy } = project;
+  const { id, name, members, createdAt, updatedAt, createdBy } = project;
 
   const isAdmin = createdBy.id === user?.id;
 
   const filteredMembers = members.filter((m) =>
     m.member.username.toLowerCase().includes(filterValue.toLowerCase())
   );
+
+  const handleDeleteProject = () => {
+    dispatch(deleteProject(id));
+    history.push('/');
+  };
 
   const membersDataToDisplay = () => {
     if (filteredMembers.length === 0) {
@@ -124,13 +143,17 @@ const ProjectDetailsPage = () => {
               >
                 Add Members
               </Button>
-              <Button
-                color="primary"
-                variant="contained"
-                startIcon={<DeleteOutlineIcon />}
-              >
-                Delete Project
-              </Button>
+              <ConfirmDialog
+                title="Confirm Delete Project"
+                contentText="Are you sure you want to permanently delete your project?"
+                actionBtnText="Delete Project"
+                triggerBtn={{
+                  type: 'normal',
+                  text: 'Delete Project',
+                  icon: DeleteOutlineIcon,
+                }}
+                actionFunc={handleDeleteProject}
+              />
             </>
           )}
         </div>

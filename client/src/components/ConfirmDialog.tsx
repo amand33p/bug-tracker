@@ -10,6 +10,7 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
+  Typography,
 } from '@material-ui/core';
 
 interface NormalButtonType {
@@ -40,14 +41,8 @@ const ConfirmDialog: React.FC<{
   contentText: string;
   actionBtnText: string;
   triggerBtn: TriggerButtonDetails;
-  handleConfirmedAction: () => void;
-}> = ({
-  title,
-  contentText,
-  actionBtnText,
-  triggerBtn,
-  handleConfirmedAction,
-}) => {
+  actionFunc: () => void;
+}> = ({ title, contentText, actionBtnText, triggerBtn, actionFunc }) => {
   const [dialogOpen, setDialogOpen] = useState(false);
 
   const handleDialogClose = () => {
@@ -58,8 +53,26 @@ const ConfirmDialog: React.FC<{
     setDialogOpen(true);
   };
 
+  const handleConfirmedAction = () => {
+    actionFunc();
+    handleDialogClose();
+  };
+
   const triggerButton = () => {
-    if (triggerBtn.type === 'normal') {
+    if (triggerBtn.type === 'icon') {
+      return (
+        <IconButton color="primary" onClick={handleDialogOpen}>
+          <triggerBtn.icon />
+        </IconButton>
+      );
+    } else if (triggerBtn.type === 'menu') {
+      return (
+        <MenuItem onClick={handleDialogOpen}>
+          <triggerBtn.icon />
+          {triggerBtn.text}
+        </MenuItem>
+      );
+    } else {
       return (
         <Button
           color="primary"
@@ -71,35 +84,34 @@ const ConfirmDialog: React.FC<{
           {triggerBtn.text}
         </Button>
       );
-    } else if (triggerBtn.type === 'icon') {
-      return (
-        <IconButton color="primary" onClick={handleDialogOpen}>
-          <triggerBtn.icon />
-        </IconButton>
-      );
-    } else {
-      return (
-        <MenuItem onClick={handleDialogOpen}>
-          <triggerBtn.icon />
-          {triggerBtn.text}
-        </MenuItem>
-      );
     }
   };
 
   return (
-    <div>
+    <div style={{ display: 'inline' }}>
       {triggerButton()}
       <Dialog open={dialogOpen} onClose={handleDialogOpen}>
-        <DialogTitle>{title}</DialogTitle>
+        <DialogTitle>
+          <Typography color="secondary" variant="h6">
+            {title}
+          </Typography>
+        </DialogTitle>
         <DialogContent dividers>
-          <DialogContentText>{contentText}</DialogContentText>
+          <Typography>{contentText}</Typography>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleDialogClose} color="primary">
+          <Button
+            onClick={handleDialogClose}
+            color="secondary"
+            variant="outlined"
+          >
             Cancel
           </Button>
-          <Button onClick={handleConfirmedAction} color="primary" autoFocus>
+          <Button
+            onClick={handleConfirmedAction}
+            color="primary"
+            variant="contained"
+          >
             {actionBtnText}
           </Button>
         </DialogActions>

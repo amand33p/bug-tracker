@@ -50,7 +50,20 @@ const FormDialog: React.FC<{
   };
 
   const triggerButton = () => {
-    if (triggerBtn.type === 'normal') {
+    if (triggerBtn.type === 'icon') {
+      return (
+        <IconButton color="primary" onClick={handleDialogOpen}>
+          <triggerBtn.icon />
+        </IconButton>
+      );
+    } else if (triggerBtn.type === 'menu') {
+      return (
+        <MenuItem onClick={handleDialogOpen}>
+          <triggerBtn.icon />
+          {triggerBtn.text}
+        </MenuItem>
+      );
+    } else {
       return (
         <Button
           color="primary"
@@ -61,19 +74,6 @@ const FormDialog: React.FC<{
         >
           {triggerBtn.text}
         </Button>
-      );
-    } else if (triggerBtn.type === 'icon') {
-      return (
-        <IconButton color="primary" onClick={handleDialogOpen}>
-          <triggerBtn.icon />
-        </IconButton>
-      );
-    } else {
-      return (
-        <MenuItem onClick={handleDialogOpen}>
-          <triggerBtn.icon />
-          {triggerBtn.text}
-        </MenuItem>
       );
     }
   };
