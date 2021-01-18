@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import {
@@ -7,8 +7,7 @@ import {
 } from '../../redux/slices/projectsSlice';
 import { selectAuthState } from '../../redux/slices/authSlice';
 import { RootState } from '../../redux/store';
-import MembersTable from './MembersTable';
-import FilterBar from '../../components/FilterBar';
+import MembersCard from './MembersCard';
 import BugsCard from './BugsCard';
 import ConfirmDialog from '../../components/ConfirmDialog';
 import { formatDateTime } from '../../utils/helperFuncs';
@@ -18,7 +17,6 @@ import {
   Typography,
   IconButton,
   Button,
-  Collapse,
   Divider,
 } from '@material-ui/core';
 import { useMainPageStyles } from '../../styles/muiStyles';
@@ -27,7 +25,6 @@ import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 import GroupAddOutlinedIcon from '@material-ui/icons/GroupAddOutlined';
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import PeopleAltOutlinedIcon from '@material-ui/icons/PeopleAltOutlined';
 import ExitToAppOutlinedIcon from '@material-ui/icons/ExitToAppOutlined';
 
 interface ParamTypes {
@@ -41,6 +38,7 @@ const ProjectDetailsPage = () => {
   const dispatch = useDispatch();
   const [filterValue, setFilterValue] = useState('');
   const [viewMembers, setViewMembers] = useState(false);
+  const [editNameOpen, setEditNameOpen] = useState(false);
   const { user } = useSelector(selectAuthState);
   const project = useSelector((state: RootState) =>
     selectProjectById(state, projectId)
@@ -54,39 +52,27 @@ const ProjectDetailsPage = () => {
 
   const isAdmin = createdBy.id === user?.id;
 
-  const filteredMembers = members.filter((m) =>
-    m.member.username.toLowerCase().includes(filterValue.toLowerCase())
-  );
-
   const handleDeleteProject = () => {
     dispatch(deleteProject(id, history));
-  };
-
-  const membersDataToDisplay = () => {
-    if (filteredMembers.length === 0) {
-      return <div>No matches found.</div>;
-    } else {
-      return (
-        <div style={{ marginTop: '1em' }}>
-          <MembersTable
-            members={filteredMembers}
-            adminId={createdBy.id}
-            isAdmin={isAdmin}
-          />
-        </div>
-      );
-    }
   };
 
   return (
     <div className={classes.root}>
       <Paper className={classes.detailsHeader}>
         <div className={classes.flexHeader}>
-          <Typography variant="h4" color="secondary">
-            <strong>{name}</strong>
-          </Typography>
-          {isAdmin && (
-            <IconButton size="small" style={{ marginLeft: '0.4em' }}>
+          {!editNameOpen ? (
+            <Typography variant="h4" color="secondary">
+              <strong>{name}</strong>
+            </Typography>
+          ) : (
+            <h4>ok</h4>
+          )}
+          {isAdmin && !editNameOpen && (
+            <IconButton
+              size="small"
+              style={{ marginLeft: '0.4em' }}
+              onClick={() => setEditNameOpen(true)}
+            >
               <EditIcon color="primary" style={{ fontSize: '1.7em' }} />
             </IconButton>
           )}
@@ -149,33 +135,12 @@ const ProjectDetailsPage = () => {
           )}
         </div>
         {members.length > 1 && (
-          <Collapse
-            in={viewMembers}
-            timeout="auto"
-            unmountOnExit
-            className={classes.membersWrapper}
-          >
-            <div className={classes.flexInput}>
-              <Typography
-                variant="h5"
-                color="secondary"
-                className={classes.flexHeader}
-              >
-                <PeopleAltOutlinedIcon
-                  fontSize="large"
-                  style={{ marginRight: '0.2em' }}
-                />
-                Members
-              </Typography>
-              <FilterBar
-                filterValue={filterValue}
-                setFilterValue={setFilterValue}
-                label="Members"
-                size="small"
-              />
-            </div>
-            {membersDataToDisplay()}
-          </Collapse>
+          <MembersCard
+            members={members}
+            viewMembers={viewMembers}
+            isAdmin={isAdmin}
+            adminId={createdBy.id}
+          />
         )}
       </Paper>
       <BugsCard projectId={projectId} />
