@@ -43,13 +43,13 @@ const LoginPage = () => {
   const dispatch = useDispatch();
   const { loading, error } = useSelector(selectAuthState);
   const [showPass, setShowPass] = useState<boolean>(false);
-  const { register, handleSubmit, errors, reset } = useForm({
+  const { register, handleSubmit, errors } = useForm({
     mode: 'onChange',
     resolver: yupResolver(validationSchema),
   });
 
   const handleLogin = ({ username, password }: InputValues) => {
-    dispatch(login({ username, password }, reset));
+    dispatch(login({ username, password }));
   };
 
   return (

@@ -1,9 +1,8 @@
 import axios from 'axios';
 import backendUrl from '../backendUrl';
-import storage from '../utils/localStorage';
+import { token } from './auth';
 
 const baseUrl = `${backendUrl}/users`;
-const token = storage.loadUser()?.token;
 
 const setConfig = () => {
   return {

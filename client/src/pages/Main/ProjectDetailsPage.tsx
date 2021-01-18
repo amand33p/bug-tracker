@@ -4,7 +4,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import {
   selectProjectById,
   deleteProject,
-  selectProjectsState,
 } from '../../redux/slices/projectsSlice';
 import { selectAuthState } from '../../redux/slices/authSlice';
 import { RootState } from '../../redux/store';
@@ -43,16 +42,9 @@ const ProjectDetailsPage = () => {
   const [filterValue, setFilterValue] = useState('');
   const [viewMembers, setViewMembers] = useState(false);
   const { user } = useSelector(selectAuthState);
-  const { deleteError } = useSelector(selectProjectsState);
   const project = useSelector((state: RootState) =>
     selectProjectById(state, projectId)
   );
-
-  useEffect(() => {
-    if (deleteError) {
-      console.log(deleteError);
-    }
-  }, [deleteError]);
 
   if (!project) {
     return <div>404: Project not found.</div>;

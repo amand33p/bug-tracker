@@ -84,5 +84,3 @@ export interface NewProjectPayload {
   name: string;
   members: string[];
 }
-
-export type ResetFields = () => void;

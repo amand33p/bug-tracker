@@ -62,7 +62,7 @@ const SignupPage = () => {
   const { loading, error } = useSelector(selectAuthState);
   const [showPass, setShowPass] = useState<boolean>(false);
   const [showConfPass, setShowConfPass] = useState<boolean>(false);
-  const { register, handleSubmit, reset, errors } = useForm({
+  const { register, handleSubmit, errors } = useForm({
     mode: 'onChange',
     resolver: yupResolver(validationSchema),
   });
@@ -75,7 +75,7 @@ const SignupPage = () => {
     if (password !== confirmPassword) {
       return dispatch(setAuthError('Both passwords need to match.'));
     }
-    dispatch(signup({ username, password }, reset));
+    dispatch(signup({ username, password }));
   };
 
   return (

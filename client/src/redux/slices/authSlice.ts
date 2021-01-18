@@ -2,7 +2,9 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState, AppThunk } from '../store';
 import authService from '../../services/auth';
 import storage from '../../utils/localStorage';
-import { CredentialsPayload, UserState, ResetFields } from '../types';
+import { CredentialsPayload, UserState } from '../types';
+import { fetchProjects } from './projectsSlice';
+import { fetchUsers } from './usersSlice';
 import { getErrorMsg } from '../../utils/helperFuncs';
 
 interface InitialAuthState {
@@ -51,34 +53,36 @@ export const {
   clearAuthError,
 } = authSlice.actions;
 
-export const login = (
-  credentials: CredentialsPayload,
-  resetFields: ResetFields
-): AppThunk => {
+export const login = (credentials: CredentialsPayload): AppThunk => {
   return async (dispatch) => {
     try {
       dispatch(setAuthLoading());
       const userData = await authService.login(credentials);
       dispatch(setUser(userData));
+
       storage.saveUser(userData);
-      resetFields();
+      authService.setToken(userData.token);
+
+      dispatch(fetchProjects());
+      dispatch(fetchUsers());
     } catch (e) {
       dispatch(setAuthError(getErrorMsg(e)));
     }
   };
 };
 
-export const signup = (
-  credentials: CredentialsPayload,
-  resetFields: ResetFields
-): AppThunk => {
+export const signup = (credentials: CredentialsPayload): AppThunk => {
   return async (dispatch) => {
     try {
       dispatch(setAuthLoading());
       const userData = await authService.signup(credentials);
       dispatch(setUser(userData));
+
       storage.saveUser(userData);
-      resetFields();
+      authService.setToken(userData.token);
+
+      dispatch(fetchProjects());
+      dispatch(fetchUsers());
     } catch (e) {
       dispatch(setAuthError(getErrorMsg(e)));
     }

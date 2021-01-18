@@ -11,7 +11,6 @@ interface InitialProjectsState {
   fetchError: string | null;
   submitLoading: boolean;
   submitError: string | null;
-  deleteError: string | null;
   sortBy: ProjectSortValues;
 }
 
@@ -21,7 +20,6 @@ const initialState: InitialProjectsState = {
   fetchError: null,
   submitLoading: false,
   submitError: null,
-  deleteError: null,
   sortBy: 'newest',
 };
 
@@ -60,10 +58,6 @@ const projectsSlice = createSlice({
     },
     removeProject: (state, action: PayloadAction<string>) => {
       state.projects = state.projects.filter((p) => p.id !== action.payload);
-      state.deleteError = null;
-    },
-    setDeleteProjectError: (state, action: PayloadAction<string>) => {
-      state.deleteError = action.payload;
     },
     sortProjectsBy: (state, action: PayloadAction<ProjectSortValues>) => {
       state.sortBy = action.payload;
@@ -80,7 +74,6 @@ export const {
   setSubmitProjectError,
   clearSubmitProjectError,
   removeProject,
-  setDeleteProjectError,
   sortProjectsBy,
 } = projectsSlice.actions;
 
@@ -122,7 +115,7 @@ export const deleteProject = (
       history.push('/');
       dispatch(removeProject(projectId));
     } catch (e) {
-      dispatch(setDeleteProjectError(getErrorMsg(e)));
+      console.log(console.log(getErrorMsg(e)));
     }
   };
 };

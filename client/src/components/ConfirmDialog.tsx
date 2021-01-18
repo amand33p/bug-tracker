@@ -104,6 +104,7 @@ const ConfirmDialog: React.FC<{
             onClick={handleDialogClose}
             color="secondary"
             variant="outlined"
+            size="small"
           >
             Cancel
           </Button>
@@ -111,6 +112,7 @@ const ConfirmDialog: React.FC<{
             onClick={handleConfirmedAction}
             color="primary"
             variant="contained"
+            size="small"
           >
             {actionBtnText}
           </Button>

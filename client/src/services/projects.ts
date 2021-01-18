@@ -1,10 +1,9 @@
 import axios from 'axios';
 import backendUrl from '../backendUrl';
-import storage from '../utils/localStorage';
+import { token } from './auth';
 import { NewProjectPayload } from '../redux/types';
 
 const baseUrl = `${backendUrl}/projects`;
-const token = storage.loadUser()?.token;
 
 const setConfig = () => {
   return {
@@ -27,6 +26,20 @@ const deleteProject = async (projectId: string) => {
   return response.data;
 };
 
-const projectService = { getProjects, createProject, deleteProject };
+const editProjectName = async (projectId: string, newName: string) => {
+  const response = await axios.put(
+    `${baseUrl}/${projectId}`,
+    { name: newName },
+    setConfig()
+  );
+  return response.data;
+};
+
+const projectService = {
+  getProjects,
+  createProject,
+  deleteProject,
+  editProjectName,
+};
 
 export default projectService;
