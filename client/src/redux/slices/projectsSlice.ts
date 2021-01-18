@@ -2,6 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState, AppThunk } from '../store';
 import projectService from '../../services/projects';
 import { ProjectState, ProjectSortValues, NewProjectPayload } from '../types';
+import { History } from 'history';
 import { getErrorMsg } from '../../utils/helperFuncs';
 
 interface InitialProjectsState {
@@ -111,10 +112,14 @@ export const createNewProject = (
   };
 };
 
-export const deleteProject = (projectId: string): AppThunk => {
+export const deleteProject = (
+  projectId: string,
+  history: History
+): AppThunk => {
   return async (dispatch) => {
     try {
       await projectService.deleteProject(projectId);
+      history.push('/');
       dispatch(removeProject(projectId));
     } catch (e) {
       dispatch(setDeleteProjectError(getErrorMsg(e)));

@@ -67,8 +67,7 @@ const ProjectDetailsPage = () => {
   );
 
   const handleDeleteProject = () => {
-    dispatch(deleteProject(id));
-    history.push('/');
+    dispatch(deleteProject(id, history));
   };
 
   const membersDataToDisplay = () => {
