@@ -1,10 +1,9 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setUser } from './redux/slices/authSlice';
+import { autoLogin } from './redux/slices/authSlice';
 import { fetchUsers, selectUsersState } from './redux/slices/usersSlice';
 import NavBar from './components/NavBar';
 import Routes from './Routes';
-import storage from './utils/localStorage';
 
 import customTheme from './styles/customTheme';
 import { useBodyStyles } from './styles/muiStyles';
@@ -17,10 +16,7 @@ const App = () => {
   const darkMode = false; //placeholder
 
   useEffect(() => {
-    const loggedUser = storage.loadUser();
-    if (loggedUser) {
-      dispatch(setUser(loggedUser));
-    }
+    dispatch(autoLogin());
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

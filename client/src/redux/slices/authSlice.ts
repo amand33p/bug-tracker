@@ -96,6 +96,16 @@ export const logout = (): AppThunk => {
   };
 };
 
+export const autoLogin = (): AppThunk => {
+  return (dispatch) => {
+    const loggedUser = storage.loadUser();
+    if (loggedUser) {
+      dispatch(setUser(loggedUser));
+      authService.setToken(loggedUser.token);
+    }
+  };
+};
+
 export const selectAuthState = (state: RootState) => state.auth;
 
 export default authSlice.reducer;
