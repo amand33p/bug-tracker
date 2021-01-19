@@ -57,9 +57,6 @@ export const useDialogStyles = makeStyles(
 
 export const useFormStyles = makeStyles(
   (theme) => ({
-    autoCompleteField: {
-      marginTop: '1.5em',
-    },
     submitBtn: {
       marginTop: '2em',
       height: '3.2em',

@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import {
   createNewProject,
   editProjectName,
+  addProjectMembers,
   selectProjectsState,
   clearSubmitProjectError,
 } from '../../redux/slices/projectsSlice';
@@ -40,23 +41,23 @@ interface BaseType {
 }
 interface CreateProject extends BaseType {
   editMode: null;
-  previousName?: string;
-  previousMembers?: string[];
+  currentName?: string;
+  currentMembers?: string[];
   projectId?: string;
 }
 
 interface EditProjectName extends BaseType {
   editMode: 'name';
-  previousName: string;
+  currentName: string;
   projectId: string;
-  previousMembers?: string[];
+  currentMembers?: string[];
 }
 
 interface AddProjectMembers extends BaseType {
   editMode: 'members';
-  previousMembers: string[];
+  currentMembers: string[];
   projectId: string;
-  previousName?: string;
+  currentName?: string;
 }
 
 type ProjectFormPropTypes = CreateProject | EditProjectName | AddProjectMembers;
@@ -64,8 +65,8 @@ type ProjectFormPropTypes = CreateProject | EditProjectName | AddProjectMembers;
 const ProjectForm: React.FC<ProjectFormPropTypes> = ({
   closeDialog,
   editMode,
-  previousName,
-  previousMembers,
+  currentName,
+  currentMembers,
   projectId,
 }) => {
   const classes = useFormStyles();
@@ -76,10 +77,10 @@ const ProjectForm: React.FC<ProjectFormPropTypes> = ({
     mode: 'onChange',
     resolver: yupResolver(validationSchema),
     defaultValues: {
-      name: previousName || '',
+      name: currentName || '',
     },
   });
-  const [members, setMembers] = useState<string[]>(previousMembers || []);
+  const [members, setMembers] = useState<string[]>([]);
 
   const selectMembersOnChange = (e: any, selectedOption: User[]) => {
     setMembers(selectedOption.map((s) => s.id));
@@ -93,40 +94,59 @@ const ProjectForm: React.FC<ProjectFormPropTypes> = ({
     dispatch(editProjectName(projectId as string, name, closeDialog));
   };
 
+  const handleAddMembers = (e: React.FormEvent<EventTarget>) => {
+    e.preventDefault();
+
+    dispatch(addProjectMembers(projectId as string, members, closeDialog));
+  };
+
   return (
     <form
-      onSubmit={handleSubmit(!editMode ? handleCreateProject : handleEditName)}
+      onSubmit={
+        editMode !== 'members'
+          ? handleSubmit(
+              editMode === 'name' ? handleEditName : handleCreateProject
+            )
+          : handleAddMembers
+      }
     >
-      <TextField
-        inputRef={register}
-        name="name"
-        required
-        fullWidth
-        type="text"
-        label="Project Name"
-        variant="outlined"
-        error={'name' in errors}
-        helperText={'name' in errors ? errors.name?.message : ''}
-        InputProps={{
-          startAdornment: (
-            <InputAdornment position="start">
-              <LabelImportantIcon color="primary" />
-            </InputAdornment>
-          ),
-        }}
-      />
+      {editMode !== 'members' && (
+        <TextField
+          inputRef={register}
+          name="name"
+          required
+          fullWidth
+          type="text"
+          label="Project Name"
+          variant="outlined"
+          error={'name' in errors}
+          helperText={'name' in errors ? errors.name?.message : ''}
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <LabelImportantIcon color="primary" />
+              </InputAdornment>
+            ),
+          }}
+        />
+      )}
       {editMode !== 'name' && (
         <Autocomplete
-          className={classes.autoCompleteField}
+          style={{ marginTop: editMode !== 'members' ? '1.5em' : 0 }}
           multiple
           filterSelectedOptions
           onChange={selectMembersOnChange}
-          options={users}
+          options={
+            editMode !== 'members'
+              ? users
+              : users.filter((u) => !currentMembers?.includes(u.id))
+          }
           getOptionLabel={(option) => option.username}
           renderInput={(params) => (
             <TextField
               {...params}
               variant="outlined"
+              required={editMode === 'members'}
               label="Select Members"
               InputProps={{
                 ...params.InputProps,
@@ -141,6 +161,10 @@ const ProjectForm: React.FC<ProjectFormPropTypes> = ({
                     {params.InputProps.startAdornment}
                   </>
                 ),
+              }}
+              inputProps={{
+                ...params.inputProps,
+                required: members.length === 0 && editMode === 'members',
               }}
             />
           )}
@@ -182,7 +206,11 @@ const ProjectForm: React.FC<ProjectFormPropTypes> = ({
         type="submit"
         disabled={submitLoading}
       >
-        {!editMode ? 'Create New Project' : 'Update Project Name'}
+        {editMode === 'name'
+          ? 'Update Project Name'
+          : editMode === 'members'
+          ? 'Add Project Members'
+          : 'Create New Project'}
       </Button>
       {submitError && (
         <ErrorBox

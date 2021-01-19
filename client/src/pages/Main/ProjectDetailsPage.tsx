@@ -66,7 +66,7 @@ const ProjectDetailsPage = () => {
               triggerBtn={{ type: 'icon', icon: EditIcon, size: 'small' }}
               title="Edit the project name"
             >
-              <ProjectForm editMode="name" previousName={name} projectId={id} />
+              <ProjectForm editMode="name" currentName={name} projectId={id} />
             </FormDialog>
           )}
         </div>
@@ -105,14 +105,21 @@ const ProjectDetailsPage = () => {
           )}
           {isAdmin && (
             <>
-              <Button
-                color="primary"
-                variant="contained"
-                startIcon={<GroupAddOutlinedIcon />}
-                style={{ marginRight: '1em' }}
+              <FormDialog
+                triggerBtn={{
+                  type: 'normal',
+                  text: 'Add Members',
+                  icon: GroupAddOutlinedIcon,
+                  style: { marginRight: '1em' },
+                }}
+                title="Add members to the project"
               >
-                Add Members
-              </Button>
+                <ProjectForm
+                  editMode="members"
+                  currentMembers={members.map((m) => m.member.id)}
+                  projectId={id}
+                />
+              </FormDialog>
               <ConfirmDialog
                 title="Confirm Delete Project"
                 contentText="Are you sure you want to permanently delete your project?"

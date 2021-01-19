@@ -15,6 +15,7 @@ interface NormalButtonType {
   text: string;
   icon: (props: SvgIconProps) => JSX.Element;
   size?: 'small' | 'medium' | 'large';
+  style?: { [name: string]: string } | { [name: string]: number };
 }
 
 interface IconButtonType {
@@ -76,6 +77,7 @@ const FormDialog: React.FC<{
           size={triggerBtn.size || 'medium'}
           startIcon={<triggerBtn.icon />}
           onClick={handleDialogOpen}
+          style={triggerBtn.style}
         >
           {triggerBtn.text}
         </Button>
@@ -90,7 +92,7 @@ const FormDialog: React.FC<{
     : children;
 
   return (
-    <div>
+    <div style={{ display: 'inline' }}>
       {triggerButton()}
       <Dialog
         open={dialogOpen}

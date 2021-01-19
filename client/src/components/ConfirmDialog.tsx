@@ -91,7 +91,7 @@ const ConfirmDialog: React.FC<{
     <div style={{ display: 'inline' }}>
       {triggerButton()}
       <Dialog open={dialogOpen} onClose={handleDialogOpen}>
-        <DialogTitle>
+        <DialogTitle disableTypography>
           <Typography color="secondary" variant="h6">
             {title}
           </Typography>
