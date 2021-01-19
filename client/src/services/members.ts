@@ -27,7 +27,7 @@ const removeMember = async (projectId: string, memberId: string) => {
   return response.data;
 };
 
-const leaveProjectMembership = async (projectId: string) => {
+const leaveProject = async (projectId: string) => {
   const response = await axios.post(
     `${baseUrl}/${projectId}/members/leave`,
     setConfig()
@@ -35,6 +35,6 @@ const leaveProjectMembership = async (projectId: string) => {
   return response.data;
 };
 
-const memberService = { addMembers, removeMember, leaveProjectMembership };
+const memberService = { addMembers, removeMember, leaveProject };
 
 export default memberService;

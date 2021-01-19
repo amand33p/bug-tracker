@@ -1,7 +1,13 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState, AppThunk } from '../store';
 import projectService from '../../services/projects';
-import { ProjectState, ProjectSortValues, NewProjectPayload } from '../types';
+import memberService from '../../services/members';
+import {
+  ProjectState,
+  ProjectSortValues,
+  NewProjectPayload,
+  ProjectMember,
+} from '../types';
 import { History } from 'history';
 import { getErrorMsg } from '../../utils/helperFuncs';
 
@@ -72,6 +78,37 @@ const projectsSlice = createSlice({
       state.submitLoading = false;
       state.submitError = null;
     },
+    addMembers: (
+      state,
+      action: PayloadAction<{ members: ProjectMember[]; projectId: string }>
+    ) => {
+      state.projects = state.projects.map((p) =>
+        p.id === action.payload.projectId
+          ? { ...p, members: action.payload.members }
+          : p
+      );
+      state.submitLoading = false;
+      state.submitError = null;
+    },
+    removeMember: (
+      state,
+      action: PayloadAction<{ memberId: string; projectId: string }>
+    ) => {
+      const project = state.projects.find(
+        (p) => p.id === action.payload.projectId
+      );
+
+      if (project) {
+        const updatedMembers = project.members.filter(
+          (m) => m.member.id !== action.payload.memberId
+        );
+        state.projects = state.projects.map((p) =>
+          p.id === action.payload.projectId
+            ? { ...p, members: updatedMembers }
+            : p
+        );
+      }
+    },
     sortProjectsBy: (state, action: PayloadAction<ProjectSortValues>) => {
       state.sortBy = action.payload;
     },
@@ -88,6 +125,8 @@ export const {
   clearSubmitProjectError,
   removeProject,
   updateProjectName,
+  addMembers,
+  removeMember,
   sortProjectsBy,
 } = projectsSlice.actions;
 
@@ -158,6 +197,52 @@ export const editProjectName = (
       closeDialog && closeDialog();
     } catch (e) {
       dispatch(setSubmitProjectError(getErrorMsg(e)));
+    }
+  };
+};
+
+export const addProjectMembers = (
+  projectId: string,
+  members: string[],
+  closeDialog?: () => void
+): AppThunk => {
+  return async (dispatch) => {
+    try {
+      dispatch(setSubmitProjectLoading());
+      const updatedMembers = await memberService.addMembers(projectId, members);
+      dispatch(addMembers({ members: updatedMembers, projectId }));
+      closeDialog && closeDialog();
+    } catch (e) {
+      dispatch(setSubmitProjectError(getErrorMsg(e)));
+    }
+  };
+};
+
+export const removeProjectMember = (
+  projectId: string,
+  memberId: string
+): AppThunk => {
+  return async (dispatch) => {
+    try {
+      await memberService.removeMember(projectId, memberId);
+      dispatch(removeMember({ memberId, projectId }));
+    } catch (e) {
+      console.log(console.log(getErrorMsg(e)));
+    }
+  };
+};
+
+export const leaveProjectMembership = (
+  projectId: string,
+  history: History
+): AppThunk => {
+  return async (dispatch) => {
+    try {
+      await memberService.leaveProject(projectId);
+      history.push('/');
+      dispatch(removeProject(projectId));
+    } catch (e) {
+      console.log(console.log(getErrorMsg(e)));
     }
   };
 };
