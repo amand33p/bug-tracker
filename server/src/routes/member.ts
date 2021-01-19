@@ -11,6 +11,6 @@ const { auth } = middleware;
 
 router.post('/:projectId/members', auth, addProjectMembers);
 router.delete('/:projectId/members/:memberId', auth, removeProjectMember);
-router.delete('/:projectId/leave', auth, leaveProjectAsMember);
+router.post('/:projectId/members/leave', auth, leaveProjectAsMember);
 
 export default router;

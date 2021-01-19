@@ -28,8 +28,8 @@ const removeMember = async (projectId: string, memberId: string) => {
 };
 
 const leaveProjectMembership = async (projectId: string) => {
-  const response = await axios.delete(
-    `${baseUrl}/${projectId}/leave`,
+  const response = await axios.post(
+    `${baseUrl}/${projectId}/members/leave`,
     setConfig()
   );
   return response.data;
