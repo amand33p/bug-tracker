@@ -138,8 +138,8 @@ const ProjectDetailsPage = () => {
           <MembersCard
             members={members}
             viewMembers={viewMembers}
-            isAdmin={isAdmin}
             adminId={createdBy.id}
+            projectId={id}
           />
         )}
       </Paper>

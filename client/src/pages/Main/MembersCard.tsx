@@ -10,9 +10,9 @@ import PeopleAltOutlinedIcon from '@material-ui/icons/PeopleAltOutlined';
 const MembersCard: React.FC<{
   members: ProjectMember[];
   viewMembers: boolean;
-  isAdmin: boolean;
   adminId: string;
-}> = ({ members, viewMembers, isAdmin, adminId }) => {
+  projectId: string;
+}> = ({ members, viewMembers, adminId, projectId }) => {
   const classes = useMainPageStyles();
   const [filterValue, setFilterValue] = useState('');
 
@@ -29,7 +29,7 @@ const MembersCard: React.FC<{
           <MembersTable
             members={filteredMembers}
             adminId={adminId}
-            isAdmin={isAdmin}
+            projectId={projectId}
           />
         </div>
       );

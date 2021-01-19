@@ -1,5 +1,9 @@
 import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { ProjectMember } from '../../redux/types';
+import { selectAuthState } from '../../redux/slices/authSlice';
+import { removeProjectMember } from '../../redux/slices/projectsSlice';
+import ConfirmDialog from '../../components/ConfirmDialog';
 import { formatDateInWords } from '../../utils/helperFuncs';
 
 import {
@@ -8,20 +12,28 @@ import {
   TableBody,
   TableRow,
   TableCell,
-  IconButton,
   Paper,
 } from '@material-ui/core';
 import { useTableStyles } from '../../styles/muiStyles';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
+import BlockIcon from '@material-ui/icons/Block';
 
 const memberHeaders = ['ID', 'Username', 'Role', 'Joined'];
 
 const MembersTable: React.FC<{
   members: ProjectMember[];
   adminId: string;
-  isAdmin: boolean;
-}> = ({ members, adminId, isAdmin }) => {
+  projectId: string;
+}> = ({ members, adminId, projectId }) => {
   const classes = useTableStyles();
+  const dispatch = useDispatch();
+  const { user } = useSelector(selectAuthState);
+
+  const isAdmin = adminId === user?.id;
+
+  const handleRemoveMember = (memberId: string) => {
+    dispatch(removeProjectMember(projectId, memberId));
+  };
 
   return (
     <Paper className={classes.scrollableTable}>
@@ -40,7 +52,9 @@ const MembersTable: React.FC<{
           {members.map((m) => (
             <TableRow key={m.id}>
               <TableCell align="center">{m.id}</TableCell>
-              <TableCell align="center">{m.member.username}</TableCell>
+              <TableCell align="center">
+                {m.member.username} {m.member.id === user?.id && '(You)'}
+              </TableCell>
               <TableCell align="center">
                 {m.member.id === adminId ? 'Admin' : 'Member'}
               </TableCell>
@@ -49,12 +63,22 @@ const MembersTable: React.FC<{
               </TableCell>
               {isAdmin && (
                 <TableCell align="center">
-                  <IconButton
-                    size="small"
-                    onClick={() => console.log('table button clicked.')}
-                  >
-                    <HighlightOffIcon color="primary" fontSize="large" />
-                  </IconButton>
+                  {m.member.id === user?.id ? (
+                    <BlockIcon color="secondary" fontSize="large" />
+                  ) : (
+                    <ConfirmDialog
+                      title="Confirm Remove Member"
+                      contentText={`Are you sure you want to remove ${m.member.username} from your project?`}
+                      actionBtnText="Remove"
+                      triggerBtn={{
+                        type: 'icon',
+                        iconSize: 'large',
+                        icon: HighlightOffIcon,
+                        size: 'small',
+                      }}
+                      actionFunc={() => handleRemoveMember(m.member.id)}
+                    />
+                  )}
                 </TableCell>
               )}
             </TableRow>

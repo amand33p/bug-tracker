@@ -8,7 +8,6 @@ import {
   Dialog,
   DialogActions,
   DialogContent,
-  DialogContentText,
   DialogTitle,
   Typography,
 } from '@material-ui/core';
@@ -18,11 +17,14 @@ interface NormalButtonType {
   text: string;
   icon: (props: SvgIconProps) => JSX.Element;
   size?: 'small' | 'medium' | 'large';
+  style?: { [name: string]: string } | { [name: string]: number };
 }
 
 interface IconButtonType {
   type: 'icon';
   icon: (props: SvgIconProps) => JSX.Element;
+  size?: 'small' | 'medium';
+  iconSize?: 'small' | 'default' | 'large';
 }
 
 interface MenuItemButtonType {
@@ -61,8 +63,12 @@ const ConfirmDialog: React.FC<{
   const triggerButton = () => {
     if (triggerBtn.type === 'icon') {
       return (
-        <IconButton color="primary" onClick={handleDialogOpen}>
-          <triggerBtn.icon />
+        <IconButton
+          color="primary"
+          onClick={handleDialogOpen}
+          size={triggerBtn.size || 'medium'}
+        >
+          <triggerBtn.icon fontSize={triggerBtn.iconSize || 'default'} />
         </IconButton>
       );
     } else if (triggerBtn.type === 'menu') {
@@ -80,6 +86,7 @@ const ConfirmDialog: React.FC<{
           size={triggerBtn.size || 'medium'}
           startIcon={<triggerBtn.icon />}
           onClick={handleDialogOpen}
+          style={triggerBtn.style}
         >
           {triggerBtn.text}
         </Button>
