@@ -1,14 +1,8 @@
 import axios from 'axios';
 import backendUrl from '../backendUrl';
-import { token } from './auth';
+import { setConfig } from './auth';
 
 const baseUrl = `${backendUrl}/projects`;
-
-const setConfig = () => {
-  return {
-    headers: { 'x-auth-token': token },
-  };
-};
 
 const addMembers = async (projectId: string, members: string[]) => {
   const response = await axios.post(

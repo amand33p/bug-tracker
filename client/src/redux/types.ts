@@ -80,7 +80,13 @@ export interface CredentialsPayload {
   password: string;
 }
 
-export interface NewProjectPayload {
+export interface ProjectPayload {
   name: string;
   members: string[];
+}
+
+export interface BugPayload {
+  title: string;
+  description: string;
+  priority: BugPriority;
 }

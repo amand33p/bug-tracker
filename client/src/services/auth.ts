@@ -8,10 +8,16 @@ interface Credentials {
 
 type Token = string | null;
 
-export let token: Token = null;
+let token: Token = null;
 
 const setToken = (newToken: string) => {
   token = newToken;
+};
+
+export const setConfig = () => {
+  return {
+    headers: { 'x-auth-token': token },
+  };
 };
 
 const login = async (credentials: Credentials) => {

@@ -5,7 +5,7 @@ import memberService from '../../services/members';
 import {
   ProjectState,
   ProjectSortValues,
-  NewProjectPayload,
+  ProjectPayload,
   ProjectMember,
 } from '../types';
 import { History } from 'history';
@@ -143,7 +143,7 @@ export const fetchProjects = (): AppThunk => {
 };
 
 export const createNewProject = (
-  projectData: NewProjectPayload,
+  projectData: ProjectPayload,
   closeDialog?: () => void
 ): AppThunk => {
   return async (dispatch) => {

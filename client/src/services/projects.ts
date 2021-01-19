@@ -1,22 +1,16 @@
 import axios from 'axios';
 import backendUrl from '../backendUrl';
-import { token } from './auth';
-import { NewProjectPayload } from '../redux/types';
+import { setConfig } from './auth';
+import { ProjectPayload } from '../redux/types';
 
 const baseUrl = `${backendUrl}/projects`;
-
-const setConfig = () => {
-  return {
-    headers: { 'x-auth-token': token },
-  };
-};
 
 const getProjects = async () => {
   const response = await axios.get(baseUrl, setConfig());
   return response.data;
 };
 
-const createProject = async (projectData: NewProjectPayload) => {
+const createProject = async (projectData: ProjectPayload) => {
   const response = await axios.post(baseUrl, projectData, setConfig());
   return response.data;
 };
