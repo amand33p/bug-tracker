@@ -69,7 +69,7 @@ const MembersTable: React.FC<{
                     <ConfirmDialog
                       title="Confirm Remove Member"
                       contentText={`Are you sure you want to remove ${m.member.username} from your project?`}
-                      actionBtnText="Remove"
+                      actionBtnText="Remove Member"
                       triggerBtn={{
                         type: 'icon',
                         iconSize: 'large',

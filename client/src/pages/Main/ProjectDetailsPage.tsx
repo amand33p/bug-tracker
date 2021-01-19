@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import {
   selectProjectById,
   deleteProject,
+  leaveProjectMembership,
 } from '../../redux/slices/projectsSlice';
 import { selectAuthState } from '../../redux/slices/authSlice';
 import { RootState } from '../../redux/store';
@@ -48,6 +49,10 @@ const ProjectDetailsPage = () => {
 
   const handleDeleteProject = () => {
     dispatch(deleteProject(id, history));
+  };
+
+  const handleLeaveProject = () => {
+    dispatch(leaveProjectMembership(id, history));
   };
 
   return (
@@ -95,13 +100,17 @@ const ProjectDetailsPage = () => {
             </Button>
           )}
           {!isAdmin && (
-            <Button
-              color="primary"
-              variant="contained"
-              startIcon={<ExitToAppOutlinedIcon />}
-            >
-              Leave Project
-            </Button>
+            <ConfirmDialog
+              title="Confirm Leave Project"
+              contentText="Are you sure you want to leave the project's membership?"
+              actionBtnText="Leave Project"
+              triggerBtn={{
+                type: 'normal',
+                text: 'Leave Project',
+                icon: ExitToAppOutlinedIcon,
+              }}
+              actionFunc={handleLeaveProject}
+            />
           )}
           {isAdmin && (
             <>

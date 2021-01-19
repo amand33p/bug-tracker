@@ -30,6 +30,7 @@ const removeMember = async (projectId: string, memberId: string) => {
 const leaveProject = async (projectId: string) => {
   const response = await axios.post(
     `${baseUrl}/${projectId}/members/leave`,
+    null,
     setConfig()
   );
   return response.data;
