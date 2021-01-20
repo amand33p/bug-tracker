@@ -5,7 +5,6 @@ import {
   BugState,
   BugSortValues,
   BugPayload,
-  User,
   EditedBugData,
   ClosedReopenedBugData,
 } from '../types';

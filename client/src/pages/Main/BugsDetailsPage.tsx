@@ -1,7 +1,11 @@
 import React from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { selectBugById, deleteBug } from '../../redux/slices/bugsSlice';
+import {
+  selectBugById,
+  deleteBug,
+  closeReopenBug,
+} from '../../redux/slices/bugsSlice';
 import { RootState } from '../../redux/store';
 import FormDialog from '../../components/FormDialog';
 import BugForm from './BugForm';
@@ -9,7 +13,7 @@ import ConfirmDialog from '../../components/ConfirmDialog';
 import { formatDateTime } from '../../utils/helperFuncs';
 import NotesCard from './NotesCard';
 
-import { Paper, Typography, Divider, Button } from '@material-ui/core';
+import { Paper, Typography, Divider } from '@material-ui/core';
 import { useMainPageStyles } from '../../styles/muiStyles';
 import RedoIcon from '@material-ui/icons/Redo';
 import DoneOutlineIcon from '@material-ui/icons/DoneOutline';
@@ -57,6 +61,14 @@ const BugsDetailsPage = () => {
 
   const handleDeleteBug = () => {
     dispatch(deleteBug(projectId, bugId, history));
+  };
+
+  const handleCloseBug = () => {
+    dispatch(closeReopenBug(projectId, bugId, 'close'));
+  };
+
+  const handleReopenBug = () => {
+    dispatch(closeReopenBug(projectId, bugId, 'reopen'));
   };
 
   const statusInfo = () => {
@@ -107,21 +119,29 @@ const BugsDetailsPage = () => {
         )}
         <div className={classes.btnsWrapper}>
           {isResolved ? (
-            <Button
-              color="primary"
-              variant="contained"
-              startIcon={<RedoIcon />}
-            >
-              Re-Open Bug
-            </Button>
+            <ConfirmDialog
+              title="Re-open the Bug"
+              contentText="Are you sure you want to re-open the bug?"
+              actionBtnText="Re-open Bug"
+              triggerBtn={{
+                type: 'normal',
+                text: 'Re-open Bug',
+                icon: RedoIcon,
+              }}
+              actionFunc={handleReopenBug}
+            />
           ) : (
-            <Button
-              color="primary"
-              variant="contained"
-              startIcon={<DoneOutlineIcon />}
-            >
-              Close Bug
-            </Button>
+            <ConfirmDialog
+              title="Close the Bug"
+              contentText="Are you sure you want to close the bug?"
+              actionBtnText="Close Bug"
+              triggerBtn={{
+                type: 'normal',
+                text: 'Close Bug',
+                icon: DoneOutlineIcon,
+              }}
+              actionFunc={handleCloseBug}
+            />
           )}
           <FormDialog
             triggerBtn={{
