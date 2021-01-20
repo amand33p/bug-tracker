@@ -58,8 +58,8 @@ export const loginValidator = (username: string, password: string) => {
 };
 
 export const projectNameError = (name: string) => {
-  if (!name || name.trim() === '' || name.length > 30) {
-    return 'Project name length must not be more than 30.';
+  if (!name || name.trim() === '' || name.length > 60) {
+    return 'Project name length must not be more than 60.';
   }
 };
 
@@ -104,8 +104,8 @@ export const createBugValidator = (
   const errors: BugErrors = {};
   const validPriorities = ['low', 'medium', 'high'];
 
-  if (!title || title.trim() === '' || title.length > 50 || title.length < 3) {
-    errors.title = 'Title must be in range of 3-50 characters length.';
+  if (!title || title.trim() === '' || title.length > 60 || title.length < 3) {
+    errors.title = 'Title must be in range of 3-60 characters length.';
   }
 
   if (!description || description.trim() === '') {

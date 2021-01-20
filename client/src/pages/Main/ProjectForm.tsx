@@ -33,7 +33,7 @@ const validationSchema = yup.object({
   name: yup
     .string()
     .required('Required')
-    .max(30, 'Must be at most 30 characters'),
+    .max(60, 'Must be at most 60 characters'),
 });
 
 interface BaseType {

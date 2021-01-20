@@ -6,7 +6,7 @@ import { Bug } from './Bug';
 
 @Entity({ name: 'projects' })
 export class Project extends BaseModel {
-  @Column({ type: 'varchar', length: 30 })
+  @Column({ type: 'varchar', length: 60 })
   name: string;
 
   @ManyToOne(() => User, (user) => user)

@@ -19,7 +19,7 @@ export class Bug extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column({ type: 'varchar', length: 50 })
+  @Column({ type: 'varchar', length: 60 })
   title: string;
 
   @Column()
