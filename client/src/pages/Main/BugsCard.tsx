@@ -20,7 +20,7 @@ const BugsCard: React.FC<{ projectId: string }> = ({ projectId }) => {
   const bugs = useSelector((state: RootState) =>
     selectBugsByProjectId(state, projectId)
   );
-  const { loading, error, sortBy } = useSelector(selectBugsState);
+  const { fetchLoading, fetchError, sortBy } = useSelector(selectBugsState);
   const [filterValue, setFilterValue] = useState('');
 
   useEffect(() => {
@@ -40,10 +40,10 @@ const BugsCard: React.FC<{ projectId: string }> = ({ projectId }) => {
     );
 
   const bugsDataToDisplay = () => {
-    if (loading) {
+    if (fetchLoading) {
       return <div>Loading...</div>;
-    } else if (error) {
-      return <div>{error}</div>;
+    } else if (fetchError) {
+      return <div>{fetchError}</div>;
     } else if (!bugs || bugs.length === 0) {
       return <div>No bugs added yet.</div>;
     } else if (filteredSortedProjects.length === 0) {

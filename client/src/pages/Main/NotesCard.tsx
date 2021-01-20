@@ -125,7 +125,6 @@ const NotesCard: React.FC<{ notes: Note[]; projectId: string }> = ({
                 </div>
               </div>
             </div>
-
             <Divider />
           </div>
         ))}

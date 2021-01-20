@@ -38,28 +38,9 @@ const projectsSlice = createSlice({
       state.fetchStatus = 'succeeded';
       state.fetchError = null;
     },
-    setFetchProjectsLoading: (state) => {
-      state.fetchStatus = 'loading';
-      state.fetchError = null;
-    },
-    setFetchProjectsError: (state, action: PayloadAction<string>) => {
-      state.fetchStatus = 'failed';
-      state.fetchError = action.payload;
-    },
     addProject: (state, action: PayloadAction<ProjectState>) => {
       state.projects.push(action.payload);
       state.submitLoading = false;
-      state.submitError = null;
-    },
-    setSubmitProjectLoading: (state) => {
-      state.submitLoading = true;
-      state.submitError = null;
-    },
-    setSubmitProjectError: (state, action: PayloadAction<string>) => {
-      state.submitLoading = false;
-      state.submitError = action.payload;
-    },
-    clearSubmitProjectError: (state) => {
       state.submitError = null;
     },
     removeProject: (state, action: PayloadAction<string>) => {
@@ -109,6 +90,26 @@ const projectsSlice = createSlice({
         );
       }
     },
+    setFetchProjectsLoading: (state) => {
+      state.fetchStatus = 'loading';
+      state.fetchError = null;
+    },
+    setFetchProjectsError: (state, action: PayloadAction<string>) => {
+      state.fetchStatus = 'failed';
+      state.fetchError = action.payload;
+    },
+
+    setSubmitProjectLoading: (state) => {
+      state.submitLoading = true;
+      state.submitError = null;
+    },
+    setSubmitProjectError: (state, action: PayloadAction<string>) => {
+      state.submitLoading = false;
+      state.submitError = action.payload;
+    },
+    clearSubmitProjectError: (state) => {
+      state.submitError = null;
+    },
     sortProjectsBy: (state, action: PayloadAction<ProjectSortValues>) => {
       state.sortBy = action.payload;
     },
@@ -117,16 +118,16 @@ const projectsSlice = createSlice({
 
 export const {
   setProjects,
-  setFetchProjectsLoading,
-  setFetchProjectsError,
   addProject,
-  setSubmitProjectLoading,
-  setSubmitProjectError,
-  clearSubmitProjectError,
   removeProject,
   updateProjectName,
   addMembers,
   removeMember,
+  setFetchProjectsLoading,
+  setFetchProjectsError,
+  setSubmitProjectLoading,
+  setSubmitProjectError,
+  clearSubmitProjectError,
   sortProjectsBy,
 } = projectsSlice.actions;
 
