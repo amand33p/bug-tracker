@@ -178,6 +178,7 @@ export const editBug = (
         updatedAt,
         updatedBy,
       } = updatedBug as EditedBugData;
+
       dispatch(
         updateBug({
           data: { title, description, priority, updatedAt, updatedBy },

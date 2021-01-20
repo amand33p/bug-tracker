@@ -113,22 +113,31 @@ export const updateBug = async (req: Request, res: Response) => {
     return res.status(401).send({ message: 'Access is denied.' });
   }
 
-  const updatedBug = await Bug.createQueryBuilder('bug')
-    .update(Bug)
-    .set({
-      title,
-      description,
-      priority,
-      updatedById: req.user,
-      updatedAt: new Date(),
-    })
-    .where('id = :bugId', { bugId })
-    .returning('*')
-    .updateEntity(true)
-    .execute()
-    .then((res) => res.raw[0]);
+  const targetBug = await Bug.findOne({ id: bugId });
 
-  return res.json(updatedBug);
+  if (!targetBug) {
+    return res.status(400).send({ message: 'Invalid bug ID.' });
+  }
+
+  targetBug.title = title;
+  targetBug.description = description;
+  targetBug.priority = priority;
+  targetBug.updatedById = req.user;
+  targetBug.updatedAt = new Date();
+
+  await targetBug.save();
+  const relationedBug = await Bug.createQueryBuilder('bug')
+    .where('bug.id = :bugId', { bugId })
+    .leftJoinAndSelect('bug.createdBy', 'createdBy')
+    .leftJoinAndSelect('bug.updatedBy', 'updatedBy')
+    .leftJoinAndSelect('bug.closedBy', 'closedBy')
+    .leftJoinAndSelect('bug.reopenedBy', 'reopenedBy')
+    .leftJoinAndSelect('bug.notes', 'note')
+    .leftJoinAndSelect('note.author', 'noteAuthor')
+    .select(fieldsToSelect)
+    .getOne();
+
+  return res.status(201).json(relationedBug);
 };
 
 export const deleteBug = async (req: Request, res: Response) => {
@@ -189,7 +198,6 @@ export const closeBug = async (req: Request, res: Response) => {
   targetBug.reopenedAt = null;
 
   await targetBug.save();
-
   const relationedBug = await Bug.createQueryBuilder('bug')
     .where('bug.id = :bugId', { bugId })
     .leftJoinAndSelect('bug.createdBy', 'createdBy')
@@ -233,7 +241,6 @@ export const reopenBug = async (req: Request, res: Response) => {
   targetBug.closedAt = null;
 
   await targetBug.save();
-
   const relationedBug = await Bug.createQueryBuilder('bug')
     .where('bug.id = :bugId', { bugId })
     .leftJoinAndSelect('bug.createdBy', 'createdBy')

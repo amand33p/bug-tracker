@@ -58,7 +58,7 @@ export const useDialogStyles = makeStyles(
 export const useFormStyles = makeStyles(
   (theme) => ({
     submitBtn: {
-      marginTop: '2em',
+      marginTop: '1.5em',
       height: '3.2em',
     },
     avatar: {
@@ -67,6 +67,23 @@ export const useFormStyles = makeStyles(
     },
     fieldMargin: {
       marginTop: '1.5em',
+    },
+    radioGroup: {
+      display: 'flex',
+      alignItems: 'center',
+      marginTop: '0.8em',
+    },
+    radioGroupLabel: {
+      marginRight: '1.5em',
+    },
+    formControlWrapper: {
+      display: 'flex',
+      justifyContent: 'space-between',
+      width: '80%',
+      [theme.breakpoints.down('xs')]: {
+        flexDirection: 'column',
+        width: 'auto',
+      },
     },
   }),
   { index: 1 }

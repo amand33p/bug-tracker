@@ -3,6 +3,8 @@ import { useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { selectBugById } from '../../redux/slices/bugsSlice';
 import { RootState } from '../../redux/store';
+import FormDialog from '../../components/FormDialog';
+import BugForm from './BugForm';
 import { formatDateTime } from '../../utils/helperFuncs';
 import NotesCard from './NotesCard';
 
@@ -34,6 +36,7 @@ const BugsDetailsPage = () => {
   }
 
   const {
+    id,
     title,
     description,
     priority,
@@ -95,7 +98,6 @@ const BugsDetailsPage = () => {
             <strong>{updatedBy.username}</strong>
           </Typography>
         )}
-
         <div className={classes.btnsWrapper}>
           {isResolved ? (
             <Button
@@ -114,14 +116,22 @@ const BugsDetailsPage = () => {
               Close Bug
             </Button>
           )}
-          <Button
-            color="primary"
-            variant="contained"
-            startIcon={<EditOutlinedIcon />}
-            style={{ marginLeft: '1em' }}
+          <FormDialog
+            triggerBtn={{
+              type: 'normal',
+              text: 'Update Bug Info',
+              icon: EditOutlinedIcon,
+              style: { marginLeft: '1em' },
+            }}
+            title="Edit the bug details"
           >
-            Update Bug Info
-          </Button>
+            <BugForm
+              isEditMode={true}
+              projectId={projectId}
+              bugId={id}
+              currentData={{ title, description, priority }}
+            />
+          </FormDialog>
           <Button
             color="primary"
             variant="contained"

@@ -1,7 +1,8 @@
-import { useForm } from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
 import { useSelector, useDispatch } from 'react-redux';
 import {
   createNewBug,
+  editBug,
   clearSubmitBugError,
   selectBugsState,
 } from '../../redux/slices/bugsSlice';
@@ -10,7 +11,15 @@ import ErrorBox from '../../components/ErrorBox';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 
-import { TextField, Button, InputAdornment } from '@material-ui/core';
+import {
+  TextField,
+  RadioGroup,
+  Radio,
+  FormControlLabel,
+  Button,
+  InputAdornment,
+  FormLabel,
+} from '@material-ui/core';
 import { useFormStyles } from '../../styles/muiStyles';
 import TitleIcon from '@material-ui/icons/Title';
 import SubjectIcon from '@material-ui/icons/Subject';
@@ -43,7 +52,7 @@ const BugForm: React.FC<BugFormProps> = ({
   const classes = useFormStyles();
   const dispatch = useDispatch();
   const { submitError, submitLoading } = useSelector(selectBugsState);
-  const { register, handleSubmit, errors } = useForm({
+  const { register, control, handleSubmit, errors } = useForm({
     mode: 'onChange',
     resolver: yupResolver(validationSchema),
     defaultValues: {
@@ -53,12 +62,12 @@ const BugForm: React.FC<BugFormProps> = ({
     },
   });
 
-  const handleCreateBug = ({ title, description, priority }: BugPayload) => {
-    console.log(title, description, priority);
+  const handleCreateBug = (data: BugPayload) => {
+    dispatch(createNewBug(projectId, data, closeDialog));
   };
 
-  const handleUpdateBug = ({ title, description, priority }: BugPayload) => {
-    console.log(title, description, priority);
+  const handleUpdateBug = (data: BugPayload) => {
+    dispatch(editBug(projectId, bugId as string, data, closeDialog));
   };
 
   return (
@@ -104,6 +113,32 @@ const BugForm: React.FC<BugFormProps> = ({
             </InputAdornment>
           ),
         }}
+      />
+      <Controller
+        control={control}
+        name="priority"
+        as={
+          <RadioGroup row className={classes.radioGroup}>
+            <FormLabel className={classes.radioGroupLabel}>Priority:</FormLabel>
+            <div className={classes.formControlWrapper}>
+              <FormControlLabel
+                value="low"
+                control={<Radio color="primary" />}
+                label="Low"
+              />
+              <FormControlLabel
+                value="medium"
+                control={<Radio color="primary" />}
+                label="Medium"
+              />
+              <FormControlLabel
+                value="high"
+                control={<Radio color="primary" />}
+                label="High"
+              />
+            </div>
+          </RadioGroup>
+        }
       />
       <Button
         size="large"
