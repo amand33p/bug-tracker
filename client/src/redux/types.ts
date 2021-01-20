@@ -90,3 +90,16 @@ export interface BugPayload {
   description: string;
   priority: BugPriority;
 }
+
+export interface EditedBugData extends BugPayload {
+  updatedAt: Date;
+  updatedBy: User;
+}
+
+export interface ClosedReopenedBugData {
+  isResolved: boolean;
+  closedAt: Date;
+  closedBy: User;
+  reopenedAt: Date;
+  reopenedBy: User;
+}

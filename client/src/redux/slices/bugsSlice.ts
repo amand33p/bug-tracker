@@ -1,7 +1,15 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState, AppThunk } from '../store';
 import bugService from '../../services/bugs';
-import { BugState, BugSortValues, User, BugPriority } from '../types';
+import {
+  BugState,
+  BugSortValues,
+  BugPayload,
+  User,
+  EditedBugData,
+  ClosedReopenedBugData,
+} from '../types';
+import { History } from 'history';
 import { getErrorMsg } from '../../utils/helperFuncs';
 
 interface InitialBugState {
@@ -49,13 +57,7 @@ const bugsSlice = createSlice({
     updateBug: (
       state,
       action: PayloadAction<{
-        data: {
-          title: string;
-          description: string;
-          priority: BugPriority;
-          updatedAt: Date;
-          updatedBy: User;
-        };
+        data: EditedBugData;
         bugId: string;
         projectId: string;
       }>
@@ -77,16 +79,10 @@ const bugsSlice = createSlice({
         action.payload.projectId
       ].filter((b) => b.id !== action.payload.bugId);
     },
-    closeReopenBug: (
+    updateBugStatus: (
       state,
       action: PayloadAction<{
-        data: {
-          isResolved: boolean;
-          closedAt: Date;
-          closedBy: User;
-          reopenedAt: Date;
-          reopenedBy: User;
-        };
+        data: ClosedReopenedBugData;
         bugId: string;
         projectId: string;
       }>
@@ -127,7 +123,7 @@ export const {
   addBug,
   updateBug,
   removeBug,
-  closeReopenBug,
+  updateBugStatus,
   setFetchBugsLoading,
   setFetchBugsError,
   setSubmitBugLoading,
@@ -144,6 +140,103 @@ export const fetchBugsByProjectId = (projectId: string): AppThunk => {
       dispatch(setBugs({ bugs: projectBugs, projectId }));
     } catch (e) {
       dispatch(setFetchBugsError(getErrorMsg(e)));
+    }
+  };
+};
+
+export const createNewBug = (
+  projectId: string,
+  bugData: BugPayload,
+  closeDialog?: () => void
+): AppThunk => {
+  return async (dispatch) => {
+    try {
+      dispatch(setSubmitBugLoading());
+      const newBug = await bugService.createBug(projectId, bugData);
+      dispatch(addBug({ bug: newBug, projectId }));
+      closeDialog && closeDialog();
+    } catch (e) {
+      dispatch(setSubmitBugError(getErrorMsg(e)));
+    }
+  };
+};
+
+export const editBug = (
+  projectId: string,
+  bugId: string,
+  bugData: BugPayload,
+  closeDialog?: () => void
+): AppThunk => {
+  return async (dispatch) => {
+    try {
+      dispatch(setSubmitBugLoading());
+      const updatedBug = await bugService.updateBug(projectId, bugId, bugData);
+      const {
+        title,
+        description,
+        priority,
+        updatedAt,
+        updatedBy,
+      } = updatedBug as EditedBugData;
+      dispatch(
+        updateBug({
+          data: { title, description, priority, updatedAt, updatedBy },
+          bugId,
+          projectId,
+        })
+      );
+      closeDialog && closeDialog();
+    } catch (e) {
+      dispatch(setSubmitBugError(getErrorMsg(e)));
+    }
+  };
+};
+
+export const deleteBug = (
+  projectId: string,
+  bugId: string,
+  history: History
+): AppThunk => {
+  return async (dispatch) => {
+    try {
+      await bugService.deleteBug(projectId, bugId);
+      history.push(`/projects/${projectId}`);
+      dispatch(removeBug({ bugId, projectId }));
+    } catch (e) {
+      console.log(console.log(getErrorMsg(e)));
+    }
+  };
+};
+
+export const closeReopenBug = (
+  projectId: string,
+  bugId: string,
+  action: 'close' | 'reopen'
+): AppThunk => {
+  return async (dispatch) => {
+    try {
+      let returnedData;
+      if (action === 'close') {
+        returnedData = await bugService.closeBug(projectId, bugId);
+      } else {
+        returnedData = await bugService.reopenBug(projectId, bugId);
+      }
+      const {
+        isResolved,
+        closedAt,
+        closedBy,
+        reopenedAt,
+        reopenedBy,
+      } = returnedData as ClosedReopenedBugData;
+      dispatch(
+        updateBugStatus({
+          data: { isResolved, closedAt, closedBy, reopenedAt, reopenedBy },
+          bugId,
+          projectId,
+        })
+      );
+    } catch (e) {
+      console.log(console.log(getErrorMsg(e)));
     }
   };
 };
