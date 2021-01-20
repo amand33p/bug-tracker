@@ -60,9 +60,9 @@ interface AddProjectMembers extends BaseType {
   currentName?: string;
 }
 
-type ProjectFormPropTypes = CreateProject | EditProjectName | AddProjectMembers;
+type ProjectFormProps = CreateProject | EditProjectName | AddProjectMembers;
 
-const ProjectForm: React.FC<ProjectFormPropTypes> = ({
+const ProjectForm: React.FC<ProjectFormProps> = ({
   closeDialog,
   editMode,
   currentName,

@@ -2,10 +2,11 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import FilterBar from '../../components/FilterBar';
 import SortBar from '../../components/SortBar';
+import FormDialog from '../../components/FormDialog';
+import BugForm from './BugForm';
 import { BugSortValues } from '../../redux/types';
 import { sortBugsBy } from '../../redux/slices/bugsSlice';
 
-import { Button } from '@material-ui/core';
 import { useActionCardStyles } from '../../styles/muiStyles';
 import AddIcon from '@material-ui/icons/Add';
 
@@ -22,9 +23,10 @@ const menuItems = [
 ];
 
 const BugsActionCard: React.FC<{
+  projectId: string;
   filterValue: string;
   setFilterValue: (filterValue: string) => void;
-}> = ({ filterValue, setFilterValue }) => {
+}> = ({ projectId, filterValue, setFilterValue }) => {
   const classes = useActionCardStyles();
   const dispatch = useDispatch();
   const [sortBy, setSortBy] = useState<BugSortValues>('newest');
@@ -54,14 +56,17 @@ const BugsActionCard: React.FC<{
           />
         </div>
       </div>
-      <Button
-        variant="contained"
-        color="primary"
-        startIcon={<AddIcon />}
-        size="large"
+
+      <FormDialog
+        triggerBtn={{
+          type: 'normal',
+          text: 'Add Bug',
+          icon: AddIcon,
+        }}
+        title="Add a new bug"
       >
-        Add Bug
-      </Button>
+        <BugForm isEditMode={false} projectId={projectId} />
+      </FormDialog>
     </div>
   );
 };

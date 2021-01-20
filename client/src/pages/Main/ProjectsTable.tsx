@@ -3,7 +3,7 @@ import { Link as RouterLink, useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { ProjectState } from '../../redux/types';
 import { selectAuthState } from '../../redux/slices/authSlice';
-import { formatDateTime } from '../../utils/helperFuncs';
+import { formatDateTime, truncateString } from '../../utils/helperFuncs';
 
 import {
   Table,
@@ -53,7 +53,7 @@ const ProjectsTable: React.FC<{ projects: ProjectState[] }> = ({
                   to={`/projects/${p.id}`}
                   color="secondary"
                 >
-                  {p.name}
+                  {truncateString(p.name, 30)}
                 </Link>
               </TableCell>
               <TableCell align="center">{p.bugs.length}</TableCell>

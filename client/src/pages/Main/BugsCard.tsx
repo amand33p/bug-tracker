@@ -64,6 +64,7 @@ const BugsCard: React.FC<{ projectId: string }> = ({ projectId }) => {
       </Typography>
       <div style={{ margin: '1.5em 0' }}>
         <BugsActionCard
+          projectId={projectId}
           filterValue={filterValue}
           setFilterValue={setFilterValue}
         />

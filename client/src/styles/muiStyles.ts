@@ -65,6 +65,9 @@ export const useFormStyles = makeStyles(
       color: theme.palette.primary.main,
       backgroundColor: '#d3d3d3',
     },
+    fieldMargin: {
+      marginTop: '1.5em',
+    },
   }),
   { index: 1 }
 );
