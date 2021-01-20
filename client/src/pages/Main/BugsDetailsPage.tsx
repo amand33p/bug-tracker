@@ -1,10 +1,11 @@
 import React from 'react';
-import { useParams } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import { selectBugById } from '../../redux/slices/bugsSlice';
+import { useParams, useHistory } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { selectBugById, deleteBug } from '../../redux/slices/bugsSlice';
 import { RootState } from '../../redux/store';
 import FormDialog from '../../components/FormDialog';
 import BugForm from './BugForm';
+import ConfirmDialog from '../../components/ConfirmDialog';
 import { formatDateTime } from '../../utils/helperFuncs';
 import NotesCard from './NotesCard';
 
@@ -23,6 +24,8 @@ interface ParamTypes {
 const BugsDetailsPage = () => {
   const classes = useMainPageStyles();
   const { projectId, bugId } = useParams<ParamTypes>();
+  const history = useHistory();
+  const dispatch = useDispatch();
   const bug = useSelector((state: RootState) =>
     selectBugById(state, projectId, bugId)
   );
@@ -51,6 +54,10 @@ const BugsDetailsPage = () => {
     reopenedAt,
     notes,
   } = bug;
+
+  const handleDeleteBug = () => {
+    dispatch(deleteBug(projectId, bugId, history));
+  };
 
   const statusInfo = () => {
     if (!isResolved && reopenedAt && reopenedBy) {
@@ -132,14 +139,18 @@ const BugsDetailsPage = () => {
               currentData={{ title, description, priority }}
             />
           </FormDialog>
-          <Button
-            color="primary"
-            variant="contained"
-            startIcon={<DeleteOutlineIcon />}
-            style={{ marginLeft: '1em' }}
-          >
-            Delete Bug
-          </Button>
+          <ConfirmDialog
+            title="Confirm Delete Bug"
+            contentText="Are you sure you want to permanently delete the bug?"
+            actionBtnText="Delete Bug"
+            triggerBtn={{
+              type: 'normal',
+              text: 'Delete Bug',
+              icon: DeleteOutlineIcon,
+              style: { marginLeft: '1em' },
+            }}
+            actionFunc={handleDeleteBug}
+          />
         </div>
       </Paper>
       <NotesCard notes={notes} projectId={projectId} />
