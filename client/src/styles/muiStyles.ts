@@ -145,6 +145,7 @@ export const useMainPageStyles = makeStyles(
       display: 'flex',
       alignItems: 'flex-start',
       marginBottom: '0.3em',
+      marginTop: '0.8em',
     },
     avatar: {
       width: theme.spacing(4.8),

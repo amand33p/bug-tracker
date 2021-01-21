@@ -86,6 +86,7 @@ const NotesCard: React.FC<{
         <NoteForm isEditMode={false} projectId={projectId} bugId={bugId} />
       </FormDialog>
       <div className={classes.notesWrapper}>
+        <Divider />
         {sortedNotes.map((n) => (
           <div key={n.id}>
             <div className={classes.singleNote}>
@@ -121,6 +122,7 @@ const NotesCard: React.FC<{
                         icon: EditIcon,
                         variant: 'outlined',
                         size: 'small',
+                        style: { marginRight: '1em' },
                       }}
                       title="Edit the note"
                     >
@@ -143,7 +145,6 @@ const NotesCard: React.FC<{
                         type: 'normal',
                         text: 'Delete',
                         icon: DeleteIcon,
-                        style: { marginLeft: '1em' },
                         variant: 'outlined',
                         size: 'small',
                       }}
