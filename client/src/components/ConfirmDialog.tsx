@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
+import { TriggerButtonTypes } from './types';
 
 import {
   Button,
   IconButton,
   MenuItem,
-  SvgIconProps,
   Dialog,
   DialogActions,
   DialogContent,
@@ -12,37 +12,11 @@ import {
   Typography,
 } from '@material-ui/core';
 
-interface NormalButtonType {
-  type: 'normal';
-  text: string;
-  icon: (props: SvgIconProps) => JSX.Element;
-  size?: 'small' | 'medium' | 'large';
-  style?: { [name: string]: string } | { [name: string]: number };
-}
-
-interface IconButtonType {
-  type: 'icon';
-  icon: (props: SvgIconProps) => JSX.Element;
-  size?: 'small' | 'medium';
-  iconSize?: 'small' | 'default' | 'large';
-}
-
-interface MenuItemButtonType {
-  type: 'menu';
-  text: string;
-  icon: (props: SvgIconProps) => JSX.Element;
-}
-
-type TriggerButtonDetails =
-  | NormalButtonType
-  | IconButtonType
-  | MenuItemButtonType;
-
 const ConfirmDialog: React.FC<{
   title: string;
   contentText: string;
   actionBtnText: string;
-  triggerBtn: TriggerButtonDetails;
+  triggerBtn: TriggerButtonTypes;
   actionFunc: () => void;
 }> = ({ title, contentText, actionBtnText, triggerBtn, actionFunc }) => {
   const [dialogOpen, setDialogOpen] = useState(false);
@@ -82,7 +56,7 @@ const ConfirmDialog: React.FC<{
       return (
         <Button
           color="primary"
-          variant="contained"
+          variant={triggerBtn.variant || 'contained'}
           size={triggerBtn.size || 'medium'}
           startIcon={<triggerBtn.icon />}
           onClick={handleDialogOpen}

@@ -1,43 +1,19 @@
 import React, { useState } from 'react';
 import { DialogTitle } from './CustomDialogTitle';
+import { TriggerButtonTypes } from './types';
+
 import {
   Dialog,
   DialogContent,
   Button,
   IconButton,
   MenuItem,
-  SvgIconProps,
 } from '@material-ui/core';
 import { useDialogStyles } from '../styles/muiStyles';
 
-interface NormalButtonType {
-  type: 'normal';
-  text: string;
-  icon: (props: SvgIconProps) => JSX.Element;
-  size?: 'small' | 'medium' | 'large';
-  style?: { [name: string]: string } | { [name: string]: number };
-}
-
-interface IconButtonType {
-  type: 'icon';
-  icon: (props: SvgIconProps) => JSX.Element;
-  size?: 'small' | 'medium';
-}
-
-interface MenuItemButtonType {
-  type: 'menu';
-  text: string;
-  icon: (props: SvgIconProps) => JSX.Element;
-}
-
-type TriggerButtonDetails =
-  | NormalButtonType
-  | IconButtonType
-  | MenuItemButtonType;
-
 const FormDialog: React.FC<{
   title: string;
-  triggerBtn: TriggerButtonDetails;
+  triggerBtn: TriggerButtonTypes;
   children: React.ReactNode;
 }> = ({ triggerBtn, children, title }) => {
   const classes = useDialogStyles();
@@ -59,7 +35,7 @@ const FormDialog: React.FC<{
           onClick={handleDialogOpen}
           size={triggerBtn.size || 'medium'}
         >
-          <triggerBtn.icon />
+          <triggerBtn.icon fontSize={triggerBtn.iconSize || 'default'} />
         </IconButton>
       );
     } else if (triggerBtn.type === 'menu') {
@@ -73,7 +49,7 @@ const FormDialog: React.FC<{
       return (
         <Button
           color="primary"
-          variant="contained"
+          variant={triggerBtn.variant || 'contained'}
           size={triggerBtn.size || 'medium'}
           startIcon={<triggerBtn.icon />}
           onClick={handleDialogOpen}

@@ -1,14 +1,18 @@
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { selectAuthState } from '../../redux/slices/authSlice';
 import { selectProjectById } from '../../redux/slices/projectsSlice';
+import { deleteNote } from '../../redux/slices/bugsSlice';
 import { Note } from '../../redux/types';
 import { RootState } from '../../redux/store';
 import SortBar from '../../components/SortBar';
 import sortNotes from '../../utils/sortNotes';
+import NoteForm from './NoteForm';
+import ConfirmDialog from '../../components/ConfirmDialog';
+import FormDialog from '../../components/FormDialog';
 import { formatTimeAgo } from '../../utils/helperFuncs';
 
-import { Paper, Typography, Button, Avatar, Divider } from '@material-ui/core';
+import { Paper, Typography, Avatar, Divider } from '@material-ui/core';
 import { useMainPageStyles } from '../../styles/muiStyles';
 import ForumOutlinedIcon from '@material-ui/icons/ForumOutlined';
 import EditIcon from '@material-ui/icons/Edit';
@@ -23,11 +27,13 @@ const menuItems = [
   { value: 'updated', label: 'Recently Updated' },
 ];
 
-const NotesCard: React.FC<{ notes: Note[]; projectId: string }> = ({
-  notes,
-  projectId,
-}) => {
+const NotesCard: React.FC<{
+  notes: Note[];
+  projectId: string;
+  bugId: string;
+}> = ({ notes, projectId, bugId }) => {
   const classes = useMainPageStyles();
+  const dispatch = useDispatch();
   const { user } = useSelector(selectAuthState);
   const project = useSelector((state: RootState) =>
     selectProjectById(state, projectId)
@@ -39,6 +45,10 @@ const NotesCard: React.FC<{ notes: Note[]; projectId: string }> = ({
   };
 
   const sortedNotes = sortNotes(notes, sortBy);
+
+  const handleDeleteNote = (noteId: number) => {
+    dispatch(deleteNote(projectId, bugId, noteId));
+  };
 
   return (
     <Paper className={classes.notesPaper}>
@@ -64,14 +74,17 @@ const NotesCard: React.FC<{ notes: Note[]; projectId: string }> = ({
           />
         </div>
       </div>
-      <Button
-        color="primary"
-        variant="contained"
-        startIcon={<CommentIcon />}
-        style={{ marginTop: '1em' }}
+      <FormDialog
+        triggerBtn={{
+          type: 'normal',
+          text: 'Leave A Note',
+          icon: CommentIcon,
+          style: { marginTop: '1em' },
+        }}
+        title="Post a note"
       >
-        Leave a Note
-      </Button>
+        <NoteForm isEditMode={false} projectId={projectId} bugId={bugId} />
+      </FormDialog>
       <div className={classes.notesWrapper}>
         {sortedNotes.map((n) => (
           <div key={n.id}>
@@ -101,26 +114,41 @@ const NotesCard: React.FC<{ notes: Note[]; projectId: string }> = ({
                 </Typography>
                 <div className={classes.notesBtnWrapper}>
                   {n.author.id === user?.id && (
-                    <Button
-                      size="small"
-                      color="primary"
-                      variant="outlined"
-                      startIcon={<EditIcon />}
+                    <FormDialog
+                      triggerBtn={{
+                        type: 'normal',
+                        text: 'Edit',
+                        icon: EditIcon,
+                        variant: 'outlined',
+                        size: 'small',
+                      }}
+                      title="Edit the note"
                     >
-                      Edit
-                    </Button>
+                      <NoteForm
+                        isEditMode={true}
+                        projectId={projectId}
+                        bugId={bugId}
+                        noteId={n.id}
+                        currentBody={n.body}
+                      />
+                    </FormDialog>
                   )}
                   {(n.author.id === user?.id ||
                     user?.id === project?.createdBy.id) && (
-                    <Button
-                      size="small"
-                      color="primary"
-                      variant="outlined"
-                      startIcon={<DeleteIcon />}
-                      style={{ marginLeft: '1em' }}
-                    >
-                      Delete
-                    </Button>
+                    <ConfirmDialog
+                      title="Confirm Delete Note"
+                      contentText="Are you sure you want to delete the note?"
+                      actionBtnText="Delete Note"
+                      triggerBtn={{
+                        type: 'normal',
+                        text: 'Delete',
+                        icon: DeleteIcon,
+                        style: { marginLeft: '1em' },
+                        variant: 'outlined',
+                        size: 'small',
+                      }}
+                      actionFunc={() => handleDeleteNote(n.id)}
+                    />
                   )}
                 </div>
               </div>

@@ -173,7 +173,7 @@ const BugsDetailsPage = () => {
           />
         </div>
       </Paper>
-      <NotesCard notes={notes} projectId={projectId} />
+      <NotesCard notes={notes} projectId={projectId} bugId={id} />
     </div>
   );
 };
