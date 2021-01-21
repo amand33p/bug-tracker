@@ -110,6 +110,7 @@ export const useMainPageStyles = makeStyles(
       alignItems: 'center',
       [theme.breakpoints.down('xs')]: {
         padding: '0.3em 0.5em',
+        marginBottom: '0.5em',
       },
     },
     headerIcon: {
@@ -305,7 +306,7 @@ export const useAuthPageStyles = makeStyles(
       marginTop: '8%',
       [theme.breakpoints.down('xs')]: {
         width: 'auto',
-        margin: '0.7em 0.7em',
+        margin: '0.5em 0.5em',
         padding: '1em',
       },
     },
