@@ -1,12 +1,14 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState, AppThunk } from '../store';
 import bugService from '../../services/bugs';
+import noteService from '../../services/notes';
 import {
   BugState,
   BugSortValues,
   BugPayload,
   EditedBugData,
   ClosedReopenedBugData,
+  Note,
 } from '../types';
 import { History } from 'history';
 import { getErrorMsg } from '../../utils/helperFuncs';
@@ -92,6 +94,72 @@ const bugsSlice = createSlice({
         b.id === action.payload.bugId ? { ...b, ...action.payload.data } : b
       );
     },
+    addNote: (
+      state,
+      action: PayloadAction<{ note: Note; bugId: string; projectId: string }>
+    ) => {
+      state.bugs[action.payload.projectId] = state.bugs[
+        action.payload.projectId
+      ].map((b) =>
+        b.id === action.payload.bugId
+          ? { ...b, notes: [...b.notes, action.payload.note] }
+          : b
+      );
+      state.submitLoading = false;
+      state.submitError = null;
+    },
+    updateNote: (
+      state,
+      action: PayloadAction<{
+        data: { body: string; updatedAt: Date };
+        noteId: number;
+        bugId: string;
+        projectId: string;
+      }>
+    ) => {
+      const bug = state.bugs[action.payload.projectId].find(
+        (b) => b.id === action.payload.bugId
+      );
+
+      if (bug) {
+        const updatedNotes = bug.notes.map((n) =>
+          n.id === action.payload.noteId ? { ...n, ...action.payload.data } : n
+        );
+
+        state.bugs[action.payload.projectId] = state.bugs[
+          action.payload.projectId
+        ].map((b) =>
+          b.id === action.payload.bugId ? { ...b, notes: updatedNotes } : b
+        );
+
+        state.submitLoading = false;
+        state.submitError = null;
+      }
+    },
+    removeNote: (
+      state,
+      action: PayloadAction<{
+        noteId: number;
+        bugId: string;
+        projectId: string;
+      }>
+    ) => {
+      const bug = state.bugs[action.payload.projectId].find(
+        (b) => b.id === action.payload.bugId
+      );
+
+      if (bug) {
+        const updatedNotes = bug.notes.filter(
+          (n) => n.id !== action.payload.noteId
+        );
+
+        state.bugs[action.payload.projectId] = state.bugs[
+          action.payload.projectId
+        ].map((b) =>
+          b.id === action.payload.bugId ? { ...b, notes: updatedNotes } : b
+        );
+      }
+    },
     setFetchBugsLoading: (state) => {
       state.fetchLoading = true;
       state.fetchError = null;
@@ -123,6 +191,9 @@ export const {
   updateBug,
   removeBug,
   updateBugStatus,
+  addNote,
+  updateNote,
+  removeNote,
   setFetchBugsLoading,
   setFetchBugsError,
   setSubmitBugLoading,
@@ -235,6 +306,65 @@ export const closeReopenBug = (
           projectId,
         })
       );
+    } catch (e) {
+      console.log(console.log(getErrorMsg(e)));
+    }
+  };
+};
+
+export const createNote = (
+  projectId: string,
+  bugId: string,
+  noteBody: string,
+  closeDialog?: () => void
+): AppThunk => {
+  return async (dispatch) => {
+    try {
+      dispatch(setSubmitBugLoading());
+      const newNote = await noteService.createNote(projectId, bugId, noteBody);
+      dispatch(addNote({ note: newNote, bugId, projectId }));
+      closeDialog && closeDialog();
+    } catch (e) {
+      dispatch(setSubmitBugError(getErrorMsg(e)));
+    }
+  };
+};
+
+export const editNote = (
+  projectId: string,
+  bugId: string,
+  noteId: number,
+  noteBody: string,
+  closeDialog?: () => void
+): AppThunk => {
+  return async (dispatch) => {
+    try {
+      dispatch(setSubmitBugLoading());
+      const returnedData = await noteService.editNote(
+        projectId,
+        noteId,
+        noteBody
+      );
+      const { body, updatedAt } = returnedData as Note;
+      dispatch(
+        updateNote({ data: { body, updatedAt }, noteId, bugId, projectId })
+      );
+      closeDialog && closeDialog();
+    } catch (e) {
+      dispatch(setSubmitBugError(getErrorMsg(e)));
+    }
+  };
+};
+
+export const deleteNote = (
+  projectId: string,
+  bugId: string,
+  noteId: number
+): AppThunk => {
+  return async (dispatch) => {
+    try {
+      await noteService.deleteNote(projectId, noteId);
+      dispatch(removeNote({ noteId, bugId, projectId }));
     } catch (e) {
       console.log(console.log(getErrorMsg(e)));
     }

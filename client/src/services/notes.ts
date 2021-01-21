@@ -19,7 +19,7 @@ const createNote = async (
 
 const editNote = async (
   projectId: string,
-  noteId: string,
+  noteId: number,
   noteBody: string
 ) => {
   const response = await axios.put(
@@ -30,7 +30,7 @@ const editNote = async (
   return response.data;
 };
 
-const deleteNote = async (projectId: string, noteId: string) => {
+const deleteNote = async (projectId: string, noteId: number) => {
   const response = await axios.delete(
     `${baseUrl}/${projectId}/notes/${noteId}`,
     setConfig()
