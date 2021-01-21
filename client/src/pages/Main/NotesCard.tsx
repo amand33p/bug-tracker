@@ -87,6 +87,7 @@ const NotesCard: React.FC<{
       </FormDialog>
       <div className={classes.notesWrapper}>
         <Divider />
+        {sortedNotes.length === 0 && <div>No notes added yet.</div>}
         {sortedNotes.map((n) => (
           <div key={n.id}>
             <div className={classes.singleNote}>

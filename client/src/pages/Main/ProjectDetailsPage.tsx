@@ -35,15 +35,15 @@ const ProjectDetailsPage = () => {
   const dispatch = useDispatch();
   const [viewMembers, setViewMembers] = useState(false);
   const { user } = useSelector(selectAuthState);
-  const project = useSelector((state: RootState) =>
+  const projectInState = useSelector((state: RootState) =>
     selectProjectById(state, projectId)
   );
 
-  if (!project) {
+  if (!projectInState) {
     return <div>404: Project not found.</div>;
   }
 
-  const { id, name, members, createdAt, updatedAt, createdBy } = project;
+  const { id, name, members, createdAt, updatedAt, createdBy } = projectInState;
 
   const isAdmin = createdBy.id === user?.id;
 

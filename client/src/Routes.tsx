@@ -11,7 +11,7 @@ import { Container, useMediaQuery } from '@material-ui/core';
 import { useTheme } from '@material-ui/core/styles';
 
 const Routes = () => {
-  const { user } = useSelector(selectAuthState);
+  const { user: isLoggedIn } = useSelector(selectAuthState);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
@@ -19,19 +19,19 @@ const Routes = () => {
     <Container disableGutters={isMobile}>
       <Switch>
         <Route exact path="/">
-          {user ? <ProjectsPage /> : <Redirect to="/signup" />}
+          {isLoggedIn ? <ProjectsPage /> : <Redirect to="/signup" />}
         </Route>
         <Route exact path="/projects/:projectId">
-          {user ? <ProjectDetailsPage /> : <Redirect to="/signup" />}
+          {isLoggedIn ? <ProjectDetailsPage /> : <Redirect to="/signup" />}
         </Route>
         <Route exact path="/projects/:projectId/bugs/:bugId">
-          {user ? <BugDetailsPage /> : <Redirect to="/signup" />}
+          {isLoggedIn ? <BugDetailsPage /> : <Redirect to="/signup" />}
         </Route>
         <Route exact path="/login">
-          {!user ? <LoginPage /> : <Redirect to="/" />}
+          {!isLoggedIn ? <LoginPage /> : <Redirect to="/" />}
         </Route>
         <Route exact path="/signup">
-          {!user ? <SignupPage /> : <Redirect to="/" />}
+          {!isLoggedIn ? <SignupPage /> : <Redirect to="/" />}
         </Route>
         <Route>
           <h1>404</h1>
