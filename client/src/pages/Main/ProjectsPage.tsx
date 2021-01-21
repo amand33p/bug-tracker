@@ -8,12 +8,15 @@ import ProjectsTable from './ProjectsTable';
 import ProjectActionCard from './ProjectsActionCard';
 import sortProjects from '../../utils/sortProjects';
 
-import { Paper, Typography } from '@material-ui/core';
+import { Paper, Typography, useMediaQuery } from '@material-ui/core';
+import { useTheme } from '@material-ui/core/styles';
 import { useMainPageStyles } from '../../styles/muiStyles';
 import AssignmentIcon from '@material-ui/icons/Assignment';
 
 const ProjectsPage = () => {
   const classes = useMainPageStyles();
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const dispatch = useDispatch();
   const { projects, fetchStatus, fetchError, sortBy } = useSelector(
     selectProjectsState
@@ -65,11 +68,14 @@ const ProjectsPage = () => {
           className={classes.headerIcon}
         />
         <div>
-          <Typography variant="h5" color="secondary">
+          <Typography variant={isMobile ? 'h6' : 'h5'} color="secondary">
             All Projects
           </Typography>
-          <Typography variant="body2" color="secondary">
-            Projects you created or joined.
+          <Typography
+            variant={isMobile ? 'caption' : 'subtitle1'}
+            color="secondary"
+          >
+            List of all the created or joined projects.
           </Typography>
         </div>
       </Paper>
@@ -77,6 +83,7 @@ const ProjectsPage = () => {
         <ProjectActionCard
           filterValue={filterValue}
           setFilterValue={setFilterValue}
+          isMobile={isMobile}
         />
         {projectsDataToDisplay()}
       </Paper>

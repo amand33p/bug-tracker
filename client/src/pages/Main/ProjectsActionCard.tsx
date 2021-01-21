@@ -24,7 +24,8 @@ const menuItems = [
 const ProjectsActionCard: React.FC<{
   filterValue: string;
   setFilterValue: (filterValue: string) => void;
-}> = ({ filterValue, setFilterValue }) => {
+  isMobile: boolean;
+}> = ({ filterValue, setFilterValue, isMobile }) => {
   const classes = useActionCardStyles();
   const dispatch = useDispatch();
   const [sortBy, setSortBy] = useState<ProjectSortValues>('newest');
@@ -43,6 +44,7 @@ const ProjectsActionCard: React.FC<{
             filterValue={filterValue}
             setFilterValue={setFilterValue}
             label="Projects"
+            size={isMobile ? 'small' : 'medium'}
           />
         </div>
         <div className={classes.sortBarWrapper}>
@@ -51,6 +53,7 @@ const ProjectsActionCard: React.FC<{
             handleSortChange={handleSortChange}
             menuItems={menuItems}
             label="Projects"
+            size={isMobile ? 'small' : 'medium'}
           />
         </div>
       </div>

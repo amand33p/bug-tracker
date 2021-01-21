@@ -93,21 +93,34 @@ export const useMainPageStyles = makeStyles(
   (theme) => ({
     root: {
       padding: '1em 0',
+      [theme.breakpoints.down('xs')]: {
+        padding: '0.7em 0.7em',
+      },
     },
     headerPaper: {
       padding: '0.8em 1.5em',
       marginBottom: '1em',
       display: 'flex',
       alignItems: 'center',
+      [theme.breakpoints.down('xs')]: {
+        padding: '0.3em 0.5em',
+      },
     },
     headerIcon: {
       fontSize: '4.5em',
       marginRight: '0.2em',
+      [theme.breakpoints.down('xs')]: {
+        fontSize: '3em',
+        marginRight: '0.3em',
+      },
     },
     projectsPaper: {
       padding: '1.5em',
       minHeight: 'calc(100vH - 248px)',
       marginBottom: '0.2em',
+      [theme.breakpoints.down('xs')]: {
+        padding: '0.5em',
+      },
     },
     detailsHeader: {
       padding: '1.2em 1.5em',
@@ -175,9 +188,15 @@ export const useActionCardStyles = makeStyles(
     },
     searchBarWrapper: {
       width: '70%',
+      [theme.breakpoints.down('xs')]: {
+        width: '55%',
+      },
     },
     sortBarWrapper: {
       width: '25%',
+      [theme.breakpoints.down('xs')]: {
+        width: '42%',
+      },
     },
   }),
   { index: 1 }
