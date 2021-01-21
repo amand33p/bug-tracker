@@ -58,12 +58,21 @@ const ProjectsActionCard: React.FC<{
         </div>
       </div>
       <FormDialog
-        triggerBtn={{
-          type: 'normal',
-          text: 'Add Project',
-          icon: AddIcon,
-          size: 'large',
-        }}
+        triggerBtn={
+          isMobile
+            ? {
+                type: 'fab',
+                variant: 'extended',
+                text: 'Project',
+                icon: AddIcon,
+              }
+            : {
+                type: 'normal',
+                text: 'Add Project',
+                icon: AddIcon,
+                size: 'large',
+              }
+        }
         title="Add a new project"
       >
         <ProjectForm editMode={null} />

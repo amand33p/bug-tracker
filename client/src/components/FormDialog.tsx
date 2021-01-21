@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { DialogTitle } from './CustomDialogTitle';
+import HideOnScroll from './HideOnScroll';
 import { TriggerButtonTypes } from './types';
 
 import {
@@ -8,6 +9,7 @@ import {
   Button,
   IconButton,
   MenuItem,
+  Fab,
 } from '@material-ui/core';
 import { useDialogStyles } from '../styles/muiStyles';
 
@@ -44,6 +46,25 @@ const FormDialog: React.FC<{
           <triggerBtn.icon />
           {triggerBtn.text}
         </MenuItem>
+      );
+    } else if (triggerBtn.type === 'fab') {
+      return (
+        <HideOnScroll>
+          <Fab
+            variant={triggerBtn.variant || 'round'}
+            size={triggerBtn.size || 'large'}
+            color="primary"
+            className={classes.fab}
+            onClick={handleDialogOpen}
+          >
+            <triggerBtn.icon
+              style={{
+                marginRight: triggerBtn.variant === 'extended' ? '0.3em' : 0,
+              }}
+            />
+            {triggerBtn.variant === 'extended' && triggerBtn.text}
+          </Fab>
+        </HideOnScroll>
       );
     } else {
       return (

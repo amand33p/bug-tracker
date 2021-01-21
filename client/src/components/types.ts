@@ -22,7 +22,16 @@ interface MenuItemButtonType {
   icon: (props: SvgIconProps) => JSX.Element;
 }
 
+interface FabButtonType {
+  type: 'fab';
+  icon: (props: SvgIconProps) => JSX.Element;
+  size?: 'small' | 'medium' | 'large';
+  variant?: 'extended' | 'round';
+  text?: string;
+}
+
 export type TriggerButtonTypes =
   | NormalButtonType
   | IconButtonType
-  | MenuItemButtonType;
+  | MenuItemButtonType
+  | FabButtonType;

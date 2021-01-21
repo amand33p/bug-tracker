@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import HideOnScroll from './HideOnScroll';
 import { TriggerButtonTypes } from './types';
 
 import {
@@ -10,7 +11,9 @@ import {
   DialogContent,
   DialogTitle,
   Typography,
+  Fab,
 } from '@material-ui/core';
+import { useDialogStyles } from '../styles/muiStyles';
 
 const ConfirmDialog: React.FC<{
   title: string;
@@ -19,6 +22,7 @@ const ConfirmDialog: React.FC<{
   triggerBtn: TriggerButtonTypes;
   actionFunc: () => void;
 }> = ({ title, contentText, actionBtnText, triggerBtn, actionFunc }) => {
+  const classes = useDialogStyles();
   const [dialogOpen, setDialogOpen] = useState(false);
 
   const handleDialogClose = () => {
@@ -51,6 +55,21 @@ const ConfirmDialog: React.FC<{
           <triggerBtn.icon />
           {triggerBtn.text}
         </MenuItem>
+      );
+    } else if (triggerBtn.type === 'fab') {
+      return (
+        <HideOnScroll>
+          <Fab
+            variant={triggerBtn.variant || 'round'}
+            size={triggerBtn.size || 'medium'}
+            color="primary"
+            className={classes.fab}
+            onClick={handleDialogOpen}
+          >
+            <triggerBtn.icon />
+            {triggerBtn.variant === 'extended' && triggerBtn.text}
+          </Fab>
+        </HideOnScroll>
       );
     } else {
       return (

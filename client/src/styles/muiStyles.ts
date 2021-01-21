@@ -51,6 +51,12 @@ export const useDialogStyles = makeStyles(
         padding: 0,
       },
     },
+    fab: {
+      position: 'fixed',
+      bottom: theme.spacing(1.5),
+      right: theme.spacing(1.5),
+      zIndex: 1000,
+    },
   }),
   { index: 1 }
 );
@@ -94,7 +100,7 @@ export const useMainPageStyles = makeStyles(
     root: {
       padding: '1em 0',
       [theme.breakpoints.down('xs')]: {
-        padding: '0.7em 0.7em',
+        padding: '0.5em 0.5em',
       },
     },
     headerPaper: {
@@ -119,7 +125,9 @@ export const useMainPageStyles = makeStyles(
       minHeight: 'calc(100vH - 248px)',
       marginBottom: '0.2em',
       [theme.breakpoints.down('xs')]: {
-        padding: '0.5em',
+        padding: '0.7em 0.3em',
+        minHeight: 'calc(100vH - 168px)',
+        marginBottom: '0.1em',
       },
     },
     detailsHeader: {
@@ -173,6 +181,19 @@ export const useMainPageStyles = makeStyles(
     },
     notesBtnWrapper: {
       margin: '0.5em 0',
+    },
+    iconText: {
+      verticalAlign: 'middle',
+      display: 'inline-flex',
+    },
+    countWrapper: {
+      display: 'flex',
+      width: '100px',
+      justifyContent: 'space-between',
+      marginTop: '0.4em',
+    },
+    listItemWrapper: {
+      padding: '0.4em 0.3em',
     },
   }),
   { index: 1 }

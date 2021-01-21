@@ -6,6 +6,7 @@ import {
 } from '../../redux/slices/projectsSlice';
 import ProjectsTable from './ProjectsTable';
 import ProjectActionCard from './ProjectsActionCard';
+import ProjectsListMobile from './ProjectsListMobile';
 import sortProjects from '../../utils/sortProjects';
 
 import { Paper, Typography, useMediaQuery } from '@material-ui/core';
@@ -53,7 +54,11 @@ const ProjectsPage = () => {
     } else {
       return (
         <div style={{ marginTop: '1.5em' }}>
-          <ProjectsTable projects={filteredSortedProjects} />
+          {!isMobile ? (
+            <ProjectsTable projects={filteredSortedProjects} />
+          ) : (
+            <ProjectsListMobile projects={filteredSortedProjects} />
+          )}
         </div>
       );
     }

@@ -1,4 +1,3 @@
-import React from 'react';
 import { Link as RouterLink, useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { ProjectState } from '../../redux/types';
