@@ -72,14 +72,15 @@ const ProjectDetailsPage = () => {
 
     if (isMobile) {
       return (
-        <IconButton
-          color="secondary"
+        <Button
+          color="primary"
+          variant="contained"
           onClick={() => setViewMembers(!viewMembers)}
           style={{ marginRight: '1em' }}
-          className={classes.iconButton}
+          className={classes.roundIconButton}
         >
           {!viewMembers ? <PeopleAltTwoToneIcon /> : <PeopleAltIcon />}
-        </IconButton>
+        </Button>
       );
     } else {
       return (
@@ -94,6 +95,59 @@ const ProjectDetailsPage = () => {
         </Button>
       );
     }
+  };
+
+  const leaveProjectBtn = () => {
+    if (isAdmin) return null;
+
+    return (
+      <ConfirmDialog
+        title="Confirm Leave Project"
+        contentText="Are you sure you want to leave the project's membership?"
+        actionBtnText="Leave Project"
+        triggerBtn={{
+          type: isMobile ? 'round' : 'normal',
+          text: isMobile ? undefined : 'Leave Project',
+          icon: ExitToAppOutlinedIcon,
+        }}
+        actionFunc={handleLeaveProject}
+      />
+    );
+  };
+
+  const adminBtns = () => {
+    if (!isAdmin) return null;
+
+    return (
+      <>
+        <FormDialog
+          triggerBtn={{
+            type: isMobile ? 'round' : 'normal',
+            text: isMobile ? undefined : 'Add Members',
+            icon: GroupAddOutlinedIcon,
+            style: { marginRight: '1em' },
+          }}
+          title="Add members to the project"
+        >
+          <ProjectForm
+            editMode="members"
+            currentMembers={members.map((m) => m.member.id)}
+            projectId={id}
+          />
+        </FormDialog>
+        <ConfirmDialog
+          title="Confirm Delete Project"
+          contentText="Are you sure you want to permanently delete your project?"
+          actionBtnText="Delete Project"
+          triggerBtn={{
+            type: isMobile ? 'round' : 'normal',
+            text: isMobile ? undefined : 'Delete Project',
+            icon: DeleteOutlineIcon,
+          }}
+          actionFunc={handleDeleteProject}
+        />
+      </>
+    );
   };
 
   return (
@@ -130,49 +184,8 @@ const ProjectDetailsPage = () => {
         )}
         <div className={classes.btnsWrapper}>
           {showMembersBtn()}
-          {!isAdmin && (
-            <ConfirmDialog
-              title="Confirm Leave Project"
-              contentText="Are you sure you want to leave the project's membership?"
-              actionBtnText="Leave Project"
-              triggerBtn={{
-                type: 'normal',
-                text: 'Leave Project',
-                icon: ExitToAppOutlinedIcon,
-              }}
-              actionFunc={handleLeaveProject}
-            />
-          )}
-          {isAdmin && (
-            <>
-              <FormDialog
-                triggerBtn={{
-                  type: 'normal',
-                  text: 'Add Members',
-                  icon: GroupAddOutlinedIcon,
-                  style: { marginRight: '1em' },
-                }}
-                title="Add members to the project"
-              >
-                <ProjectForm
-                  editMode="members"
-                  currentMembers={members.map((m) => m.member.id)}
-                  projectId={id}
-                />
-              </FormDialog>
-              <ConfirmDialog
-                title="Confirm Delete Project"
-                contentText="Are you sure you want to permanently delete your project?"
-                actionBtnText="Delete Project"
-                triggerBtn={{
-                  type: 'normal',
-                  text: 'Delete Project',
-                  icon: DeleteOutlineIcon,
-                }}
-                actionFunc={handleDeleteProject}
-              />
-            </>
-          )}
+          {leaveProjectBtn()}
+          {adminBtns()}
         </div>
         {members.length > 1 && (
           <MembersCard

@@ -57,6 +57,11 @@ export const useDialogStyles = makeStyles(
       right: theme.spacing(1.5),
       zIndex: 1000,
     },
+    roundIconButton: {
+      minWidth: 0,
+      padding: '0.65em',
+      borderRadius: '2em',
+    },
   }),
   { index: 1 }
 );
@@ -140,6 +145,10 @@ export const useMainPageStyles = makeStyles(
     detailsHeader: {
       padding: '1.2em 1.5em',
       marginBottom: '1em',
+      [theme.breakpoints.down('xs')]: {
+        padding: '0.5em 1em',
+        marginBottom: '0.5em',
+      },
     },
     flexHeader: {
       display: 'flex',
@@ -148,13 +157,10 @@ export const useMainPageStyles = makeStyles(
     btnsWrapper: {
       margin: '1em 0',
       [theme.breakpoints.down('xs')]: {
-        margin: '0.4em 0',
+        margin: '0.5em 0',
       },
     },
-    iconButton: {
-      backgroundColor: theme.palette.primary.main + '30',
-      padding: '0.4em',
-    },
+
     membersWrapper: {
       marginTop: '1em',
     },
@@ -213,6 +219,11 @@ export const useMainPageStyles = makeStyles(
       display: 'flex',
       justifyContent: 'space-between',
       alignItems: 'center',
+    },
+    roundIconButton: {
+      minWidth: 0,
+      padding: '0.65em',
+      borderRadius: '2em',
     },
   }),
   { index: 1 }

@@ -43,9 +43,11 @@ const ConfirmDialog: React.FC<{
     if (triggerBtn.type === 'icon') {
       return (
         <IconButton
-          color="primary"
+          color={triggerBtn.color || 'primary'}
           onClick={handleDialogOpen}
           size={triggerBtn.size || 'medium'}
+          className={triggerBtn.className}
+          style={triggerBtn.style}
         >
           <triggerBtn.icon fontSize={triggerBtn.iconSize || 'default'} />
         </IconButton>
@@ -63,7 +65,7 @@ const ConfirmDialog: React.FC<{
           <Fab
             variant={triggerBtn.variant || 'round'}
             size={triggerBtn.size || 'medium'}
-            color="primary"
+            color={triggerBtn.color || 'primary'}
             className={classes.fab}
             onClick={handleDialogOpen}
           >
@@ -72,15 +74,29 @@ const ConfirmDialog: React.FC<{
           </Fab>
         </HideOnScroll>
       );
+    } else if (triggerBtn.type === 'round') {
+      return (
+        <Button
+          color={triggerBtn.color || 'primary'}
+          variant={triggerBtn.variant || 'contained'}
+          size={triggerBtn.size || 'medium'}
+          onClick={handleDialogOpen}
+          style={triggerBtn.style}
+          className={classes.roundIconButton}
+        >
+          <triggerBtn.icon />
+        </Button>
+      );
     } else {
       return (
         <Button
-          color="primary"
+          color={triggerBtn.color || 'primary'}
           variant={triggerBtn.variant || 'contained'}
           size={triggerBtn.size || 'medium'}
           startIcon={<triggerBtn.icon />}
           onClick={handleDialogOpen}
           style={triggerBtn.style}
+          className={triggerBtn.className}
         >
           {triggerBtn.text}
         </Button>
