@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import HideOnScroll from './HideOnScroll';
 import { TriggerButtonTypes } from './types';
 
@@ -31,6 +31,7 @@ const ConfirmDialog: React.FC<{
 
   const handleDialogOpen = () => {
     setDialogOpen(true);
+    triggerBtn.type === 'menu' && triggerBtn.closeMenu();
   };
 
   const handleConfirmedAction = () => {
@@ -52,7 +53,7 @@ const ConfirmDialog: React.FC<{
     } else if (triggerBtn.type === 'menu') {
       return (
         <MenuItem onClick={handleDialogOpen}>
-          <triggerBtn.icon />
+          <triggerBtn.icon style={triggerBtn.iconStyle} />
           {triggerBtn.text}
         </MenuItem>
       );

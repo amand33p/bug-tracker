@@ -1,21 +1,19 @@
-import { Link as RouterLink, useHistory } from 'react-router-dom';
+import { Link as RouterLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { ProjectState } from '../../redux/types';
 import { selectAuthState } from '../../redux/slices/authSlice';
+import ProjectsMenu from './ProjectsMenu';
 import { formatDateTime, truncateString } from '../../utils/helperFuncs';
 
 import { Divider, Typography, Link } from '@material-ui/core';
 import { useMainPageStyles } from '../../styles/muiStyles';
-import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import BugReportTwoToneIcon from '@material-ui/icons/BugReportTwoTone';
 import PeopleAltTwoToneIcon from '@material-ui/icons/PeopleAltTwoTone';
-import OpenInNewIcon from '@material-ui/icons/OpenInNew';
 
 const ProjectsListMobile: React.FC<{ projects: ProjectState[] }> = ({
   projects,
 }) => {
   const classes = useMainPageStyles();
-  const history = useHistory();
   const { user } = useSelector(selectAuthState);
 
   return (
@@ -38,19 +36,28 @@ const ProjectsListMobile: React.FC<{ projects: ProjectState[] }> = ({
             <Typography variant="body2" color="secondary">
               Created: <strong>{formatDateTime(p.createdAt)}</strong>
             </Typography>
-            <div className={classes.countWrapper}>
-              <div className={classes.iconText}>
-                <BugReportTwoToneIcon color="primary" />
-                <Typography variant="subtitle1" color="secondary">
-                  : {p.bugs.length}
-                </Typography>
+            <div className={classes.flexedWrapper}>
+              <div className={classes.iconCounters}>
+                <div className={classes.iconText}>
+                  <BugReportTwoToneIcon color="primary" />
+                  <Typography variant="subtitle1" color="secondary">
+                    : {p.bugs.length}
+                  </Typography>
+                </div>
+                <div className={classes.iconText}>
+                  <PeopleAltTwoToneIcon color="primary" />{' '}
+                  <Typography variant="subtitle1" color="secondary">
+                    : {p.members.length}
+                  </Typography>
+                </div>
               </div>
-              <div className={classes.iconText}>
-                <PeopleAltTwoToneIcon color="primary" />{' '}
-                <Typography variant="subtitle1" color="secondary">
-                  : {p.members.length}
-                </Typography>
-              </div>
+              <ProjectsMenu
+                projectId={p.id}
+                currentName={p.name}
+                currentMembers={p.members.map((m) => m.member.id)}
+                isAdmin={p.createdBy.id === user?.id}
+                iconSize="default"
+              />
             </div>
           </div>
           <Divider />

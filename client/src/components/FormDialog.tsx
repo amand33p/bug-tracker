@@ -27,6 +27,7 @@ const FormDialog: React.FC<{
 
   const handleDialogOpen = () => {
     setDialogOpen(true);
+    triggerBtn.type === 'menu' && triggerBtn.closeMenu();
   };
 
   const triggerButton = () => {
@@ -43,7 +44,7 @@ const FormDialog: React.FC<{
     } else if (triggerBtn.type === 'menu') {
       return (
         <MenuItem onClick={handleDialogOpen}>
-          <triggerBtn.icon />
+          <triggerBtn.icon style={triggerBtn.iconStyle} />
           {triggerBtn.text}
         </MenuItem>
       );

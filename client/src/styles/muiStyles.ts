@@ -187,14 +187,19 @@ export const useMainPageStyles = makeStyles(
       verticalAlign: 'middle',
       display: 'inline-flex',
     },
-    countWrapper: {
+    iconCounters: {
       display: 'flex',
       width: '100px',
       justifyContent: 'space-between',
-      marginTop: '0.4em',
     },
     listItemWrapper: {
       padding: '0.4em 0.3em',
+    },
+    flexedWrapper: {
+      width: '100%',
+      display: 'flex',
+      justifyContent: 'space-between',
+      alignItems: 'center',
     },
   }),
   { index: 1 }
@@ -207,6 +212,9 @@ export const useActionCardStyles = makeStyles(
       minWidth: '100%',
       justifyContent: 'space-between',
       marginBottom: '1.5em',
+      [theme.breakpoints.down('xs')]: {
+        marginBottom: '0.7em',
+      },
     },
     searchBarWrapper: {
       width: '70%',

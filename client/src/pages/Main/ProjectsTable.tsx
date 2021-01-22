@@ -2,6 +2,7 @@ import { Link as RouterLink, useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { ProjectState } from '../../redux/types';
 import { selectAuthState } from '../../redux/slices/authSlice';
+import ProjectsMenu from './ProjectsMenu';
 import { formatDateTime, truncateString } from '../../utils/helperFuncs';
 
 import {
@@ -11,12 +12,9 @@ import {
   TableRow,
   TableCell,
   Link,
-  IconButton,
   Paper,
 } from '@material-ui/core';
 import { useTableStyles } from '../../styles/muiStyles';
-import BlockIcon from '@material-ui/icons/Block';
-import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 
 const tableHeaders = ['Name', 'Bugs', 'Members', 'Admin', 'Created', 'Actions'];
 
@@ -62,16 +60,12 @@ const ProjectsTable: React.FC<{ projects: ProjectState[] }> = ({
                 {formatDateTime(p.createdAt)}
               </TableCell>
               <TableCell align="center">
-                {p.createdBy.id === user?.id ? (
-                  <IconButton
-                    size="small"
-                    onClick={() => console.log('table button clicked.')}
-                  >
-                    <MoreHorizIcon color="primary" fontSize="large" />
-                  </IconButton>
-                ) : (
-                  <BlockIcon color="secondary" fontSize="large" />
-                )}
+                <ProjectsMenu
+                  projectId={p.id}
+                  currentName={p.name}
+                  currentMembers={p.members.map((m) => m.member.id)}
+                  isAdmin={p.createdBy.id === user?.id}
+                />
               </TableCell>
             </TableRow>
           ))}

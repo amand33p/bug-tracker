@@ -1,6 +1,6 @@
 import { SvgIconProps } from '@material-ui/core';
 
-interface NormalButtonType {
+export interface NormalButtonType {
   type: 'normal';
   text: string;
   icon: (props: SvgIconProps) => JSX.Element;
@@ -9,20 +9,22 @@ interface NormalButtonType {
   variant?: 'outlined' | 'contained' | 'text';
 }
 
-interface IconButtonType {
+export interface IconButtonType {
   type: 'icon';
   icon: (props: SvgIconProps) => JSX.Element;
   size?: 'small' | 'medium';
   iconSize?: 'small' | 'default' | 'large';
 }
 
-interface MenuItemButtonType {
+export interface MenuItemButtonType {
   type: 'menu';
   text: string;
   icon: (props: SvgIconProps) => JSX.Element;
+  closeMenu: () => void;
+  iconStyle?: { [name: string]: string } | { [name: string]: number };
 }
 
-interface FabButtonType {
+export interface FabButtonType {
   type: 'fab';
   icon: (props: SvgIconProps) => JSX.Element;
   size?: 'small' | 'medium' | 'large';
