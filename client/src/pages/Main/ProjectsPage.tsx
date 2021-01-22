@@ -53,7 +53,7 @@ const ProjectsPage = () => {
       return <div>No matches found.</div>;
     } else {
       return (
-        <div style={{ marginTop: '1.5em' }}>
+        <div className={classes.projectsListTable}>
           {!isMobile ? (
             <ProjectsTable projects={filteredSortedProjects} />
           ) : (

@@ -131,6 +131,12 @@ export const useMainPageStyles = makeStyles(
         marginBottom: '0.1em',
       },
     },
+    projectsListTable: {
+      marginTop: '1.5em',
+      [theme.breakpoints.down('xs')]: {
+        marginTop: 0,
+      },
+    },
     detailsHeader: {
       padding: '1.2em 1.5em',
       marginBottom: '1em',

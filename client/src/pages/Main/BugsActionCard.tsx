@@ -56,7 +56,6 @@ const BugsActionCard: React.FC<{
           />
         </div>
       </div>
-
       <FormDialog
         triggerBtn={{
           type: 'normal',
