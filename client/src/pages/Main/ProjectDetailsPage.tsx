@@ -15,7 +15,15 @@ import ConfirmDialog from '../../components/ConfirmDialog';
 import FormDialog from '../../components/FormDialog';
 import { formatDateTime } from '../../utils/helperFuncs';
 
-import { Paper, Typography, Button, Divider } from '@material-ui/core';
+import {
+  Paper,
+  Typography,
+  Button,
+  IconButton,
+  Divider,
+  useMediaQuery,
+} from '@material-ui/core';
+import { useTheme } from '@material-ui/core/styles';
 import { useMainPageStyles } from '../../styles/muiStyles';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
@@ -23,6 +31,8 @@ import GroupAddOutlinedIcon from '@material-ui/icons/GroupAddOutlined';
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ExitToAppOutlinedIcon from '@material-ui/icons/ExitToAppOutlined';
+import PeopleAltTwoToneIcon from '@material-ui/icons/PeopleAltTwoTone';
+import PeopleAltIcon from '@material-ui/icons/PeopleAlt';
 
 interface ParamTypes {
   projectId: string;
@@ -30,6 +40,8 @@ interface ParamTypes {
 
 const ProjectDetailsPage = () => {
   const classes = useMainPageStyles();
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const { projectId } = useParams<ParamTypes>();
   const history = useHistory();
   const dispatch = useDispatch();
@@ -55,12 +67,41 @@ const ProjectDetailsPage = () => {
     dispatch(leaveProjectMembership(id, history));
   };
 
+  const showMembersBtn = () => {
+    if (members.length < 2) return null;
+
+    if (isMobile) {
+      return (
+        <IconButton
+          color="secondary"
+          onClick={() => setViewMembers(!viewMembers)}
+          style={{ marginRight: '1em' }}
+          className={classes.iconButton}
+        >
+          {!viewMembers ? <PeopleAltTwoToneIcon /> : <PeopleAltIcon />}
+        </IconButton>
+      );
+    } else {
+      return (
+        <Button
+          color="secondary"
+          variant="outlined"
+          startIcon={viewMembers ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+          onClick={() => setViewMembers(!viewMembers)}
+          style={{ marginRight: '1em' }}
+        >
+          {viewMembers ? 'Hide Members' : 'View Members'}
+        </Button>
+      );
+    }
+  };
+
   return (
     <div className={classes.root}>
       <Paper className={classes.detailsHeader}>
         <div className={classes.flexHeader}>
           <Typography
-            variant="h4"
+            variant={isMobile ? 'h5' : 'h4'}
             color="secondary"
             style={{ marginRight: '0.2em' }}
           >
@@ -88,17 +129,7 @@ const ProjectDetailsPage = () => {
           </Typography>
         )}
         <div className={classes.btnsWrapper}>
-          {members.length > 1 && (
-            <Button
-              color="secondary"
-              variant="outlined"
-              startIcon={viewMembers ? <ExpandLessIcon /> : <ExpandMoreIcon />}
-              onClick={() => setViewMembers(!viewMembers)}
-              style={{ marginRight: '1em' }}
-            >
-              {viewMembers ? 'Hide Members' : 'View Members'}
-            </Button>
-          )}
+          {showMembersBtn()}
           {!isAdmin && (
             <ConfirmDialog
               title="Confirm Leave Project"

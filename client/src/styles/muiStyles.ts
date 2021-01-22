@@ -147,6 +147,13 @@ export const useMainPageStyles = makeStyles(
     },
     btnsWrapper: {
       margin: '1em 0',
+      [theme.breakpoints.down('xs')]: {
+        margin: '0.4em 0',
+      },
+    },
+    iconButton: {
+      backgroundColor: theme.palette.primary.main + '30',
+      padding: '0.4em',
     },
     membersWrapper: {
       marginTop: '1em',
