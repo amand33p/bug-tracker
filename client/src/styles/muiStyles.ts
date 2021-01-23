@@ -241,6 +241,10 @@ export const useMainPageStyles = makeStyles(
       padding: '0.65em',
       borderRadius: '2em',
     },
+    gotoIcon: {
+      fontSize: '0.7em',
+      marginLeft: '0.4em',
+    },
   }),
   { index: 1 }
 );

@@ -9,6 +9,7 @@ import { Divider, Typography, Link } from '@material-ui/core';
 import { useMainPageStyles } from '../../styles/muiStyles';
 import BugReportTwoToneIcon from '@material-ui/icons/BugReportTwoTone';
 import PeopleAltTwoToneIcon from '@material-ui/icons/PeopleAltTwoTone';
+import OpenInNewIcon from '@material-ui/icons/OpenInNew';
 
 const ProjectsListMobile: React.FC<{ projects: ProjectState[] }> = ({
   projects,
@@ -18,9 +19,9 @@ const ProjectsListMobile: React.FC<{ projects: ProjectState[] }> = ({
 
   return (
     <div>
-      <Divider />
       {projects.map((p) => (
         <div key={p.id}>
+          <Divider />
           <div className={classes.listItemWrapper}>
             <Link
               component={RouterLink}
@@ -29,6 +30,7 @@ const ProjectsListMobile: React.FC<{ projects: ProjectState[] }> = ({
               variant="h6"
             >
               {truncateString(p.name, 30)}
+              <OpenInNewIcon color="primary" className={classes.gotoIcon} />
             </Link>
             <Typography variant="body2" color="secondary">
               Admin: <strong>{p.createdBy.username}</strong>
@@ -60,7 +62,6 @@ const ProjectsListMobile: React.FC<{ projects: ProjectState[] }> = ({
               />
             </div>
           </div>
-          <Divider />
         </div>
       ))}
     </div>

@@ -6,15 +6,16 @@ import { formatDateTime, truncateString } from '../../utils/helperFuncs';
 import { Divider, Typography, Link } from '@material-ui/core';
 import { useMainPageStyles } from '../../styles/muiStyles';
 import QuestionAnswerTwoToneIcon from '@material-ui/icons/QuestionAnswerTwoTone';
+import OpenInNewIcon from '@material-ui/icons/OpenInNew';
 
 const BugsListMobile: React.FC<{ bugs: BugState[] }> = ({ bugs }) => {
   const classes = useMainPageStyles();
 
   return (
     <div>
-      <Divider />
       {bugs.map((b) => (
         <div key={b.id}>
+          <Divider />
           <div className={classes.listItemWrapper}>
             <Link
               component={RouterLink}
@@ -23,6 +24,7 @@ const BugsListMobile: React.FC<{ bugs: BugState[] }> = ({ bugs }) => {
               variant="h6"
             >
               {truncateString(b.title, 30)}
+              <OpenInNewIcon color="primary" className={classes.gotoIcon} />
             </Link>
             <Typography variant="body2" color="secondary">
               Priority: <strong>{b.priority}</strong>
@@ -64,7 +66,6 @@ const BugsListMobile: React.FC<{ bugs: BugState[] }> = ({ bugs }) => {
               />
             </div>
           </div>
-          <Divider />
         </div>
       ))}
     </div>
