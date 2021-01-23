@@ -10,8 +10,9 @@ import { RootState } from '../../redux/store';
 import FormDialog from '../../components/FormDialog';
 import BugForm from './BugForm';
 import ConfirmDialog from '../../components/ConfirmDialog';
-import { formatDateTime } from '../../utils/helperFuncs';
 import NotesCard from './NotesCard';
+import { formatDateTime } from '../../utils/helperFuncs';
+import { priorityStyles } from '../../styles/customStyles';
 
 import { Paper, Typography, Divider, useMediaQuery } from '@material-ui/core';
 import { useTheme } from '@material-ui/core/styles';
@@ -178,7 +179,17 @@ const BugsDetailsPage = () => {
           Status: {statusInfo()}
         </Typography>
         <Typography color="secondary" variant="subtitle2">
-          Priority: <strong>{priority}</strong>
+          Priority:{' '}
+          <div
+            style={{
+              ...priorityStyles(priority),
+              display: 'inline',
+              padding: '0.20em 0.4em',
+              textTransform: 'capitalize',
+            }}
+          >
+            {priority}
+          </div>
         </Typography>
         <Typography color="secondary" variant="subtitle2">
           Created: <em>{formatDateTime(createdAt)}</em> ~{' '}

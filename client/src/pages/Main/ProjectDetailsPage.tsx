@@ -31,7 +31,6 @@ import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ExitToAppOutlinedIcon from '@material-ui/icons/ExitToAppOutlined';
 import PeopleAltTwoToneIcon from '@material-ui/icons/PeopleAltTwoTone';
-import PeopleAltIcon from '@material-ui/icons/PeopleAlt';
 
 interface ParamTypes {
   projectId: string;

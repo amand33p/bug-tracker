@@ -3,6 +3,7 @@ import { Link as RouterLink, useHistory } from 'react-router-dom';
 import { BugState } from '../../redux/types';
 import BugsMenu from './BugsMenu';
 import { formatDateTime } from '../../utils/helperFuncs';
+import { priorityStyles } from '../../styles/customStyles';
 
 import {
   Table,
@@ -11,7 +12,6 @@ import {
   TableRow,
   TableCell,
   Link,
-  IconButton,
   Paper,
 } from '@material-ui/core';
 import { useTableStyles } from '../../styles/muiStyles';
@@ -60,7 +60,17 @@ const BugsTable: React.FC<{ bugs: BugState[] }> = ({ bugs }) => {
                   {b.title}
                 </Link>
               </TableCell>
-              <TableCell align="center">{b.priority}</TableCell>
+              <TableCell align="center">
+                <div
+                  style={{
+                    ...priorityStyles(b.priority),
+                    textTransform: 'capitalize',
+                    margin: '0 auto',
+                  }}
+                >
+                  {b.priority}
+                </div>
+              </TableCell>
               <TableCell align="center">
                 {b.isResolved ? 'Closed' : 'Open'}
               </TableCell>

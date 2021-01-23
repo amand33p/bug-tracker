@@ -34,7 +34,7 @@ const BugsCard: React.FC<{ projectId: string; isMobile: boolean }> = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const filteredSortedProjects =
+  const filteredSortedBugs =
     bugs &&
     sortBugs(
       bugs.filter((b) =>
@@ -50,15 +50,15 @@ const BugsCard: React.FC<{ projectId: string; isMobile: boolean }> = ({
       return <div>{fetchError}</div>;
     } else if (!bugs || bugs.length === 0) {
       return <div>No bugs added yet.</div>;
-    } else if (filteredSortedProjects.length === 0) {
+    } else if (filteredSortedBugs.length === 0) {
       return <div>No matches found.</div>;
     } else {
       return (
         <div>
           {isMobile ? (
-            <BugsListMobile bugs={bugs} />
+            <BugsListMobile bugs={filteredSortedBugs} />
           ) : (
-            <BugsTable bugs={bugs} />
+            <BugsTable bugs={filteredSortedBugs} />
           )}
         </div>
       );
