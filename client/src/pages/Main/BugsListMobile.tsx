@@ -13,9 +13,9 @@ const BugsListMobile: React.FC<{ bugs: BugState[] }> = ({ bugs }) => {
 
   return (
     <div>
+      <Divider />
       {bugs.map((b) => (
         <div key={b.id}>
-          <Divider />
           <div className={classes.listItemWrapper}>
             <Link
               component={RouterLink}
@@ -66,6 +66,7 @@ const BugsListMobile: React.FC<{ bugs: BugState[] }> = ({ bugs }) => {
               />
             </div>
           </div>
+          <Divider />
         </div>
       ))}
     </div>
