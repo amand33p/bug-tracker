@@ -26,7 +26,8 @@ const BugsActionCard: React.FC<{
   projectId: string;
   filterValue: string;
   setFilterValue: (filterValue: string) => void;
-}> = ({ projectId, filterValue, setFilterValue }) => {
+  isMobile: boolean;
+}> = ({ projectId, filterValue, setFilterValue, isMobile }) => {
   const classes = useActionCardStyles();
   const dispatch = useDispatch();
   const [sortBy, setSortBy] = useState<BugSortValues>('newest');
@@ -45,6 +46,7 @@ const BugsActionCard: React.FC<{
             filterValue={filterValue}
             setFilterValue={setFilterValue}
             label="Bugs"
+            size={isMobile ? 'small' : 'medium'}
           />
         </div>
         <div className={classes.sortBarWrapper}>
@@ -53,15 +55,25 @@ const BugsActionCard: React.FC<{
             handleSortChange={handleSortChange}
             menuItems={menuItems}
             label="Bugs"
+            size={isMobile ? 'small' : 'medium'}
           />
         </div>
       </div>
       <FormDialog
-        triggerBtn={{
-          type: 'normal',
-          text: 'Add Bug',
-          icon: AddIcon,
-        }}
+        triggerBtn={
+          isMobile
+            ? {
+                type: 'fab',
+                variant: 'extended',
+                text: 'Bug',
+                icon: AddIcon,
+              }
+            : {
+                type: 'normal',
+                text: 'Add Bug',
+                icon: AddIcon,
+              }
+        }
         title="Add a new bug"
       >
         <BugForm isEditMode={false} projectId={projectId} />

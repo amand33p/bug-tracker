@@ -24,7 +24,8 @@ const MembersTable: React.FC<{
   members: ProjectMember[];
   adminId: string;
   projectId: string;
-}> = ({ members, adminId, projectId }) => {
+  isMobile: boolean;
+}> = ({ members, adminId, projectId, isMobile }) => {
   const classes = useTableStyles();
   const dispatch = useDispatch();
   const { user } = useSelector(selectAuthState);
@@ -37,7 +38,7 @@ const MembersTable: React.FC<{
 
   return (
     <Paper className={classes.scrollableTable}>
-      <Table stickyHeader>
+      <Table stickyHeader size={isMobile ? 'small' : 'medium'}>
         <TableHead>
           <TableRow>
             {memberHeaders.map((m) => (
@@ -64,7 +65,10 @@ const MembersTable: React.FC<{
               {isAdmin && (
                 <TableCell align="center">
                   {m.member.id === user?.id ? (
-                    <BlockIcon color="secondary" fontSize="large" />
+                    <BlockIcon
+                      color="secondary"
+                      fontSize={isMobile ? 'default' : 'large'}
+                    />
                   ) : (
                     <ConfirmDialog
                       title="Confirm Remove Member"
@@ -72,7 +76,7 @@ const MembersTable: React.FC<{
                       actionBtnText="Remove Member"
                       triggerBtn={{
                         type: 'icon',
-                        iconSize: 'large',
+                        iconSize: isMobile ? 'default' : 'large',
                         icon: HighlightOffIcon,
                         size: 'small',
                       }}

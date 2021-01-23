@@ -73,7 +73,7 @@ const ProjectDetailsPage = () => {
     if (isMobile) {
       return (
         <Button
-          color="primary"
+          color={!viewMembers ? 'primary' : 'secondary'}
           variant="contained"
           onClick={() => setViewMembers(!viewMembers)}
           style={{ marginRight: '1em' }}
@@ -127,7 +127,7 @@ const ProjectDetailsPage = () => {
             icon: GroupAddOutlinedIcon,
             style: { marginRight: '1em' },
           }}
-          title="Add members to the project"
+          title="Add members to project"
         >
           <ProjectForm
             editMode="members"
@@ -193,10 +193,11 @@ const ProjectDetailsPage = () => {
             viewMembers={viewMembers}
             adminId={createdBy.id}
             projectId={id}
+            isMobile={isMobile}
           />
         )}
       </Paper>
-      <BugsCard projectId={projectId} />
+      <BugsCard projectId={projectId} isMobile={isMobile} />
     </div>
   );
 };

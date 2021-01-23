@@ -132,8 +132,8 @@ export const useMainPageStyles = makeStyles(
       marginBottom: '0.2em',
       [theme.breakpoints.down('xs')]: {
         padding: '0.7em 0.3em',
-        minHeight: 'calc(100vH - 168px)',
-        marginBottom: '0.1em',
+        minHeight: 'calc(100vH - 160px)',
+        marginBottom: '0.05em',
       },
     },
     projectsListTable: {
@@ -146,7 +146,7 @@ export const useMainPageStyles = makeStyles(
       padding: '1.2em 1.5em',
       marginBottom: '1em',
       [theme.breakpoints.down('xs')]: {
-        padding: '0.5em 1em',
+        padding: '0.5em 0.7em',
         marginBottom: '0.5em',
       },
     },
@@ -160,9 +160,13 @@ export const useMainPageStyles = makeStyles(
         margin: '0.5em 0',
       },
     },
-
     membersWrapper: {
       marginTop: '1em',
+    },
+    filterMembersInput: {
+      [theme.breakpoints.down('xs')]: {
+        width: '55%',
+      },
     },
     flexInput: {
       display: 'flex',
@@ -173,6 +177,17 @@ export const useMainPageStyles = makeStyles(
       padding: '1.5em',
       marginBottom: '0.2em',
       minHeight: 'calc(100vH - 382px)',
+      [theme.breakpoints.down('xs')]: {
+        padding: '0.5em 0.7em',
+        minHeight: 'calc(100vH - 256px)',
+        marginBottom: '0em',
+      },
+    },
+    bugsActionCard: {
+      margin: '1.5em 0',
+      [theme.breakpoints.down('xs')]: {
+        margin: '0.5em 0',
+      },
     },
     notesPaper: {
       padding: '1.5em',

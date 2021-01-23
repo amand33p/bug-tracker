@@ -12,7 +12,8 @@ const MembersCard: React.FC<{
   viewMembers: boolean;
   adminId: string;
   projectId: string;
-}> = ({ members, viewMembers, adminId, projectId }) => {
+  isMobile: boolean;
+}> = ({ members, viewMembers, adminId, projectId, isMobile }) => {
   const classes = useMainPageStyles();
   const [filterValue, setFilterValue] = useState('');
 
@@ -30,6 +31,7 @@ const MembersCard: React.FC<{
             members={filteredMembers}
             adminId={adminId}
             projectId={projectId}
+            isMobile={isMobile}
           />
         </div>
       );
@@ -45,22 +47,24 @@ const MembersCard: React.FC<{
     >
       <div className={classes.flexInput}>
         <Typography
-          variant="h5"
+          variant={isMobile ? 'h6' : 'h5'}
           color="secondary"
           className={classes.flexHeader}
         >
           <PeopleAltOutlinedIcon
-            fontSize="large"
+            fontSize={isMobile ? 'default' : 'large'}
             style={{ marginRight: '0.2em' }}
           />
           Members
         </Typography>
-        <FilterBar
-          filterValue={filterValue}
-          setFilterValue={setFilterValue}
-          label="Members"
-          size="small"
-        />
+        <div className={classes.filterMembersInput}>
+          <FilterBar
+            filterValue={filterValue}
+            setFilterValue={setFilterValue}
+            label="Members"
+            size="small"
+          />
+        </div>
       </div>
       {membersDataToDisplay()}
     </Collapse>

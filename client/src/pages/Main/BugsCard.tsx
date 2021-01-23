@@ -8,13 +8,17 @@ import {
 import { RootState } from '../../redux/store';
 import BugsTable from './BugsTable';
 import BugsActionCard from './BugsActionCard';
+import BugsListMobile from './BugsListMobile';
 import sortBugs from '../../utils/sortBugs';
 
 import { Paper, Typography } from '@material-ui/core';
 import { useMainPageStyles } from '../../styles/muiStyles';
 import BugReportOutlinedIcon from '@material-ui/icons/BugReportOutlined';
 
-const BugsCard: React.FC<{ projectId: string }> = ({ projectId }) => {
+const BugsCard: React.FC<{ projectId: string; isMobile: boolean }> = ({
+  projectId,
+  isMobile,
+}) => {
   const classes = useMainPageStyles();
   const dispatch = useDispatch();
   const bugs = useSelector((state: RootState) =>
@@ -49,24 +53,37 @@ const BugsCard: React.FC<{ projectId: string }> = ({ projectId }) => {
     } else if (filteredSortedProjects.length === 0) {
       return <div>No matches found.</div>;
     } else {
-      return <BugsTable bugs={bugs} />;
+      return (
+        <div>
+          {isMobile ? (
+            <BugsListMobile bugs={bugs} />
+          ) : (
+            <BugsTable bugs={bugs} />
+          )}{' '}
+        </div>
+      );
     }
   };
 
   return (
     <Paper className={classes.bugsPaper}>
-      <Typography variant="h5" color="secondary" className={classes.flexHeader}>
+      <Typography
+        variant={isMobile ? 'h6' : 'h5'}
+        color="secondary"
+        className={classes.flexHeader}
+      >
         <BugReportOutlinedIcon
-          fontSize="large"
+          fontSize={isMobile ? 'default' : 'large'}
           style={{ marginRight: '0.2em' }}
         />
         Bugs
       </Typography>
-      <div style={{ margin: '1.5em 0' }}>
+      <div className={classes.bugsActionCard}>
         <BugsActionCard
           projectId={projectId}
           filterValue={filterValue}
           setFilterValue={setFilterValue}
+          isMobile={isMobile}
         />
       </div>
       {bugsDataToDisplay()}

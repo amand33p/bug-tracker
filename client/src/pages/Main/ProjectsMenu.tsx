@@ -122,7 +122,7 @@ const ProjectsMenu: React.FC<ProjectsMenuProps> = ({
                 iconStyle: { marginRight: '10px' },
                 closeMenu: handleCloseMenu,
               }}
-              title="Add members to the project"
+              title="Add members to project"
             >
               <ProjectForm
                 editMode="members"
