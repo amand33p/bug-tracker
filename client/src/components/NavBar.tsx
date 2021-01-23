@@ -26,7 +26,7 @@ const NavBar = () => {
   const { pathname } = useLocation();
   const classes = useNavStyles();
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const isMobile = useMediaQuery(theme.breakpoints.down('xs'));
 
   const handleLogout = () => {
     dispatch(logout());

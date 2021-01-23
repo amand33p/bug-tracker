@@ -13,7 +13,7 @@ import { useTheme } from '@material-ui/core/styles';
 const Routes = () => {
   const { user: isLoggedIn } = useSelector(selectAuthState);
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const isMobile = useMediaQuery(theme.breakpoints.down('xs'));
 
   return (
     <Container disableGutters={isMobile}>

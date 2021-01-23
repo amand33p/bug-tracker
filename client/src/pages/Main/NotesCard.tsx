@@ -31,7 +31,8 @@ const NotesCard: React.FC<{
   notes: Note[];
   projectId: string;
   bugId: string;
-}> = ({ notes, projectId, bugId }) => {
+  isMobile: boolean;
+}> = ({ notes, projectId, bugId, isMobile }) => {
   const classes = useMainPageStyles();
   const dispatch = useDispatch();
   const { user } = useSelector(selectAuthState);
@@ -54,17 +55,17 @@ const NotesCard: React.FC<{
     <Paper className={classes.notesPaper}>
       <div className={classes.flexInput}>
         <Typography
-          variant="h5"
+          variant={isMobile ? 'h6' : 'h5'}
           color="secondary"
           className={classes.flexHeader}
         >
           <ForumOutlinedIcon
-            fontSize="large"
+            fontSize={isMobile ? 'default' : 'large'}
             style={{ marginRight: '0.2em' }}
           />
           Notes
         </Typography>
-        <div style={{ width: '25%' }}>
+        <div className={classes.sortNotesInput}>
           <SortBar
             sortBy={sortBy}
             handleSortChange={handleSortChange}
@@ -75,12 +76,16 @@ const NotesCard: React.FC<{
         </div>
       </div>
       <FormDialog
-        triggerBtn={{
-          type: 'normal',
-          text: 'Leave A Note',
-          icon: CommentOutlinedIcon,
-          style: { marginTop: '1em' },
-        }}
+        triggerBtn={
+          isMobile
+            ? { type: 'fab', variant: 'round', icon: CommentOutlinedIcon }
+            : {
+                type: 'normal',
+                text: 'Leave A Note',
+                icon: CommentOutlinedIcon,
+                style: { marginTop: '1em' },
+              }
+        }
         title="Post a note"
       >
         <NoteForm isEditMode={false} projectId={projectId} bugId={bugId} />

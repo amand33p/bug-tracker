@@ -53,8 +53,8 @@ export const useDialogStyles = makeStyles(
     },
     fab: {
       position: 'fixed',
-      bottom: theme.spacing(1.5),
-      right: theme.spacing(1.5),
+      bottom: theme.spacing(2),
+      right: theme.spacing(2),
       zIndex: 1000,
     },
     roundIconButton: {
@@ -172,6 +172,9 @@ export const useMainPageStyles = makeStyles(
       display: 'flex',
       justifyContent: 'space-between',
       alignItems: 'center',
+      [theme.breakpoints.down('xs')]: {
+        marginTop: '0.3em',
+      },
     },
     bugsPaper: {
       padding: '1.5em',
@@ -193,15 +196,29 @@ export const useMainPageStyles = makeStyles(
       padding: '1.5em',
       marginBottom: '0.2em',
       minHeight: 'calc(100vH - 436px)',
+      [theme.breakpoints.down('xs')]: {
+        padding: '0.5em 0.7em',
+        minHeight: 'calc(100vH - 310px)',
+        marginBottom: '0em',
+      },
     },
     notesWrapper: {
       margin: '1.5em 0',
+    },
+    sortNotesInput: {
+      width: '25%',
+      [theme.breakpoints.down('xs')]: {
+        width: '55%',
+      },
     },
     singleNote: {
       display: 'flex',
       alignItems: 'flex-start',
       marginBottom: '0.3em',
       marginTop: '0.8em',
+    },
+    noteBody: {
+      marginTop: '0.2em',
     },
     avatar: {
       width: theme.spacing(4.8),
@@ -210,9 +227,6 @@ export const useMainPageStyles = makeStyles(
       marginTop: '0.3em',
       color: theme.palette.primary.main,
       backgroundColor: '#d3d3d3',
-    },
-    noteBody: {
-      marginTop: '0.2em',
     },
     notesBtnWrapper: {
       margin: '0.5em 0',

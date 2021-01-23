@@ -64,7 +64,7 @@ const NoteForm: React.FC<NoteFormProps> = ({
         rowsMax={4}
         inputRef={register}
         name="body"
-        placeholder="Type a note for other members..."
+        placeholder="Type a note..."
         required
         fullWidth
         type="text"

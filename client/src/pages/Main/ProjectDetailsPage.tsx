@@ -19,7 +19,6 @@ import {
   Paper,
   Typography,
   Button,
-  IconButton,
   Divider,
   useMediaQuery,
 } from '@material-ui/core';
@@ -73,13 +72,13 @@ const ProjectDetailsPage = () => {
     if (isMobile) {
       return (
         <Button
-          color={!viewMembers ? 'primary' : 'secondary'}
+          color={viewMembers ? 'secondary' : 'primary'}
           variant="contained"
           onClick={() => setViewMembers(!viewMembers)}
           style={{ marginRight: '1em' }}
           className={classes.roundIconButton}
         >
-          {!viewMembers ? <PeopleAltTwoToneIcon /> : <PeopleAltIcon />}
+          {viewMembers ? <ExpandLessIcon /> : <PeopleAltTwoToneIcon />}
         </Button>
       );
     } else {
@@ -107,7 +106,7 @@ const ProjectDetailsPage = () => {
         actionBtnText="Leave Project"
         triggerBtn={{
           type: isMobile ? 'round' : 'normal',
-          text: isMobile ? undefined : 'Leave Project',
+          text: 'Leave Project',
           icon: ExitToAppOutlinedIcon,
         }}
         actionFunc={handleLeaveProject}
@@ -123,7 +122,7 @@ const ProjectDetailsPage = () => {
         <FormDialog
           triggerBtn={{
             type: isMobile ? 'round' : 'normal',
-            text: isMobile ? undefined : 'Add Members',
+            text: 'Add Members',
             icon: GroupAddOutlinedIcon,
             style: { marginRight: '1em' },
           }}
@@ -141,7 +140,7 @@ const ProjectDetailsPage = () => {
           actionBtnText="Delete Project"
           triggerBtn={{
             type: isMobile ? 'round' : 'normal',
-            text: isMobile ? undefined : 'Delete Project',
+            text: 'Delete Project',
             icon: DeleteOutlineIcon,
           }}
           actionFunc={handleDeleteProject}

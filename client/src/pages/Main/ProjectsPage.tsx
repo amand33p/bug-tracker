@@ -17,7 +17,7 @@ import AssignmentIcon from '@material-ui/icons/Assignment';
 const ProjectsPage = () => {
   const classes = useMainPageStyles();
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const isMobile = useMediaQuery(theme.breakpoints.down('xs'));
   const dispatch = useDispatch();
   const { projects, fetchStatus, fetchError, sortBy } = useSelector(
     selectProjectsState

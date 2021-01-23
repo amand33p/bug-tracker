@@ -12,6 +12,13 @@ const customTheme = (darkMode: boolean) =>
         main: darkMode ? '#22db63' : '#005b53',
       },
     },
+    overrides: {
+      MuiTypography: {
+        root: {
+          wordBreak: 'break-all',
+        },
+      },
+    },
   });
 
 export default customTheme;
