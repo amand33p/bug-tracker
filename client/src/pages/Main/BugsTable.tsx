@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link as RouterLink, useHistory } from 'react-router-dom';
 import { BugState } from '../../redux/types';
+import BugsMenu from './BugsMenu';
 import { formatDateTime } from '../../utils/helperFuncs';
 
 import {
@@ -14,7 +15,6 @@ import {
   Paper,
 } from '@material-ui/core';
 import { useTableStyles } from '../../styles/muiStyles';
-import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 
 const tableHeaders = [
   'Title',
@@ -65,23 +65,25 @@ const BugsTable: React.FC<{ bugs: BugState[] }> = ({ bugs }) => {
                 {b.isResolved ? 'Closed' : 'Open'}
               </TableCell>
               <TableCell align="center">
-                {formatDateTime(b.createdAt)} | By: {b.createdBy.username}
+                {formatDateTime(b.createdAt)} ~ {b.createdBy.username}
               </TableCell>
               <TableCell align="center">
                 {!b.updatedAt || !b.updatedBy
                   ? 'n/a'
-                  : `${formatDateTime(b.updatedAt)} | By: ${
-                      b.updatedBy.username
-                    }`}
+                  : `${formatDateTime(b.updatedAt)} ~ ${b.updatedBy.username}`}
               </TableCell>
               <TableCell align="center">{b.notes.length}</TableCell>
               <TableCell align="center">
-                <IconButton
-                  size="small"
-                  onClick={() => console.log('table button clicked.')}
-                >
-                  <MoreHorizIcon color="primary" fontSize="large" />
-                </IconButton>
+                <BugsMenu
+                  projectId={b.projectId}
+                  bugId={b.id}
+                  currentData={{
+                    title: b.title,
+                    description: b.description,
+                    priority: b.priority,
+                  }}
+                  isResolved={b.isResolved}
+                />
               </TableCell>
             </TableRow>
           ))}

@@ -221,7 +221,7 @@ export const useMainPageStyles = makeStyles(
       verticalAlign: 'middle',
       display: 'inline-flex',
     },
-    iconCounters: {
+    textIconsWrapper: {
       display: 'flex',
       width: '100px',
       justifyContent: 'space-between',
@@ -234,6 +234,7 @@ export const useMainPageStyles = makeStyles(
       display: 'flex',
       justifyContent: 'space-between',
       alignItems: 'center',
+      marginTop: '0.3em',
     },
     roundIconButton: {
       minWidth: 0,

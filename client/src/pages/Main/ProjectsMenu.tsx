@@ -79,7 +79,7 @@ const ProjectsMenu: React.FC<ProjectsMenuProps> = ({
           to={`/projects/${projectId}`}
         >
           <OpenInNewIcon style={{ marginRight: '10px' }} />
-          More Details
+          Project Details
         </MenuItem>
         {!isAdmin && (
           <ConfirmDialog

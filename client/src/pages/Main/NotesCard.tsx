@@ -17,7 +17,7 @@ import { useMainPageStyles } from '../../styles/muiStyles';
 import ForumOutlinedIcon from '@material-ui/icons/ForumOutlined';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
-import CommentIcon from '@material-ui/icons/Comment';
+import CommentOutlinedIcon from '@material-ui/icons/CommentOutlined';
 
 export type NoteSortValues = 'newest' | 'oldest' | 'updated';
 
@@ -78,7 +78,7 @@ const NotesCard: React.FC<{
         triggerBtn={{
           type: 'normal',
           text: 'Leave A Note',
-          icon: CommentIcon,
+          icon: CommentOutlinedIcon,
           style: { marginTop: '1em' },
         }}
         title="Post a note"

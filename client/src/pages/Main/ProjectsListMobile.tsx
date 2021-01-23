@@ -37,15 +37,15 @@ const ProjectsListMobile: React.FC<{ projects: ProjectState[] }> = ({
               Created: <strong>{formatDateTime(p.createdAt)}</strong>
             </Typography>
             <div className={classes.flexedWrapper}>
-              <div className={classes.iconCounters}>
+              <div className={classes.textIconsWrapper}>
                 <div className={classes.iconText}>
-                  <BugReportTwoToneIcon color="primary" />
+                  <BugReportTwoToneIcon color="secondary" />
                   <Typography variant="subtitle1" color="secondary">
                     : {p.bugs.length}
                   </Typography>
                 </div>
                 <div className={classes.iconText}>
-                  <PeopleAltTwoToneIcon color="primary" />{' '}
+                  <PeopleAltTwoToneIcon color="secondary" />{' '}
                   <Typography variant="subtitle1" color="secondary">
                     : {p.members.length}
                   </Typography>

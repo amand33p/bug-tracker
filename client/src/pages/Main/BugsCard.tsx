@@ -59,7 +59,7 @@ const BugsCard: React.FC<{ projectId: string; isMobile: boolean }> = ({
             <BugsListMobile bugs={bugs} />
           ) : (
             <BugsTable bugs={bugs} />
-          )}{' '}
+          )}
         </div>
       );
     }
