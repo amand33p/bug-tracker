@@ -15,8 +15,11 @@ const BugsListMobile: React.FC<{ bugs: BugState[] }> = ({ bugs }) => {
   return (
     <div>
       <Divider />
-      {bugs.map((b) => (
-        <div key={b.id}>
+      {bugs.map((b, i) => (
+        <div
+          key={b.id}
+          style={{ paddingBottom: i + 1 === bugs.length ? '2em' : 0 }}
+        >
           <div className={classes.listItemWrapper}>
             <Link
               component={RouterLink}

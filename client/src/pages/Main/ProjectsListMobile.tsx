@@ -20,8 +20,11 @@ const ProjectsListMobile: React.FC<{ projects: ProjectState[] }> = ({
   return (
     <div>
       <Divider />
-      {projects.map((p) => (
-        <div key={p.id}>
+      {projects.map((p, i) => (
+        <div
+          key={p.id}
+          style={{ paddingBottom: i + 1 === projects.length ? '2em' : 0 }}
+        >
           <div className={classes.listItemWrapper}>
             <Link
               component={RouterLink}
