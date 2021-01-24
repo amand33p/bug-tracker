@@ -50,7 +50,7 @@ const BugsCard: React.FC<{ projectId: string; isMobile: boolean }> = ({
       return <div>{fetchError}</div>;
     } else if (!bugs || bugs.length === 0) {
       return <div>No bugs added yet.</div>;
-    } else if (filteredSortedBugs.length === 0) {
+    } else if (!filteredSortedBugs || filteredSortedBugs.length === 0) {
       return <div>No matches found.</div>;
     } else {
       return (

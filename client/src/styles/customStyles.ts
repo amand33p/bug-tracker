@@ -29,7 +29,7 @@ export const statusStyles = (isResolved: boolean): CSS.Properties => {
     backgroundColor: color + '25',
     borderRadius: '4px',
     fontWeight: 500,
-    padding: '0.4em',
+    padding: '0.35em',
     maxWidth: '4em',
   };
 };

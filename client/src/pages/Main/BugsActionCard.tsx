@@ -15,6 +15,8 @@ const menuItems = [
   { value: 'oldest', label: 'Oldest' },
   { value: 'a-z', label: 'Title (A - Z)' },
   { value: 'z-a', label: 'Title (Z - A)' },
+  { value: 'h-l', label: 'Priority (High - Low)' },
+  { value: 'l-h', label: 'Priority (Low - High)' },
   { value: 'closed', label: 'Recently Closed' },
   { value: 'reopened', label: 'Recently Re-opened' },
   { value: 'updated', label: 'Recently Updated' },

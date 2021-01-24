@@ -26,6 +26,32 @@ const sortBugs = (bugs: BugState[], sortBy: BugSortValues) => {
           b.title.localeCompare(a.title, 'en', { sensitivity: 'base' })
         );
 
+    case 'h-l':
+      return bugs.slice().sort((a, b) => {
+        if (a.priority === 'high') {
+          return -1;
+        }
+
+        if (b.priority === 'low') {
+          return 0;
+        }
+
+        return -1;
+      });
+
+    case 'l-h':
+      return bugs.slice().sort((a, b) => {
+        if (a.priority === 'low') {
+          return -1;
+        }
+
+        if (b.priority === 'high') {
+          return 0;
+        }
+
+        return 1;
+      });
+
     case 'closed':
       return bugs.slice().sort((a, b) => {
         if (!a.closedAt) {

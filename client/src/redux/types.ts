@@ -71,6 +71,8 @@ export type BugSortValues =
   | 'z-a'
   | 'closed'
   | 'reopened'
+  | 'h-l'
+  | 'l-h'
   | 'updated'
   | 'most-notes'
   | 'least-notes';
