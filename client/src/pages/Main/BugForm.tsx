@@ -19,6 +19,7 @@ import {
   Button,
   InputAdornment,
   FormLabel,
+  FormControl,
 } from '@material-ui/core';
 import { useFormStyles } from '../../styles/muiStyles';
 import TitleIcon from '@material-ui/icons/Title';
@@ -118,26 +119,30 @@ const BugForm: React.FC<BugFormProps> = ({
         control={control}
         name="priority"
         as={
-          <RadioGroup row className={classes.radioGroup}>
-            <FormLabel className={classes.radioGroupLabel}>Priority:</FormLabel>
-            <div className={classes.formControlWrapper}>
-              <FormControlLabel
-                value="low"
-                control={<Radio color="primary" />}
-                label="Low"
-              />
-              <FormControlLabel
-                value="medium"
-                control={<Radio color="primary" />}
-                label="Medium"
-              />
-              <FormControlLabel
-                value="high"
-                control={<Radio color="primary" />}
-                label="High"
-              />
-            </div>
-          </RadioGroup>
+          <FormControl>
+            <RadioGroup row className={classes.radioGroup}>
+              <FormLabel className={classes.radioGroupLabel}>
+                Priority:
+              </FormLabel>
+              <div className={classes.formControlWrapper}>
+                <FormControlLabel
+                  value="low"
+                  control={<Radio color="primary" />}
+                  label="Low"
+                />
+                <FormControlLabel
+                  value="medium"
+                  control={<Radio color="primary" />}
+                  label="Medium"
+                />
+                <FormControlLabel
+                  value="high"
+                  control={<Radio color="primary" />}
+                  label="High"
+                />
+              </div>
+            </RadioGroup>
+          </FormControl>
         }
       />
       <Button

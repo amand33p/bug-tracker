@@ -293,6 +293,9 @@ export const useActionCardStyles = makeStyles(
       display: 'flex',
       minWidth: '100%',
       justifyContent: 'space-between',
+      [theme.breakpoints.down('xs')]: {
+        justifyContent: 'flex-start',
+      },
     },
   }),
   { index: 1 }
