@@ -11,6 +11,7 @@ import FormDialog from '../../components/FormDialog';
 import BugForm from './BugForm';
 import ConfirmDialog from '../../components/ConfirmDialog';
 import NotesCard from './NotesCard';
+import InfoText from '../../components/InfoText';
 import { formatDateTime } from '../../utils/helperFuncs';
 import { priorityStyles, statusStyles } from '../../styles/customStyles';
 import CSS from 'csstype';
@@ -41,9 +42,11 @@ const BugsDetailsPage = () => {
 
   if (!bug) {
     return (
-      <div>
-        Bug not found. If not invalid ID, try to re-fetch from bugs page.
-      </div>
+      <InfoText
+        text="404: Bug not found."
+        variant={isMobile ? 'h6' : 'h5'}
+        marginTop="10em"
+      />
     );
   }
 

@@ -13,6 +13,7 @@ import MembersCard from './MembersCard';
 import BugsCard from './BugsCard';
 import ConfirmDialog from '../../components/ConfirmDialog';
 import FormDialog from '../../components/FormDialog';
+import InfoText from '../../components/InfoText';
 import { formatDateTime } from '../../utils/helperFuncs';
 
 import {
@@ -50,7 +51,13 @@ const ProjectDetailsPage = () => {
   );
 
   if (!projectInState) {
-    return <div>404: Project not found.</div>;
+    return (
+      <InfoText
+        text="404: Project not found."
+        variant={isMobile ? 'h6' : 'h5'}
+        marginTop="10em"
+      />
+    );
   }
 
   const { id, name, members, createdAt, updatedAt, createdBy } = projectInState;

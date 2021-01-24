@@ -10,6 +10,7 @@ import sortNotes from '../../utils/sortNotes';
 import NoteForm from './NoteForm';
 import ConfirmDialog from '../../components/ConfirmDialog';
 import FormDialog from '../../components/FormDialog';
+import InfoText from '../../components/InfoText';
 import { formatTimeAgo } from '../../utils/helperFuncs';
 
 import { Paper, Typography, Avatar, Divider } from '@material-ui/core';
@@ -93,7 +94,12 @@ const NotesCard: React.FC<{
       </FormDialog>
       <div className={classes.notesWrapper}>
         <Divider />
-        {sortedNotes.length === 0 && <div>No notes added yet.</div>}
+        {sortedNotes.length === 0 && (
+          <InfoText
+            text="No notes added yet."
+            variant={isMobile ? 'h6' : 'h5'}
+          />
+        )}
         {sortedNotes.map((n) => (
           <div key={n.id}>
             <div className={classes.singleNote}>

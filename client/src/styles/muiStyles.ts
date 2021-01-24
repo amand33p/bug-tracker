@@ -295,6 +295,7 @@ export const useActionCardStyles = makeStyles(
       justifyContent: 'space-between',
       [theme.breakpoints.down('xs')]: {
         justifyContent: 'flex-start',
+        marginLeft: '0.2em',
       },
     },
   }),

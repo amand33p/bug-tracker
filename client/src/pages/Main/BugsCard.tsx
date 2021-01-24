@@ -12,6 +12,7 @@ import BugsListMobile from './BugsListMobile';
 import sortBugs from '../../utils/sortBugs';
 import filterBugs from '../../utils/filterBugs';
 import LoadingSpinner from '../../components/LoadingSpinner';
+import InfoText from '../../components/InfoText';
 
 import { Paper, Typography } from '@material-ui/core';
 import { useMainPageStyles } from '../../styles/muiStyles';
@@ -58,11 +59,20 @@ const BugsCard: React.FC<{ projectId: string; isMobile: boolean }> = ({
         />
       );
     } else if (fetchError) {
-      return <div>{fetchError}</div>;
+      return (
+        <InfoText
+          text={`Error: ${fetchError}`}
+          variant={isMobile ? 'h6' : 'h5'}
+        />
+      );
     } else if (!bugs || bugs.length === 0) {
-      return <div>No bugs added yet.</div>;
+      return (
+        <InfoText text="No Bugs added yet." variant={isMobile ? 'h6' : 'h5'} />
+      );
     } else if (!filteredSortedBugs || filteredSortedBugs.length === 0) {
-      return <div>No matches found.</div>;
+      return (
+        <InfoText text="No matches found." variant={isMobile ? 'h6' : 'h5'} />
+      );
     } else {
       return (
         <div>

@@ -9,6 +9,7 @@ import ProjectActionCard from './ProjectsActionCard';
 import ProjectsListMobile from './ProjectsListMobile';
 import sortProjects from '../../utils/sortProjects';
 import LoadingSpinner from '../../components/LoadingSpinner';
+import InfoText from '../../components/InfoText';
 
 import { Paper, Typography, useMediaQuery } from '@material-ui/core';
 import { useTheme } from '@material-ui/core/styles';
@@ -48,15 +49,27 @@ const ProjectsPage = () => {
         />
       );
     } else if (fetchStatus === 'succeeded' && projects.length === 0) {
-      return <div>No Projects added yet.</div>;
+      return (
+        <InfoText
+          text="No Projects added yet."
+          variant={isMobile ? 'h6' : 'h5'}
+        />
+      );
     } else if (fetchStatus === 'failed' && fetchError) {
-      return <div>{fetchError}</div>;
+      return (
+        <InfoText
+          text={`Error: ${fetchError}`}
+          variant={isMobile ? 'h6' : 'h5'}
+        />
+      );
     } else if (
       fetchStatus === 'succeeded' &&
       projects.length !== 0 &&
       filteredSortedProjects.length === 0
     ) {
-      return <div>No matches found.</div>;
+      return (
+        <InfoText text="No matches found." variant={isMobile ? 'h6' : 'h5'} />
+      );
     } else {
       return (
         <div className={classes.projectsListTable}>
