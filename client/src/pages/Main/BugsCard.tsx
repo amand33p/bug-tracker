@@ -10,6 +10,7 @@ import BugsTable from './BugsTable';
 import BugsActionCard from './BugsActionCard';
 import BugsListMobile from './BugsListMobile';
 import sortBugs from '../../utils/sortBugs';
+import filterBugs from '../../utils/filterBugs';
 
 import { Paper, Typography } from '@material-ui/core';
 import { useMainPageStyles } from '../../styles/muiStyles';
@@ -24,7 +25,9 @@ const BugsCard: React.FC<{ projectId: string; isMobile: boolean }> = ({
   const bugs = useSelector((state: RootState) =>
     selectBugsByProjectId(state, projectId)
   );
-  const { fetchLoading, fetchError, sortBy } = useSelector(selectBugsState);
+  const { fetchLoading, fetchError, sortBy, filterBy } = useSelector(
+    selectBugsState
+  );
   const [filterValue, setFilterValue] = useState('');
 
   useEffect(() => {
@@ -37,8 +40,10 @@ const BugsCard: React.FC<{ projectId: string; isMobile: boolean }> = ({
   const filteredSortedBugs =
     bugs &&
     sortBugs(
-      bugs.filter((b) =>
-        b.title.toLowerCase().includes(filterValue.toLowerCase())
+      bugs.filter(
+        (b) =>
+          b.title.toLowerCase().includes(filterValue.toLowerCase()) &&
+          filterBugs(filterBy, b)
       ),
       sortBy
     );

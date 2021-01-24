@@ -77,6 +77,8 @@ export type BugSortValues =
   | 'most-notes'
   | 'least-notes';
 
+export type BugFilterValues = 'all' | 'closed' | 'open';
+
 export interface CredentialsPayload {
   username: string;
   password: string;

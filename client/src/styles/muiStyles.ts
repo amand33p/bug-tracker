@@ -289,6 +289,11 @@ export const useActionCardStyles = makeStyles(
         width: '42%',
       },
     },
+    flexWrapper: {
+      display: 'flex',
+      minWidth: '100%',
+      justifyContent: 'space-between',
+    },
   }),
   { index: 1 }
 );

@@ -1,12 +1,23 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import FilterBar from '../../components/FilterBar';
 import SortBar from '../../components/SortBar';
 import FormDialog from '../../components/FormDialog';
 import BugForm from './BugForm';
-import { BugSortValues } from '../../redux/types';
-import { sortBugsBy } from '../../redux/slices/bugsSlice';
+import { BugSortValues, BugFilterValues } from '../../redux/types';
+import {
+  sortBugsBy,
+  filterBugsBy,
+  selectBugsState,
+} from '../../redux/slices/bugsSlice';
 
+import {
+  RadioGroup,
+  Radio,
+  FormControl,
+  FormControlLabel,
+  FormLabel,
+} from '@material-ui/core';
 import { useActionCardStyles } from '../../styles/muiStyles';
 import AddIcon from '@material-ui/icons/Add';
 
@@ -32,12 +43,22 @@ const BugsActionCard: React.FC<{
 }> = ({ projectId, filterValue, setFilterValue, isMobile }) => {
   const classes = useActionCardStyles();
   const dispatch = useDispatch();
-  const [sortBy, setSortBy] = useState<BugSortValues>('newest');
+  const { sortBy: sortByValue, filterBy: filterByValue } = useSelector(
+    selectBugsState
+  );
+  const [sortBy, setSortBy] = useState<BugSortValues>(sortByValue);
+  const [filterBy, setFilterBy] = useState<BugFilterValues>(filterByValue);
 
   const handleSortChange = (e: React.ChangeEvent<{ value: unknown }>) => {
     const selectedValue = e.target.value as BugSortValues;
     setSortBy(selectedValue);
     dispatch(sortBugsBy(selectedValue));
+  };
+
+  const handleFilterChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const selectedValue = e.target.value as BugFilterValues;
+    setFilterBy(selectedValue);
+    dispatch(filterBugsBy(selectedValue));
   };
 
   return (
@@ -61,26 +82,48 @@ const BugsActionCard: React.FC<{
           />
         </div>
       </div>
-      <FormDialog
-        triggerBtn={
-          isMobile
-            ? {
-                type: 'fab',
-                variant: 'extended',
-                text: 'Bug',
-                icon: AddIcon,
-              }
-            : {
-                type: 'normal',
-                text: 'Add Bug',
-                icon: AddIcon,
-                size: 'large',
-              }
-        }
-        title="Add a new bug"
-      >
-        <BugForm isEditMode={false} projectId={projectId} />
-      </FormDialog>
+      <div className={classes.flexWrapper}>
+        <FormDialog
+          triggerBtn={
+            isMobile
+              ? {
+                  type: 'fab',
+                  variant: 'extended',
+                  text: 'Bug',
+                  icon: AddIcon,
+                }
+              : {
+                  type: 'normal',
+                  text: 'Add Bug',
+                  icon: AddIcon,
+                  size: 'large',
+                }
+          }
+          title="Add a new bug"
+        >
+          <BugForm isEditMode={false} projectId={projectId} />
+        </FormDialog>
+        <FormControl component="fieldset">
+          <FormLabel component="legend">Filter Bugs By:</FormLabel>
+          <RadioGroup row value={filterBy} onChange={handleFilterChange}>
+            <FormControlLabel
+              value="all"
+              control={<Radio color="primary" />}
+              label="All"
+            />
+            <FormControlLabel
+              value="closed"
+              control={<Radio color="primary" />}
+              label="Closed"
+            />
+            <FormControlLabel
+              value="open"
+              control={<Radio color="primary" />}
+              label="Open"
+            />
+          </RadioGroup>
+        </FormControl>
+      </div>
     </div>
   );
 };

@@ -9,6 +9,7 @@ import {
   EditedBugData,
   ClosedReopenedBugData,
   Note,
+  BugFilterValues,
 } from '../types';
 import { History } from 'history';
 import { getErrorMsg } from '../../utils/helperFuncs';
@@ -20,6 +21,7 @@ interface InitialBugState {
   submitLoading: boolean;
   submitError: string | null;
   sortBy: BugSortValues;
+  filterBy: BugFilterValues;
 }
 
 const initialState: InitialBugState = {
@@ -29,6 +31,7 @@ const initialState: InitialBugState = {
   submitLoading: false,
   submitError: null,
   sortBy: 'newest',
+  filterBy: 'all',
 };
 
 const bugsSlice = createSlice({
@@ -182,6 +185,9 @@ const bugsSlice = createSlice({
     sortBugsBy: (state, action: PayloadAction<BugSortValues>) => {
       state.sortBy = action.payload;
     },
+    filterBugsBy: (state, action: PayloadAction<BugFilterValues>) => {
+      state.filterBy = action.payload;
+    },
   },
 });
 
@@ -200,6 +206,7 @@ export const {
   setSubmitBugError,
   clearSubmitBugError,
   sortBugsBy,
+  filterBugsBy,
 } = bugsSlice.actions;
 
 export const fetchBugsByProjectId = (projectId: string): AppThunk => {

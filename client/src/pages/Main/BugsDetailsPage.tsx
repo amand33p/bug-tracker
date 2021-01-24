@@ -86,7 +86,7 @@ const BugsDetailsPage = () => {
     if (!isResolved && reopenedAt && reopenedBy) {
       return (
         <span>
-          <div style={statusCSS}>Re-opened</div>
+          <div style={statusCSS}>Re-opened</div> -{' '}
           <em>{formatDateTime(reopenedAt)}</em> ~{' '}
           <strong>{reopenedBy.username}</strong>
         </span>
@@ -94,7 +94,7 @@ const BugsDetailsPage = () => {
     } else if (isResolved && closedAt && closedBy) {
       return (
         <span>
-          <div style={statusCSS}>Closed</div>
+          <div style={statusCSS}>Closed</div> -{' '}
           <em>{formatDateTime(closedAt)}</em> ~{' '}
           <strong>{closedBy.username}</strong>
         </span>

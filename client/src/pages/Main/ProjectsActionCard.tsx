@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import FilterBar from '../../components/FilterBar';
 import SortBar from '../../components/SortBar';
 import FormDialog from '../../components/FormDialog';
 import ProjectForm from './ProjectForm';
 import { ProjectSortValues } from '../../redux/types';
-import { sortProjectsBy } from '../../redux/slices/projectsSlice';
+import {
+  sortProjectsBy,
+  selectProjectsState,
+} from '../../redux/slices/projectsSlice';
 
 import { useActionCardStyles } from '../../styles/muiStyles';
 import AddIcon from '@material-ui/icons/Add';
@@ -28,7 +31,8 @@ const ProjectsActionCard: React.FC<{
 }> = ({ filterValue, setFilterValue, isMobile }) => {
   const classes = useActionCardStyles();
   const dispatch = useDispatch();
-  const [sortBy, setSortBy] = useState<ProjectSortValues>('newest');
+  const { sortBy: sortByValue } = useSelector(selectProjectsState);
+  const [sortBy, setSortBy] = useState<ProjectSortValues>(sortByValue);
 
   const handleSortChange = (e: React.ChangeEvent<{ value: unknown }>) => {
     const selectedValue = e.target.value as ProjectSortValues;
