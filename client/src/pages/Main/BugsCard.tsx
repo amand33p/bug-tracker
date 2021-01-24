@@ -11,6 +11,7 @@ import BugsActionCard from './BugsActionCard';
 import BugsListMobile from './BugsListMobile';
 import sortBugs from '../../utils/sortBugs';
 import filterBugs from '../../utils/filterBugs';
+import LoadingSpinner from '../../components/LoadingSpinner';
 
 import { Paper, Typography } from '@material-ui/core';
 import { useMainPageStyles } from '../../styles/muiStyles';
@@ -50,7 +51,12 @@ const BugsCard: React.FC<{ projectId: string; isMobile: boolean }> = ({
 
   const bugsDataToDisplay = () => {
     if (fetchLoading) {
-      return <div>Loading...</div>;
+      return (
+        <LoadingSpinner
+          marginTop={isMobile ? '3em' : '4em'}
+          size={isMobile ? 60 : 80}
+        />
+      );
     } else if (fetchError) {
       return <div>{fetchError}</div>;
     } else if (!bugs || bugs.length === 0) {

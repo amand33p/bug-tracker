@@ -8,6 +8,7 @@ import ProjectsTable from './ProjectsTable';
 import ProjectActionCard from './ProjectsActionCard';
 import ProjectsListMobile from './ProjectsListMobile';
 import sortProjects from '../../utils/sortProjects';
+import LoadingSpinner from '../../components/LoadingSpinner';
 
 import { Paper, Typography, useMediaQuery } from '@material-ui/core';
 import { useTheme } from '@material-ui/core/styles';
@@ -40,7 +41,12 @@ const ProjectsPage = () => {
 
   const projectsDataToDisplay = () => {
     if (fetchStatus === 'loading') {
-      return <div>Loading...</div>;
+      return (
+        <LoadingSpinner
+          marginTop={isMobile ? '4em' : '9em'}
+          size={isMobile ? 60 : 80}
+        />
+      );
     } else if (fetchStatus === 'succeeded' && projects.length === 0) {
       return <div>No Projects added yet.</div>;
     } else if (fetchStatus === 'failed' && fetchError) {

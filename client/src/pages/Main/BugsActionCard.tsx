@@ -104,7 +104,7 @@ const BugsActionCard: React.FC<{
           <BugForm isEditMode={false} projectId={projectId} />
         </FormDialog>
         <FormControl component="fieldset">
-          <FormLabel component="legend">Filter Bugs By:</FormLabel>
+          <FormLabel component="legend">Filter Bugs By</FormLabel>
           <RadioGroup row value={filterBy} onChange={handleFilterChange}>
             <FormControlLabel
               value="all"
