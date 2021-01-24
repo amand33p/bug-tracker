@@ -347,7 +347,7 @@ export const useNavStyles = makeStyles(
       padding: '0.35em',
     },
     menuIcon: {
-      marginRight: '8px',
+      marginRight: '10px',
     },
     userInfo: {
       display: 'flex',
