@@ -72,6 +72,7 @@ const BugsActionCard: React.FC<{
                 type: 'normal',
                 text: 'Add Bug',
                 icon: AddIcon,
+                size: 'large',
               }
         }
         title="Add a new bug"

@@ -12,7 +12,8 @@ import BugForm from './BugForm';
 import ConfirmDialog from '../../components/ConfirmDialog';
 import NotesCard from './NotesCard';
 import { formatDateTime } from '../../utils/helperFuncs';
-import { priorityStyles } from '../../styles/customStyles';
+import { priorityStyles, statusStyles } from '../../styles/customStyles';
+import CSS from 'csstype';
 
 import { Paper, Typography, Divider, useMediaQuery } from '@material-ui/core';
 import { useTheme } from '@material-ui/core/styles';
@@ -75,23 +76,31 @@ const BugsDetailsPage = () => {
     dispatch(closeReopenBug(projectId, bugId, 'reopen'));
   };
 
+  const statusCSS: CSS.Properties = {
+    ...statusStyles(isResolved),
+    display: 'inline',
+    padding: '0.20em 0.4em',
+  };
+
   const statusInfo = () => {
     if (!isResolved && reopenedAt && reopenedBy) {
       return (
         <span>
-          <strong>Re-opened</strong>, <em>{formatDateTime(reopenedAt)}</em> ~{' '}
+          <div style={statusCSS}>Re-opened</div>
+          <em>{formatDateTime(reopenedAt)}</em> ~{' '}
           <strong>{reopenedBy.username}</strong>
         </span>
       );
     } else if (isResolved && closedAt && closedBy) {
       return (
         <span>
-          <strong>Closed</strong>, <em>{formatDateTime(closedAt)}</em> ~{' '}
+          <div style={statusCSS}>Closed</div>
+          <em>{formatDateTime(closedAt)}</em> ~{' '}
           <strong>{closedBy.username}</strong>
         </span>
       );
     } else {
-      return <strong>Open</strong>;
+      return <div style={statusCSS}>Open</div>;
     }
   };
 
@@ -175,10 +184,18 @@ const BugsDetailsPage = () => {
         <Typography color="secondary" variant="h6">
           {description}
         </Typography>
-        <Typography color="secondary" variant="subtitle2">
+        <Typography
+          color="secondary"
+          variant="subtitle2"
+          className={classes.marginText}
+        >
           Status: {statusInfo()}
         </Typography>
-        <Typography color="secondary" variant="subtitle2">
+        <Typography
+          color="secondary"
+          variant="subtitle2"
+          className={classes.marginText}
+        >
           Priority:{' '}
           <div
             style={{

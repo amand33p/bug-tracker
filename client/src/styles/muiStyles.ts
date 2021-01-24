@@ -259,6 +259,9 @@ export const useMainPageStyles = makeStyles(
       fontSize: '0.7em',
       marginLeft: '0.4em',
     },
+    marginText: {
+      marginBottom: '0.35em',
+    },
   }),
   { index: 1 }
 );

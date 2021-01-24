@@ -2,7 +2,7 @@ import { Link as RouterLink } from 'react-router-dom';
 import { BugState } from '../../redux/types';
 import BugsMenu from './BugsMenu';
 import { formatDateTime, truncateString } from '../../utils/helperFuncs';
-import { priorityStyles } from '../../styles/customStyles';
+import { priorityStyles, statusStyles } from '../../styles/customStyles';
 
 import { Divider, Typography, Link } from '@material-ui/core';
 import { useMainPageStyles } from '../../styles/muiStyles';
@@ -27,7 +27,11 @@ const BugsListMobile: React.FC<{ bugs: BugState[] }> = ({ bugs }) => {
               {truncateString(b.title, 30)}
               <OpenInNewIcon color="primary" className={classes.gotoIcon} />
             </Link>
-            <Typography variant="body2" color="secondary">
+            <Typography
+              variant="body2"
+              color="secondary"
+              className={classes.marginText}
+            >
               Priority:{' '}
               <div
                 style={{
@@ -40,8 +44,21 @@ const BugsListMobile: React.FC<{ bugs: BugState[] }> = ({ bugs }) => {
                 {b.priority}
               </div>
             </Typography>
-            <Typography variant="body2" color="secondary">
-              Status: <strong>{b.isResolved ? 'Closed' : 'Open'}</strong>
+            <Typography
+              variant="body2"
+              color="secondary"
+              className={classes.marginText}
+            >
+              Status:{' '}
+              <div
+                style={{
+                  ...statusStyles(b.isResolved),
+                  display: 'inline',
+                  padding: '0.20em 0.4em',
+                }}
+              >
+                {b.isResolved ? 'Closed' : 'Open'}
+              </div>
             </Typography>
             <Typography variant="body2" color="secondary">
               Created:{' '}

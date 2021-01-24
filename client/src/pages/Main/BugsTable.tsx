@@ -3,7 +3,7 @@ import { Link as RouterLink, useHistory } from 'react-router-dom';
 import { BugState } from '../../redux/types';
 import BugsMenu from './BugsMenu';
 import { formatDateTime } from '../../utils/helperFuncs';
-import { priorityStyles } from '../../styles/customStyles';
+import { priorityStyles, statusStyles } from '../../styles/customStyles';
 
 import {
   Table,
@@ -72,7 +72,14 @@ const BugsTable: React.FC<{ bugs: BugState[] }> = ({ bugs }) => {
                 </div>
               </TableCell>
               <TableCell align="center">
-                {b.isResolved ? 'Closed' : 'Open'}
+                <div
+                  style={{
+                    ...statusStyles(b.isResolved),
+                    margin: '0 auto',
+                  }}
+                >
+                  {b.isResolved ? 'Closed' : 'Open'}
+                </div>
               </TableCell>
               <TableCell align="center">
                 {formatDateTime(b.createdAt)} ~ {b.createdBy.username}

@@ -83,6 +83,7 @@ const NotesCard: React.FC<{
                 type: 'normal',
                 text: 'Leave A Note',
                 icon: CommentOutlinedIcon,
+                size: 'large',
                 style: { marginTop: '1em' },
               }
         }
