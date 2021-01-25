@@ -31,14 +31,17 @@ export const { setNotification, clearNotification } = notificationSlice.actions;
 
 let timeoutID: number = 0;
 
-export const notify = (notifData: NotifPayload): AppThunk => {
+export const notify = (
+  message: string,
+  type: 'success' | 'error'
+): AppThunk => {
   return (dispatch) => {
     window.clearTimeout(timeoutID);
-    dispatch(setNotification(notifData));
+    dispatch(setNotification({ message, type }));
 
     timeoutID = window.setTimeout(() => {
       dispatch(clearNotification());
-    }, 5000);
+    }, 6000);
   };
 };
 

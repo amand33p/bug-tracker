@@ -11,6 +11,7 @@ import {
   Note,
   BugFilterValues,
 } from '../types';
+import { notify } from './notificationSlice';
 import { History } from 'history';
 import { getErrorMsg } from '../../utils/helperFuncs';
 
@@ -231,6 +232,7 @@ export const createNewBug = (
       dispatch(setSubmitBugLoading());
       const newBug = await bugService.createBug(projectId, bugData);
       dispatch(addBug({ bug: newBug, projectId }));
+      dispatch(notify('New bug added!', 'success'));
       closeDialog && closeDialog();
     } catch (e) {
       dispatch(setSubmitBugError(getErrorMsg(e)));
@@ -263,6 +265,7 @@ export const editBug = (
           projectId,
         })
       );
+      dispatch(notify('Successfully updated the bug!', 'success'));
       closeDialog && closeDialog();
     } catch (e) {
       dispatch(setSubmitBugError(getErrorMsg(e)));
@@ -280,8 +283,9 @@ export const deleteBug = (
       await bugService.deleteBug(projectId, bugId);
       history.push(`/projects/${projectId}`);
       dispatch(removeBug({ bugId, projectId }));
+      dispatch(notify('Deleted the bug.', 'success'));
     } catch (e) {
-      console.log(console.log(getErrorMsg(e)));
+      dispatch(notify(getErrorMsg(e), 'error'));
     }
   };
 };
@@ -313,8 +317,14 @@ export const closeReopenBug = (
           projectId,
         })
       );
+      dispatch(
+        notify(
+          `${action === 'close' ? 'Closed' : 'Re-opened'} the bug!`,
+          'success'
+        )
+      );
     } catch (e) {
-      console.log(console.log(getErrorMsg(e)));
+      dispatch(notify(getErrorMsg(e), 'error'));
     }
   };
 };
@@ -330,6 +340,7 @@ export const createNote = (
       dispatch(setSubmitBugLoading());
       const newNote = await noteService.createNote(projectId, bugId, noteBody);
       dispatch(addNote({ note: newNote, bugId, projectId }));
+      dispatch(notify('New note added!', 'success'));
       closeDialog && closeDialog();
     } catch (e) {
       dispatch(setSubmitBugError(getErrorMsg(e)));
@@ -356,6 +367,7 @@ export const editNote = (
       dispatch(
         updateNote({ data: { body, updatedAt }, noteId, bugId, projectId })
       );
+      dispatch(notify('Updated the note!', 'success'));
       closeDialog && closeDialog();
     } catch (e) {
       dispatch(setSubmitBugError(getErrorMsg(e)));
@@ -372,8 +384,9 @@ export const deleteNote = (
     try {
       await noteService.deleteNote(projectId, noteId);
       dispatch(removeNote({ noteId, bugId, projectId }));
+      dispatch(notify('Deleted the note.', 'success'));
     } catch (e) {
-      console.log(console.log(getErrorMsg(e)));
+      dispatch(notify(getErrorMsg(e), 'error'));
     }
   };
 };

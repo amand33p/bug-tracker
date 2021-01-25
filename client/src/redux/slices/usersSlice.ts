@@ -2,11 +2,12 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState, AppThunk } from '../store';
 import userService from '../../services/users';
 import { User } from '../types';
+import { notify } from './notificationSlice';
 import { getErrorMsg } from '../../utils/helperFuncs';
 
 interface InitialBugState {
   users: User[];
-  status: 'idle' | 'loading' | 'succeeded' | 'failed';
+  status: 'idle' | 'loading' | 'succeeded';
   error: string | null;
 }
 
@@ -29,14 +30,10 @@ const usersSlice = createSlice({
       state.status = 'loading';
       state.error = null;
     },
-    setUsersError: (state, action: PayloadAction<string>) => {
-      state.status = 'failed';
-      state.error = action.payload;
-    },
   },
 });
 
-export const { setUsers, setUsersLoading, setUsersError } = usersSlice.actions;
+export const { setUsers, setUsersLoading } = usersSlice.actions;
 
 export const fetchUsers = (): AppThunk => {
   return async (dispatch) => {
@@ -45,7 +42,7 @@ export const fetchUsers = (): AppThunk => {
       const allUsers = await userService.getUsers();
       dispatch(setUsers(allUsers));
     } catch (e) {
-      dispatch(setUsersError(getErrorMsg(e)));
+      dispatch(notify(getErrorMsg(e), 'error'));
     }
   };
 };

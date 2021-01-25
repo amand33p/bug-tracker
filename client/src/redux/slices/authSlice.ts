@@ -4,6 +4,7 @@ import authService from '../../services/auth';
 import storage from '../../utils/localStorage';
 import { CredentialsPayload, UserState } from '../types';
 import { fetchProjects } from './projectsSlice';
+import { notify } from './notificationSlice';
 import { fetchUsers } from './usersSlice';
 import { getErrorMsg } from '../../utils/helperFuncs';
 
@@ -65,6 +66,7 @@ export const login = (credentials: CredentialsPayload): AppThunk => {
 
       dispatch(fetchProjects());
       dispatch(fetchUsers());
+      dispatch(notify(`Welcome back, ${userData.username}!`, 'success'));
     } catch (e) {
       dispatch(setAuthError(getErrorMsg(e)));
     }
@@ -83,6 +85,9 @@ export const signup = (credentials: CredentialsPayload): AppThunk => {
 
       dispatch(fetchProjects());
       dispatch(fetchUsers());
+      dispatch(
+        notify(`Hi, ${userData.username}! Welcome to Bug Tracker :D`, 'success')
+      );
     } catch (e) {
       dispatch(setAuthError(getErrorMsg(e)));
     }
@@ -93,6 +98,7 @@ export const logout = (): AppThunk => {
   return (dispatch) => {
     dispatch(removeUser());
     storage.removeUser();
+    dispatch(notify('Logged out!', 'success'));
   };
 };
 

@@ -4,6 +4,7 @@ import { autoLogin } from './redux/slices/authSlice';
 import { fetchUsers, selectUsersState } from './redux/slices/usersSlice';
 import NavBar from './components/NavBar';
 import Routes from './Routes';
+import ToastNotification from './components/ToastNotification';
 
 import customTheme from './styles/customTheme';
 import { useBodyStyles } from './styles/muiStyles';
@@ -32,6 +33,7 @@ const App = () => {
       <div className={classes.root}>
         <NavBar />
         <Routes />
+        <ToastNotification />
       </div>
     </ThemeProvider>
   );

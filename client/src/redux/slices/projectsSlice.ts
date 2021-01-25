@@ -8,6 +8,7 @@ import {
   ProjectPayload,
   ProjectMember,
 } from '../types';
+import { notify } from './notificationSlice';
 import { History } from 'history';
 import { getErrorMsg } from '../../utils/helperFuncs';
 
@@ -152,6 +153,7 @@ export const createNewProject = (
       dispatch(setSubmitProjectLoading());
       const newProject = await projectService.createProject(projectData);
       dispatch(addProject(newProject));
+      dispatch(notify('New project added!', 'success'));
       closeDialog && closeDialog();
     } catch (e) {
       dispatch(setSubmitProjectError(getErrorMsg(e)));
@@ -168,8 +170,9 @@ export const deleteProject = (
       await projectService.deleteProject(projectId);
       history.push('/');
       dispatch(removeProject(projectId));
+      dispatch(notify('Deleted the project.', 'success'));
     } catch (e) {
-      console.log(console.log(getErrorMsg(e)));
+      dispatch(notify(getErrorMsg(e), 'error'));
     }
   };
 };
@@ -195,6 +198,7 @@ export const editProjectName = (
           projectId,
         })
       );
+      dispatch(notify("Edited the project's name!", 'success'));
       closeDialog && closeDialog();
     } catch (e) {
       dispatch(setSubmitProjectError(getErrorMsg(e)));
@@ -212,6 +216,7 @@ export const addProjectMembers = (
       dispatch(setSubmitProjectLoading());
       const updatedMembers = await memberService.addMembers(projectId, members);
       dispatch(addMembers({ members: updatedMembers, projectId }));
+      dispatch(notify('New member(s) added to the project!', 'success'));
       closeDialog && closeDialog();
     } catch (e) {
       dispatch(setSubmitProjectError(getErrorMsg(e)));
@@ -227,8 +232,9 @@ export const removeProjectMember = (
     try {
       await memberService.removeMember(projectId, memberId);
       dispatch(removeMember({ memberId, projectId }));
+      dispatch(notify('Removed the project member.', 'success'));
     } catch (e) {
-      console.log(console.log(getErrorMsg(e)));
+      dispatch(notify(getErrorMsg(e), 'error'));
     }
   };
 };
@@ -242,8 +248,9 @@ export const leaveProjectMembership = (
       await memberService.leaveProject(projectId);
       history.push('/');
       dispatch(removeProject(projectId));
+      dispatch(notify('Successfully left the project membership!', 'success'));
     } catch (e) {
-      console.log(console.log(getErrorMsg(e)));
+      dispatch(notify(getErrorMsg(e), 'error'));
     }
   };
 };
