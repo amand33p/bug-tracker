@@ -7,14 +7,17 @@ import BugDetailsPage from './pages/Main/BugsDetailsPage';
 import NotFoundPage from './pages/Main/NotFoundPage';
 import { useSelector } from 'react-redux';
 import { selectAuthState } from './redux/slices/authSlice';
+import storage from './utils/localStorage';
 
 import { Container, useMediaQuery } from '@material-ui/core';
 import { useTheme } from '@material-ui/core/styles';
 
 const Routes = () => {
-  const { user: isLoggedIn } = useSelector(selectAuthState);
+  const { user } = useSelector(selectAuthState);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('xs'));
+
+  const isLoggedIn = storage.loadUser() || user;
 
   return (
     <Container disableGutters={isMobile}>
@@ -26,7 +29,7 @@ const Routes = () => {
           {isLoggedIn ? <ProjectDetailsPage /> : <Redirect to="/signup" />}
         </Route>
         <Route exact path="/projects/:projectId/bugs/:bugId">
-          {isLoggedIn ? <BugDetailsPage /> : <Redirect to="/signup" />}
+          {user ? <BugDetailsPage /> : <Redirect to="/" />}
         </Route>
         <Route exact path="/login">
           {!isLoggedIn ? <LoginPage /> : <Redirect to="/" />}

@@ -11,7 +11,6 @@ import FormDialog from '../../components/FormDialog';
 import BugForm from './BugForm';
 import ConfirmDialog from '../../components/ConfirmDialog';
 import NotesCard from './NotesCard';
-import InfoText from '../../components/InfoText';
 import { formatDateTime } from '../../utils/helperFuncs';
 import { priorityStyles, statusStyles } from '../../styles/customStyles';
 import CSS from 'csstype';
@@ -42,11 +41,18 @@ const BugsDetailsPage = () => {
 
   if (!bug) {
     return (
-      <InfoText
-        text="404: Bug not found."
-        variant={isMobile ? 'h6' : 'h5'}
-        marginTop="10em"
-      />
+      <div className={classes.root}>
+        <Paper className={classes.notFoundPaper}>
+          <Typography
+            variant="h6"
+            color="secondary"
+            className={classes.error404Text}
+            style={{ marginTop: '5em' }}
+          >
+            404: Bug Not Found!
+          </Typography>
+        </Paper>
+      </div>
     );
   }
 

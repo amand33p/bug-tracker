@@ -13,7 +13,6 @@ import MembersCard from './MembersCard';
 import BugsCard from './BugsCard';
 import ConfirmDialog from '../../components/ConfirmDialog';
 import FormDialog from '../../components/FormDialog';
-import InfoText from '../../components/InfoText';
 import { formatDateTime } from '../../utils/helperFuncs';
 
 import {
@@ -52,11 +51,18 @@ const ProjectDetailsPage = () => {
 
   if (!projectInState) {
     return (
-      <InfoText
-        text="404: Project not found."
-        variant={isMobile ? 'h6' : 'h5'}
-        marginTop="10em"
-      />
+      <div className={classes.root}>
+        <Paper className={classes.notFoundPaper}>
+          <Typography
+            variant="h6"
+            color="secondary"
+            className={classes.error404Text}
+            style={{ marginTop: '5em' }}
+          >
+            404: Project Not Found!
+          </Typography>
+        </Paper>
+      </div>
     );
   }
 
