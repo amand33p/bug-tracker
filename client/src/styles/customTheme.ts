@@ -9,7 +9,7 @@ const customTheme = (darkMode: boolean) =>
         light: '#00968840',
       },
       secondary: {
-        main: darkMode ? '#22db63' : '#005b53',
+        main: darkMode ? '#e4fffd' : '#005b53',
       },
     },
     overrides: {

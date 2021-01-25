@@ -136,6 +136,7 @@ const NotesCard: React.FC<{
                         variant: 'outlined',
                         size: 'small',
                         style: { marginRight: '1em' },
+                        color: 'secondary',
                       }}
                       title="Edit the note"
                     >
@@ -160,6 +161,7 @@ const NotesCard: React.FC<{
                         icon: DeleteIcon,
                         variant: 'outlined',
                         size: 'small',
+                        color: 'secondary',
                       }}
                       actionFunc={() => handleDeleteNote(n.id)}
                     />

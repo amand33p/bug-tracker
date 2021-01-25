@@ -76,6 +76,7 @@ const NavBar = () => {
           startIcon={<ArrowBackIcon />}
           color="secondary"
           onClick={handleGoBack}
+          className={classes.backBtn}
         >
           {pathname.includes('/bugs') ? 'Project' : 'Home'}
         </Button>

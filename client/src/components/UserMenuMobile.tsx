@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import { UserState } from '../redux/types';
+import DarkModeSwitch from './DarkModeSwitch';
 
 import { IconButton, Menu, MenuItem, Avatar } from '@material-ui/core';
 import { useNavStyles } from '../styles/muiStyles';
@@ -40,6 +41,7 @@ const UserMenuMobile: React.FC<UserMenu> = ({
 
   return (
     <div>
+      <DarkModeSwitch isMobile={isMobile} />
       {user ? (
         <IconButton onClick={handleOpenMenu} className={classes.userBtnMob}>
           <Avatar className={classes.avatar}>
@@ -53,7 +55,7 @@ const UserMenuMobile: React.FC<UserMenu> = ({
           color="primary"
           className={classes.threeDotsBtn}
         >
-          <MoreVertIcon color="secondary" />
+          <MoreVertIcon color="primary" />
         </IconButton>
       )}
 

@@ -1,18 +1,19 @@
 import { makeStyles } from '@material-ui/core/styles';
 
-export const useBodyStyles = makeStyles(
-  (theme) => ({
-    root: {
-      width: '100vW',
-      display: 'flex',
-      flexDirection: 'column',
-      flex: 1,
-      minHeight: '100vH',
-      backgroundColor: '#00968810',
-    },
-  }),
-  { index: 1 }
-);
+export const useBodyStyles = (darkMode: boolean) =>
+  makeStyles(
+    (theme) => ({
+      root: {
+        width: '100vW',
+        display: 'flex',
+        flexDirection: 'column',
+        flex: 1,
+        minHeight: '100vH',
+        backgroundColor: darkMode ? '#333' : '#00968810',
+      },
+    }),
+    { index: 1 }
+  );
 
 export const useTableStyles = makeStyles(
   (theme) => ({
@@ -320,6 +321,11 @@ export const useNavStyles = makeStyles(
       marginRight: '0.3em',
       [theme.breakpoints.down('xs')]: {
         fontSize: '1em',
+        marginLeft: '0.6em',
+      },
+    },
+    backBtn: {
+      [theme.breakpoints.down('xs')]: {
         marginLeft: '0.6em',
       },
     },

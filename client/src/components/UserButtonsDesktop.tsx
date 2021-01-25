@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import { UserState } from '../redux/types';
+import DarkModeSwitch from './DarkModeSwitch';
 
 import { Button, Avatar, Typography } from '@material-ui/core';
 import { useNavStyles } from '../styles/muiStyles';
@@ -45,6 +46,7 @@ const UserButtonsDesktop: React.FC<UserMenu> = ({
           >
             Log Out
           </Button>
+          <DarkModeSwitch isMobile={isMobile} />
         </div>
       ) : (
         <div>
@@ -68,7 +70,8 @@ const UserButtonsDesktop: React.FC<UserMenu> = ({
             startIcon={<PersonAddIcon />}
           >
             Sign Up
-          </Button>{' '}
+          </Button>
+          <DarkModeSwitch isMobile={isMobile} />
         </div>
       )}
     </div>

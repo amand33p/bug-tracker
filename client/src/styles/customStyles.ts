@@ -6,6 +6,8 @@ const colors = {
   high: '#ff402c',
   closed: '#008000',
   open: '#000080',
+  closedBg: '#e2ffe2',
+  openBg: '#e2e2ff',
 };
 
 export const priorityStyles = (
@@ -23,10 +25,11 @@ export const priorityStyles = (
 
 export const statusStyles = (isResolved: boolean): CSS.Properties => {
   const color = isResolved ? colors.closed : colors.open;
+  const backgroundColor = isResolved ? colors.closedBg : colors.openBg;
 
   return {
     color,
-    backgroundColor: color + '25',
+    backgroundColor,
     borderRadius: '4px',
     fontWeight: 500,
     padding: '0.35em',

@@ -5,6 +5,7 @@ import projectsReducer from './slices/projectsSlice';
 import bugsReducer from './slices/bugsSlice';
 import usersReducer from './slices/usersSlice';
 import notificationReducer from './slices/notificationSlice';
+import themeReducer from './slices/themeSlice';
 
 const store = configureStore({
   reducer: {
@@ -13,6 +14,7 @@ const store = configureStore({
     bugs: bugsReducer,
     users: usersReducer,
     notification: notificationReducer,
+    theme: themeReducer,
   },
 });
 
