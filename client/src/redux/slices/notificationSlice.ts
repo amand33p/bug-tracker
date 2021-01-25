@@ -34,7 +34,6 @@ let timeoutID: number = 0;
 export const notify = (notifData: NotifPayload): AppThunk => {
   return (dispatch) => {
     window.clearTimeout(timeoutID);
-
     dispatch(setNotification(notifData));
 
     timeoutID = window.setTimeout(() => {
