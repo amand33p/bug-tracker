@@ -375,7 +375,7 @@ export const useAuthPageStyles = makeStyles(
       padding: '1.5em 3em',
       width: '320px',
       margin: 'auto',
-      marginTop: '8%',
+      marginTop: '13%',
       [theme.breakpoints.down('xs')]: {
         width: 'auto',
         margin: '0.5em 0.5em',

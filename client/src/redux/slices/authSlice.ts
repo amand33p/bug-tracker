@@ -108,6 +108,8 @@ export const autoLogin = (): AppThunk => {
     if (loggedUser) {
       dispatch(setUser(loggedUser));
       authService.setToken(loggedUser.token);
+      dispatch(fetchProjects());
+      dispatch(fetchUsers());
     }
   };
 };

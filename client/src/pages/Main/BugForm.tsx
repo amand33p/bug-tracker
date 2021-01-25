@@ -120,7 +120,7 @@ const BugForm: React.FC<BugFormProps> = ({
         name="priority"
         as={
           <FormControl>
-            <RadioGroup row className={classes.radioGroup}>
+            <RadioGroup row className={classes.radioGroup} defaultValue="low">
               <FormLabel className={classes.radioGroupLabel}>
                 Priority:
               </FormLabel>

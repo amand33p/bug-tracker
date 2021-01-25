@@ -1,9 +1,6 @@
-import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import {
-  fetchProjects,
-  selectProjectsState,
-} from '../../redux/slices/projectsSlice';
+import { useState } from 'react';
+import { useSelector } from 'react-redux';
+import { selectProjectsState } from '../../redux/slices/projectsSlice';
 import ProjectsTable from './ProjectsTable';
 import ProjectActionCard from './ProjectsActionCard';
 import ProjectsListMobile from './ProjectsListMobile';
@@ -20,18 +17,10 @@ const ProjectsPage = () => {
   const classes = useMainPageStyles();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('xs'));
-  const dispatch = useDispatch();
   const { projects, fetchStatus, fetchError, sortBy } = useSelector(
     selectProjectsState
   );
   const [filterValue, setFilterValue] = useState('');
-
-  useEffect(() => {
-    if (fetchStatus === 'idle') {
-      dispatch(fetchProjects());
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   const filteredSortedProjects = sortProjects(
     projects.filter((p) =>

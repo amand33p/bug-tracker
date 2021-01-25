@@ -16,7 +16,7 @@ import {
 } from '@material-ui/core';
 import { useTableStyles } from '../../styles/muiStyles';
 
-const tableHeaders = ['Name', 'Bugs', 'Members', 'Admin', 'Created', 'Actions'];
+const tableHeaders = ['Name', 'Bugs', 'Members', 'Admin', 'Added', 'Actions'];
 
 const ProjectsTable: React.FC<{ projects: ProjectState[] }> = ({
   projects,
