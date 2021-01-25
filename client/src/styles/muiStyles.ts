@@ -206,7 +206,7 @@ export const useMainPageStyles = makeStyles(
       margin: '1.5em 0',
     },
     sortNotesInput: {
-      width: '25%',
+      width: '22%',
       [theme.breakpoints.down('xs')]: {
         width: '55%',
       },

@@ -1,4 +1,3 @@
-import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import FilterBar from '../../components/FilterBar';
 import SortBar from '../../components/SortBar';
@@ -43,21 +42,15 @@ const BugsActionCard: React.FC<{
 }> = ({ projectId, filterValue, setFilterValue, isMobile }) => {
   const classes = useActionCardStyles();
   const dispatch = useDispatch();
-  const { sortBy: sortByValue, filterBy: filterByValue } = useSelector(
-    selectBugsState
-  );
-  const [sortBy, setSortBy] = useState<BugSortValues>(sortByValue);
-  const [filterBy, setFilterBy] = useState<BugFilterValues>(filterByValue);
+  const { sortBy, filterBy } = useSelector(selectBugsState);
 
   const handleSortChange = (e: React.ChangeEvent<{ value: unknown }>) => {
     const selectedValue = e.target.value as BugSortValues;
-    setSortBy(selectedValue);
     dispatch(sortBugsBy(selectedValue));
   };
 
   const handleFilterChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedValue = e.target.value as BugFilterValues;
-    setFilterBy(selectedValue);
     dispatch(filterBugsBy(selectedValue));
   };
 

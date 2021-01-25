@@ -1,4 +1,3 @@
-import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import FilterBar from '../../components/FilterBar';
 import SortBar from '../../components/SortBar';
@@ -31,12 +30,10 @@ const ProjectsActionCard: React.FC<{
 }> = ({ filterValue, setFilterValue, isMobile }) => {
   const classes = useActionCardStyles();
   const dispatch = useDispatch();
-  const { sortBy: sortByValue } = useSelector(selectProjectsState);
-  const [sortBy, setSortBy] = useState<ProjectSortValues>(sortByValue);
+  const { sortBy } = useSelector(selectProjectsState);
 
   const handleSortChange = (e: React.ChangeEvent<{ value: unknown }>) => {
     const selectedValue = e.target.value as ProjectSortValues;
-    setSortBy(selectedValue);
     dispatch(sortProjectsBy(selectedValue));
   };
 
