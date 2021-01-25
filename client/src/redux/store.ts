@@ -4,6 +4,7 @@ import authReducer from './slices/authSlice';
 import projectsReducer from './slices/projectsSlice';
 import bugsReducer from './slices/bugsSlice';
 import usersReducer from './slices/usersSlice';
+import notificationReducer from './slices/notificationSlice';
 
 const store = configureStore({
   reducer: {
@@ -11,6 +12,7 @@ const store = configureStore({
     projects: projectsReducer,
     bugs: bugsReducer,
     users: usersReducer,
+    notification: notificationReducer,
   },
 });
 

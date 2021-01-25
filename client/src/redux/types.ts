@@ -107,3 +107,8 @@ export interface ClosedReopenedBugData {
   reopenedAt: Date;
   reopenedBy: User;
 }
+
+export interface NotifPayload {
+  message: string;
+  type: 'success' | 'error';
+}
