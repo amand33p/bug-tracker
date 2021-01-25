@@ -257,6 +257,33 @@ export const useMainPageStyles = makeStyles(
     marginText: {
       marginBottom: '0.35em',
     },
+    notFoundPaper: {
+      padding: '1.5em',
+      minHeight: 'calc(100vH - 130px)',
+      [theme.breakpoints.down('xs')]: {
+        padding: '0.5em 0.7em',
+        minHeight: 'calc(100vH - 80px)',
+      },
+    },
+    error404Image: {
+      width: '250px',
+      display: 'block',
+      margin: '0 auto',
+      [theme.breakpoints.down('xs')]: {
+        width: '150px',
+      },
+    },
+    error404Text: {
+      fontSize: '2.2em',
+      textAlign: 'center',
+      marginTop: '1em',
+      [theme.breakpoints.down('xs')]: {
+        fontSize: '1.5em',
+      },
+    },
+    notFoundWrapper: {
+      marginTop: '6em',
+    },
   }),
   { index: 1 }
 );

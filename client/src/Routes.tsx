@@ -4,6 +4,7 @@ import SignupPage from './pages/Auth/SignupPage';
 import ProjectsPage from './pages/Main/ProjectsPage';
 import ProjectDetailsPage from './pages/Main/ProjectDetailsPage';
 import BugDetailsPage from './pages/Main/BugsDetailsPage';
+import NotFoundPage from './pages/Main/NotFoundPage';
 import { useSelector } from 'react-redux';
 import { selectAuthState } from './redux/slices/authSlice';
 
@@ -34,7 +35,7 @@ const Routes = () => {
           {!isLoggedIn ? <SignupPage /> : <Redirect to="/" />}
         </Route>
         <Route>
-          <h1>404</h1>
+          <NotFoundPage />
         </Route>
       </Switch>
     </Container>
