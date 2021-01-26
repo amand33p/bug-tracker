@@ -7,7 +7,6 @@ import Routes from './Routes';
 import ToastNotification from './components/ToastNotification';
 import storage from './utils/localStorage';
 
-import { Paper } from '@material-ui/core';
 import customTheme from './styles/customTheme';
 import { useBodyStyles } from './styles/muiStyles';
 import { ThemeProvider } from '@material-ui/core/styles';
@@ -32,11 +31,11 @@ const App = () => {
 
   return (
     <ThemeProvider theme={customTheme(darkMode)}>
-      <Paper className={classes.root} elevation={0}>
+      <div className={classes.root}>
         <NavBar />
         <Routes />
         <ToastNotification />
-      </Paper>
+      </div>
     </ThemeProvider>
   );
 };
