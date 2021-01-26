@@ -15,6 +15,11 @@ const getOptions = async () => {
       ssl: true,
     },
     entities: ['build/entity/*.*'],
+    migrations: ['build/migration/*.*'],
+    cli: {
+      entitiesDir: 'build/entity',
+      migrationsDir: 'build/migration',
+    },
   };
   if (process.env.DATABASE_URL) {
     Object.assign(connectionOptions, { url: process.env.DATABASE_URL });
