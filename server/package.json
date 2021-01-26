@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Made by amand33p",
   "scripts": {
-    "start": "node build/server.js",
+    "start": "node ./build/server.js",
     "build": "rm -rf ./build && tsc -p ./",
     "dev": "ts-node-dev --respawn ./src/server.ts",
     "typeorm": "ts-node ./node_modules/typeorm/cli.js",
