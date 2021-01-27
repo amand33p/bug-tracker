@@ -5,7 +5,7 @@
   "scripts": {
     "start": "node ./build/server.js",
     "build": "rm -rf ./build && tsc -p ./",
-    "dev": "ts-node-dev --respawn ./src/server.ts",
+    "dev": "cross-env NODE_ENV=test ts-node-dev --respawn ./src/server.ts",
     "typeorm": "ts-node ./node_modules/typeorm/cli.js",
     "lint": "eslint --ext .ts ."
   },
