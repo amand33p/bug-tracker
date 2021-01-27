@@ -4,25 +4,29 @@ import {
   ConnectionOptions,
   createConnection,
 } from 'typeorm';
+import dotenv from 'dotenv';
+dotenv.config();
 
-const getOptions = async () => {
+const getConfig = async () => {
   let connectionOptions: ConnectionOptions;
   connectionOptions = {
     type: 'postgres',
     synchronize: false,
-    logging: true,
+    logging: false,
+    ssl: true,
     extra: {
-      ssl: true,
+      ssl: {
+        rejectUnauthorized: false,
+      },
     },
     entities: ['build/entity/*.*'],
     migrations: ['build/migration/*.*'],
-    cli: {
-      entitiesDir: 'build/entity',
-      migrationsDir: 'build/migration',
-    },
   };
+
   if (process.env.DATABASE_URL) {
-    Object.assign(connectionOptions, { url: process.env.DATABASE_URL });
+    Object.assign(connectionOptions, {
+      url: process.env.DATABASE_URL,
+    });
   } else {
     connectionOptions = await getConnectionOptions();
   }
@@ -31,8 +35,8 @@ const getOptions = async () => {
 };
 
 const connectToDb = async (): Promise<void> => {
-  const typeormConfig = await getOptions();
-  await createConnection(typeormConfig);
+  const config = await getConfig();
+  await createConnection(config);
 };
 
 export const initializeDB = (): void => {
