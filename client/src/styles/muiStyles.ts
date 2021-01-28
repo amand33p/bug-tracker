@@ -191,10 +191,10 @@ export const useMainPageStyles = makeStyles(
     },
     notesPaper: {
       padding: '1.5em',
-      minHeight: 'calc(100vH - 442px)',
+      minHeight: 'calc(100vH - 420px)',
       [theme.breakpoints.down('xs')]: {
         padding: '0.5em 0.7em',
-        minHeight: 'calc(100vH - 342px)',
+        minHeight: 'calc(100vH - 320px)',
       },
     },
     notesWrapper: {
