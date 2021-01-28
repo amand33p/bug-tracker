@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import MembersTable from './MembersTable';
 import FilterBar from '../../components/FilterBar';
 import { ProjectMember } from '../../redux/types';
+import InfoText from '../../components/InfoText';
 
 import { Typography, Collapse } from '@material-ui/core';
 import { useMainPageStyles } from '../../styles/muiStyles';
@@ -23,7 +24,9 @@ const MembersCard: React.FC<{
 
   const membersDataToDisplay = () => {
     if (filteredMembers.length === 0) {
-      return <div>No matches found.</div>;
+      return (
+        <InfoText text="No matches found." variant={isMobile ? 'h6' : 'h5'} />
+      );
     } else {
       return (
         <div style={{ marginTop: '1em' }}>

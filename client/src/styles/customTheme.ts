@@ -15,7 +15,7 @@ const customTheme = (darkMode: boolean) =>
     overrides: {
       MuiTypography: {
         root: {
-          wordBreak: 'break-all',
+          wordBreak: 'break-word',
         },
       },
     },

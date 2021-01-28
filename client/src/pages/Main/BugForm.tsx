@@ -119,12 +119,12 @@ const BugForm: React.FC<BugFormProps> = ({
         control={control}
         name="priority"
         as={
-          <FormControl>
-            <RadioGroup row className={classes.radioGroup} defaultValue="low">
+          <FormControl className={classes.radioGroupForm}>
+            <RadioGroup row defaultValue="low" className={classes.radioGroup}>
               <FormLabel className={classes.radioGroupLabel}>
                 Priority:
               </FormLabel>
-              <div className={classes.formControlWrapper}>
+              <div className={classes.formControlLabels}>
                 <FormControlLabel
                   value="low"
                   control={<Radio color="primary" />}

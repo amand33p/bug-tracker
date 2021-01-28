@@ -80,15 +80,18 @@ export const useFormStyles = makeStyles(
     fieldMargin: {
       marginTop: '1.5em',
     },
+    radioGroupForm: {
+      marginTop: '0.8em',
+      width: '100%',
+    },
     radioGroup: {
       display: 'flex',
       alignItems: 'center',
-      marginTop: '0.8em',
     },
     radioGroupLabel: {
-      marginRight: '1.5em',
+      marginRight: '2em',
     },
-    formControlWrapper: {
+    formControlLabels: {
       display: 'flex',
       justifyContent: 'space-between',
       width: '80%',
