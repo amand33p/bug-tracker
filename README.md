@@ -50,15 +50,15 @@ Bug tracking app made with PERN + TS
 
 #### Desktop/Tablet
 
-![Desktop-1](https://github.com/amand33p/bug-tracker-pern-ts/blob/main/screenshots/desktop-1.jpg)
-![Desktop-2](https://github.com/amand33p/bug-tracker-pern-ts/blob/main/screenshots/desktop-2.jpg)
-![Desktop-3](https://github.com/amand33p/bug-tracker-pern-ts/blob/main/screenshots/desktop-3.jpg)
-![Desktop-4](https://github.com/amand33p/bug-tracker-pern-ts/blob/main/screenshots/desktop-4.jpg)
-![Desktop-5](https://github.com/amand33p/bug-tracker-pern-ts/blob/main/screenshots/desktop-5.jpg)
+![Desktop-1](https://github.com/amand33p/bug-tracker-pern-ts/blob/master/screenshots/desktop-1.jpg)
+![Desktop-2](https://github.com/amand33p/bug-tracker-pern-ts/blob/master/screenshots/desktop-2.jpg)
+![Desktop-3](https://github.com/amand33p/bug-tracker-pern-ts/blob/master/screenshots/desktop-3.jpg)
+![Desktop-4](https://github.com/amand33p/bug-tracker-pern-ts/blob/master/screenshots/desktop-4.jpg)
+![Desktop-5](https://github.com/amand33p/bug-tracker-pern-ts/blob/master/screenshots/desktop-5.jpg)
 
 #### Mobile
 
-![Mobile-1](https://github.com/amand33p/bug-tracker-pern-ts/blob/main/screenshots/mobile-1.jpg)
-![Mobile-2](https://github.com/amand33p/bug-tracker-pern-ts/blob/main/screenshots/mobile-2.jpg)
-![Mobile-3](https://github.com/amand33p/bug-tracker-pern-ts/blob/main/screenshots/mobile-3.jpg)
-![Mobile-4](https://github.com/amand33p/bug-tracker-pern-ts/blob/main/screenshots/mobile-4.jpg)
+![Mobile-1](https://github.com/amand33p/bug-tracker-pern-ts/blob/master/screenshots/mobile-1.jpg)
+![Mobile-2](https://github.com/amand33p/bug-tracker-pern-ts/blob/master/screenshots/mobile-2.jpg)
+![Mobile-3](https://github.com/amand33p/bug-tracker-pern-ts/blob/master/screenshots/mobile-3.jpg)
+![Mobile-4](https://github.com/amand33p/bug-tracker-pern-ts/blob/master/screenshots/mobile-4.jpg)
