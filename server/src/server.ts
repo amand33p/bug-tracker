@@ -3,9 +3,10 @@ import http from 'http';
 import { PORT } from './utils/config';
 import { connectToDB } from './db';
 
+connectToDB();
+
 const server = http.createServer(app);
 
 server.listen(PORT, () => {
-  connectToDB();
   console.log(`Server running on port ${PORT}`);
 });
