@@ -79,12 +79,6 @@ JWT_SECRET = "Your JWT secret"
 
 Open client/src/backendUrl.js & change "backend" variable to `"http://localhost:3005"`
 
-```
-cd client
-npm install
-npm start
-```
-
 Run client development server:
 
 ```
