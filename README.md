@@ -62,3 +62,48 @@ Bug tracking app made with PERN + TS
 ![Mobile-2](https://github.com/amand33p/bug-tracker-pern-ts/blob/master/screenshots/mobile-2.jpg)
 ![Mobile-3](https://github.com/amand33p/bug-tracker-pern-ts/blob/master/screenshots/mobile-3.jpg)
 ![Mobile-4](https://github.com/amand33p/bug-tracker-pern-ts/blob/master/screenshots/mobile-4.jpg)
+
+## Usage
+
+#### Env variable:
+
+Create a .env file in server directory and add the following:
+
+```
+PORT = 3005
+JWT_SECRET = "Your JWT secret"
+
+```
+
+#### Client:
+
+Open client/src/backendUrl.js & change "backend" variable to `"http://localhost:3005"`
+
+```
+cd client
+npm install
+npm start
+```
+
+Run client development server:
+
+```
+cd client
+npm install
+npm start
+```
+
+#### Server:
+
+Open ormconfig.js & update the local PostgreSQL credentials to match with yours.
+
+To run the migarations, go to server dir & run this command:
+`npm run typeorm migration:run`
+
+Run backend development server:
+
+```
+cd server
+npm install
+npm run dev
+```
