@@ -8,6 +8,7 @@ import {
   selectAuthState,
 } from '../../redux/slices/authSlice';
 import ErrorBox from '../../components/ErrorBox';
+import DemoCredsBox from '../../components/DemoCredsBox';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import BugIcon from '../../svg/bug-logo.svg';
@@ -137,6 +138,7 @@ const LoginPage = () => {
             clearErrorMsg={() => dispatch(clearAuthError())}
           />
         )}
+        <DemoCredsBox />
       </Paper>
     </div>
   );
