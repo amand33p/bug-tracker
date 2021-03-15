@@ -4,7 +4,7 @@ Bug tracking app made with PERN + TS
 
 ## Demo
 
-[Deployed on Netlify (front-end) & Heroku (back-end)](https://thebugtracker.netlify.app)
+[Deployed on Netlify (front-end) & Heroku (back-end)](https://mybugtracker.netlify.app)
 
 ## Built using
 
