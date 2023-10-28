@@ -1,5 +1,5 @@
 import app from './app';
-import http from 'http';
+import http from 'https';
 import { PORT } from './utils/config';
 import { connectToDB } from './db';
 
